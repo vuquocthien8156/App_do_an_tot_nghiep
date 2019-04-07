@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lnEnterEmail"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical" android:layout_alignParentStart="true" android:layout_alignParentEnd="true">
+
+        <EditText
+                android:id="@+id/edtEnterEmail"
+                android:layout_width="match_parent"
+
+                android:hint="@string/your_email"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/btnContinuteEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@string/continute"
+        />
+
+    </LinearLayout>
+
+</RelativeLayout>
