@@ -5,9 +5,18 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#fff"
         tools:context=".view.login.LoginActivity">
 
-    <include layout="@layout/toolbar_login"/>
+    <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar">
+
+
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -18,12 +27,25 @@
                   android:gravity="center"
                   android:layout_alignParentStart="true"
                   android:layout_alignParentEnd="true">
+
+        <ImageView android:layout_width="150dp"
+                   android:layout_height="150dp"
+                   android:scaleType="fitCenter"
+                   android:src="@drawable/icon_main"
+                   android:layout_marginBottom="30dp"/>
+
         <Button
                 android:text="@string/login_with_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="phoneLogin"
                 android:textAllCaps="false"
+                android:background="@drawable/shape_btn_login"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="#fff"
+                android:paddingStart="10dp"
+                android:paddingEnd="25dp"
+                android:drawableStart="@drawable/ic_phone"
                 android:id="@+id/btnLoginPhone"
                 android:textSize="16sp"
 
@@ -35,7 +57,13 @@
                 android:textSize="16sp"
                 android:textAllCaps="false"
                 android:onClick="loginFacebook"
+                android:backgroundTint="@color/com_facebook_blue"
                 android:text="Facebook"
+                android:drawableStart="@drawable/com_facebook_button_login_logo"
+                android:paddingStart="10dp"
+                android:paddingEnd="20dp"
+                android:background="@drawable/shape_btn_login"
+                android:textColor="#fff"
                 android:layout_marginTop="5dp"/>
 
         <Button android:layout_width="match_parent"
@@ -44,6 +72,12 @@
                 android:textSize="16sp"
                 android:textAllCaps="false"
                 android:text="Email"
+                android:backgroundTint="@color/mail"
+                android:background="@drawable/shape_btn_login"
+                android:textColor="#fff"
+                android:drawableStart="@drawable/ic_mail"
+                android:paddingStart="10dp"
+                android:paddingEnd="30dp"
                 android:onClick="loginEmail"
                 android:layout_marginTop="5dp"/>
     </LinearLayout>

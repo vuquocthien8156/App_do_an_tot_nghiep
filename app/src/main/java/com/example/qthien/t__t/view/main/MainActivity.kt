@@ -1,4 +1,4 @@
-package com.example.qthien.t__t.view
+package com.example.qthien.t__t.view.main
 
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity

@@ -8,7 +8,7 @@ class MoLogin(var iPreLogin: IPreLogin) {
 
     }
 
-    fun checkExistAccout(customer: Customer){
-
+    fun checkExistAccount(email : String = "" , phone : String = ""){
+        iPreLogin.resultExistAccount(true)
     }
 }
