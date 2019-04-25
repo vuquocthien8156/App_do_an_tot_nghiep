@@ -42,4 +42,38 @@
     <string name="gender">Giới tính</string>
     <string name="password">Mật khẩu</string>
     <string name="birthday">Sinh nhật</string>
+    <string name="text">
+        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        aaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    </string>
+    <string name="account">Tài khoản</string>
+    <string name="product_like">Nhiều yêu thích</string>
+    <string name="eat">Thức ăn</string>
+    <string name="drink">Đồ uống</string>
+    <string name="product_buy_the_most">Mua nhiều</string>
+    <string name="chosse_method">Chọn phương thức</string>
+    <string name="chosse_picture">Chọn hình</string>
+    <string name="camera">Máy ảnh</string>
+    <string name="enter_your_phone_number">Nhập số điện thoại</string>
+    <string name="change_phone_number">Thay đổi số điện thoại</string>
+    <string name="enter_keyword">Tên , mô tả sản phẩm</string>
+    <string name="login_point">Đăng nhập tích điểm</string>
+    <string name="rewards"><![CDATA[T&&T Rewards]]></string>
+    <string name="products_like">Sản phẩm yêu thích</string>
+    <string name="regulations">Qui định</string>
+    <string name="history">Lịch sử đơn hàng</string>
+    <string name="Payment">Thanh toán</string>
+    <string name="change">Thay đổi</string>
+    <string name="permission_deny">Không cho phép truy cập</string>
+    <string name="select_address_in_map">Chọn địa chỉ trên bản đồ</string>
+    <string name="read_more">Xem thêm</string>
+    <string name="decription">Mô tả</string>
+    <string name="collapse">Thu gọn</string>
+    <string name="like">Yêu thích</string>
+    <string name="share">Chia sẻ</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="carts">Giỏ hàng</string>
+    <string name="customer_evaluation">Khách hàng đánh giá</string>
+    <string name="write_evaluation">Viết đánh giá</string>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_point"
+            android:title="@string/news"/>
+
+    <item
+            android:id="@+id/nav_order"
+            android:icon="@drawable/ic_bike"
+            android:title="@string/order"/>
+
+    <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_account"
+            android:title="@string/account"/>
+</menu>

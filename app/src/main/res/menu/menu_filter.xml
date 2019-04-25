@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_best_buy"
+          android:title="Mua nhiều"
+          />
+    <item android:id="@+id/menu_best_like"
+          android:title="Yêu thích nhiều"
+    />
+    <item android:id="@+id/menu_food"
+          android:title="Thức ăn"
+    />
+    <item android:id="@+id/menu_drink"
+          android:title="Mua nhiều"
+    />
+</menu>

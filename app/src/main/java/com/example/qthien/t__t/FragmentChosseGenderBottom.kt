@@ -6,7 +6,6 @@ import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.qthien.t__t.view.login.EnterInfoFragment
 import kotlinx.android.synthetic.main.fragment_bottom_gender.*
 
 class FragmentChosseGenderBottom() : BottomSheetDialogFragment() , View.OnClickListener {

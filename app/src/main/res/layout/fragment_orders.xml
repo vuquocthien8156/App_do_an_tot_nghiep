@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentStart="true">
+        <RelativeLayout
+                android:id="@+id/relaToolbarOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/imgBike"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_directions_bike_24dp"/>
+            <TextView
+                    android:id="@+id/txtOrderTo"
+                    android:layout_toEndOf="@id/imgBike"
+                    android:layout_marginStart="10dp"
+                    android:textSize="14sp"
+                    android:text="Giao hàng đến"
+                    android:textColor="@color/colorIconsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/txtAddressOrder"
+                    android:layout_toEndOf="@id/imgBike"
+                    android:layout_marginStart="10dp"
+                    android:textSize="16sp"
+                    android:text="Địa chỉ"
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_toStartOf="@id/btnChangeAddress"
+                    android:textColor="@color/colorIconsText"
+                    android:layout_below="@id/txtOrderTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <Button
+                    android:id="@+id/btnChangeAddress"
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:text="@string/change"
+                    android:textColor="@color/colorIconsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+            android:id="@+id/relaTab"
+            android:layout_below="@id/toolbarOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+    >
+
+        <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayoutOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="scrollable"
+                android:layout_toStartOf="@id/ibtnSearch"
+                app:tabTextColor="@color/colorSecondaryText"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabSelectedTextColor="@color/colorPrimary">
+
+        </android.support.design.widget.TabLayout>
+
+        <ImageButton
+                android:id="@+id/ibtnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:paddingTop="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:layout_alignParentTop="true"
+        />
+    </RelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/linearLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/relaTab"
+            android:orientation="horizontal"
+            android:background="@color/colorSecondaryText"/>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpagerOrder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearLine">
+
+    </android.support.v4.view.ViewPager>
+
+    <ImageButton
+            android:id="@+id/ibtnFilter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/ic_format_list"
+            android:background="@drawable/shape_btn_filter_order"
+            android:layout_marginEnd="30dp"/>
+
+</RelativeLayout>

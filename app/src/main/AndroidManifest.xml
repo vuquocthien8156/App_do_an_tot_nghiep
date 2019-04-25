@@ -4,6 +4,8 @@
           package="com.example.qthien.t__t">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
             android:allowBackup="true"
@@ -12,6 +14,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".view.add_to_cart.AddToCartActivity">
+        </activity>
+        <activity android:name=".view.detail_product.DetailProductActivity">
+        </activity>
+        <activity android:name=".view.delivery_address.SearchDeliverryAddressActivity">
+        </activity>
+        <activity android:name=".view.account.CustomerActivity">
+        </activity>
         <activity android:name=".view.main.MainActivity">
         </activity>
 
@@ -47,27 +57,33 @@
                 <data android:scheme="@string/fb_login_protocol_scheme"/>
             </intent-filter>
         </activity>
-
         <activity android:name="com.facebook.accountkit.ui.AccountKitEmailRedirectActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="@string/ak_login_protocol_scheme" />
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:scheme="@string/ak_login_protocol_scheme"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.login.LoginActivity">
+        <activity android:name=".view.view_login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.login.EmailLoginActivity">
+        <activity android:name=".view.view_login.EmailLoginActivity">
         </activity>
-        <activity android:name=".view.login.EnterInfoActivity">
+        <activity android:name=".view.main.EnterEmailPhoneActivity">
         </activity>
+        <activity android:name=".view.main.SearchProductActivity">
+        </activity>
+
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="@string/GOOGLE_API_KEY"/>
     </application>
 
 </manifest>

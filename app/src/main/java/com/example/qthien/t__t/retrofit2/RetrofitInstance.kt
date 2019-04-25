@@ -1,12 +1,11 @@
 package com.example.qthien.t__t.retrofit2
 
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInstance{
+object RetrofitInstance{
     private var retrofit : Retrofit? = null
-    private val baseUrl = "https://api.nytimes.com/svc/search/v2/"
+    private val baseUrl = "http://192.168.1.4:8000"
 
     val getRetrofit : GetData
         get(){

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorPrimaryLight">#C5CAE9</color>
+    <color name="colorPrimary">#C22417</color>
+    <color name="colorPrimaryDark">#991616</color>
+    <color name="colorPrimaryLight">#FFCDD2</color>
     <color name="colorAccent">#FF9800</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorIconsText">#FFFFFF</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="mail">#dcd93025</color>
+    <color name="color_text_tab">#a99c9c9c</color>
+    <color name="color_grey_light">#66E1E1E1</color>
+    <color name="color_nav">#e1e1e1</color>
+    <color name="not_selected_nav">#000</color>
+    <color name="blue">#2196F3</color>
 </resources>
