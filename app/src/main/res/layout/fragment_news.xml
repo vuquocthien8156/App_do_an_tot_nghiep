@@ -27,7 +27,7 @@
                     android:src="@drawable/icon_main"
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="3dp"
-                    android:background="@drawable/shape_avata"/>
+                    android:background="@drawable/shape_avata1"/>
             <Button
                     android:id="@+id/btnLoginNowNews"
                     android:layout_width="wrap_content"
@@ -37,15 +37,17 @@
                     android:textSize="12sp"
                     android:paddingStart="8dp"
                     android:textAllCaps="false"
+                    android:layout_centerVertical="true"
                     android:paddingEnd="8dp"
                     android:layout_alignParentTop="false"
                     android:layout_alignParentBottom="false"
                     android:background="@drawable/shape_btn_main"
                     android:layout_toEndOf="@id/imgAvataNews"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:text="@string/login_point"/>
 
             <TextView
+                    android:visibility="gone"
                     android:id="@+id/txtNameCustomerNews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,6 +59,8 @@
                     android:textColor="@color/colorIconsText"
                     android:layout_marginTop="3dp"/>
             <LinearLayout
+                    android:id="@+id/lnPoint"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtNameCustomerNews"
@@ -143,7 +147,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
             >
-                <Button android:layout_width="0dp"
+                <Button
+                        android:id="@+id/btnBarcode"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:layout_marginStart="3dp"
@@ -156,7 +162,9 @@
                         android:drawableTop="@drawable/ic_point"
                         android:padding="10dp"
                         android:layout_height="match_parent"/>
-                <Button android:layout_width="0dp"
+                <Button
+                        android:id="@+id/btnToOrder"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
                         android:text="@string/order"
                         android:textColor="@color/colorPrimaryText"
@@ -168,7 +176,9 @@
                         android:background="@drawable/shape_btn_main"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"/>
-                <Button android:layout_width="0dp"
+                <Button
+                        android:id="@+id/btnDiscount"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
                         android:text="@string/coupon"
                         android:textSize="14sp"
@@ -180,7 +190,9 @@
                         android:padding="10dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="5dp"/>
-                <Button android:layout_width="0dp"
+                <Button
+                        android:id="@+id/btnBranch"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
                         android:text="@string/branch"
                         android:textSize="14sp"
@@ -226,4 +238,20 @@
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+            android:id="@+id/lnLoader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="#fff"
+            android:layout_alignParentStart="true"
+            android:gravity="center">
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 </RelativeLayout>

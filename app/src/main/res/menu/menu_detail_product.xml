@@ -19,5 +19,6 @@
     <item android:id="@+id/menu_carts"
           android:title="@string/carts"
           android:icon="@drawable/ic_shopping_cart_white_24dp"
+          app:actionLayout="@layout/badge_icon_layout"
           app:showAsAction="always"/>
 </menu>

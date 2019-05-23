@@ -8,20 +8,26 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.Toast
-import com.example.qthien.t__t.FragmentDialogShowAddress
+import android.widget.*
+import com.example.qthien.t__t.adapter.FilterAdapter
 import com.example.qthien.t__t.adapter.ViewPagerTabAdapter
+import com.example.qthien.t__t.model.AddressDelivery
+import com.example.qthien.t__t.model.CatalogyProduct
 import com.example.qthien.t__t.model.LatLng
+import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.presenter.pre_frag_order.PreFragOrder
-import com.example.qthien.t__t.view.delivery_address.SearchDeliverryAddressActivity
+import com.example.qthien.t__t.view.cart.CartActivity
+import com.example.qthien.t__t.view.delivery_address.DeliveryAddressActivity
+import com.example.qthien.t__t.view.search_product.SearchProductActivity
 import kotlinx.android.synthetic.main.fragment_orders.*
-import java.net.URLEncoder
+
+
 
 
 class OrderFragment : Fragment() , IViewFragOrder {
@@ -31,8 +37,14 @@ class OrderFragment : Fragment() , IViewFragOrder {
     }
 
     val REQUEST_FINE_LOCATION = 100
+    val REQUEST_CODE_ADDRESS = 101
     var address : String? = null
+    var infoDelivery : AddressDelivery? = null
     var latLngNow : LatLng? = null
+    var arrCatalogyProduct : ArrayList<CatalogyProduct>? = null
+    lateinit var adapterViewPager : ViewPagerTabAdapter
+    var fragmentSelected : Fragment? = null
+    var filter = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -51,11 +63,11 @@ class OrderFragment : Fragment() , IViewFragOrder {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapterViewPager = ViewPagerTabAdapter(childFragmentManager , addTitle())
-        viewpagerOrder.adapter = adapterViewPager
-        tabLayoutOrder.setupWithViewPager(viewpagerOrder)
 
         setLinetab()
+
+        arrCatalogyProduct = ArrayList()
+        PreFragOrder(context!! , this).getAllCatalogy()
 
         ibtnSearch.setOnClickListener({
             startActivity(Intent(context , SearchProductActivity::class.java))
@@ -66,23 +78,70 @@ class OrderFragment : Fragment() , IViewFragOrder {
         })
 
         btnChangeAddress.setOnClickListener({
-            startActivity(Intent(context , SearchDeliverryAddressActivity::class.java))
+            startActivityForResult(Intent(context , DeliveryAddressActivity::class.java) , REQUEST_CODE_ADDRESS)
         })
 
         txtAddressOrder.setOnClickListener({
             showAddress(txtAddressOrder.text.toString())
         })
+
+        relaToDepay.setOnClickListener({
+            startActivity(Intent(context , CartActivity::class.java))
+        })
+
+        viewpagerOrder.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                fragmentSelected = adapterViewPager.getRegisteredFragment(position)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
     }
 
     private fun showAddress(address : String) {
-        FragmentDialogShowAddress.newInstance(address)
-            .show(childFragmentManager  , "dialog")
+//        FragmentDialogShowAddress.newInstance(address)
+//            .show(childFragmentManager  , "dialog")
     }
 
     fun loadMenuFilter(view : View){
-        val popupMenu = PopupMenu(context , view)
-        popupMenu.menuInflater.inflate(com.example.qthien.t__t.R.menu.menu_filter , popupMenu.menu)
-        popupMenu.show()
+        val window = PopupWindow(context)
+        val vieww = layoutInflater.inflate(com.example.qthien.t__t.R.layout.layout_menu_popupwindow , null)
+
+        val listview = vieww.findViewById<ListView>(com.example.qthien.t__t.R.id.lvFilter)
+        listview.adapter = FilterAdapter(context!! ,
+                    arrCatalogyProduct?.map{ it.nameCatelogy }?.toMutableList() ?: mutableListOf())
+
+        listview.setOnItemClickListener(object : AdapterView.OnItemClickListener{
+            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val catalogySelected = arrCatalogyProduct?.get(position)
+
+                if(catalogySelected?.mainCatelogy == 1){
+                    eventSelectedItemListView(3 , catalogySelected.idCatalogy)
+                }
+                else {
+                    eventSelectedItemListView(2 , catalogySelected?.idCatalogy)
+                }
+                window.dismiss()
+            }
+        })
+
+        listview.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        window.contentView = vieww
+        window.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        window.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        window.setOutsideTouchable(true)
+        window.setFocusable(true)
+
+        window.showAtLocation(view , Gravity.CENTER , 0 , 0)
+    }
+
+    fun eventSelectedItemListView(tabPosition : Int , idCatalogy : Int?){
+        tabLayoutOrder.getTabAt(tabPosition)?.select()
+        viewpagerOrder.setCurrentItem(tabPosition)
+        if(fragmentSelected != null) {
+            (fragmentSelected as TabFragment).setScrollToPositionFolowIdCata(idCatalogy)
+        }
     }
 
     fun setLinetab(){
@@ -99,10 +158,10 @@ class OrderFragment : Fragment() , IViewFragOrder {
 
     fun addTitle() : ArrayList<String>{
         val arrTitle = ArrayList<String>()
-        arrTitle.add(context!!.getString(com.example.qthien.t__t.R.string.product_buy_the_most))
+        arrTitle.add(context!!.getString(com.example.qthien.t__t.R.string.product_best_order))
         arrTitle.add(context!!.getString(com.example.qthien.t__t.R.string.product_like))
-        arrTitle.add(context!!.getString(com.example.qthien.t__t.R.string.eat))
         arrTitle.add(context!!.getString(com.example.qthien.t__t.R.string.drink))
+        arrTitle.add(context!!.getString(com.example.qthien.t__t.R.string.eat))
 
         return arrTitle
     }
@@ -130,5 +189,26 @@ class OrderFragment : Fragment() , IViewFragOrder {
 
     override fun failure(message: String) {
         Toast.makeText(context , message , Toast.LENGTH_LONG).show()
+        Toast.makeText(context , "AAAAAAA" , Toast.LENGTH_LONG).show()
+        finishLoader()
     }
+
+    override fun resultGetAllCatalogy(arrCatalogy: ArrayList<CatalogyProduct>?) {
+        if(arrCatalogy != null){
+            arrCatalogy.remove(arrCatalogy.find { it.mainCatelogy == 3 })
+            arrCatalogyProduct?.addAll(arrCatalogy)
+            adapterViewPager = ViewPagerTabAdapter(childFragmentManager , addTitle(), arrCatalogyProduct)
+            viewpagerOrder.adapter = adapterViewPager
+            viewpagerOrder.offscreenPageLimit = 4
+            tabLayoutOrder.setupWithViewPager(viewpagerOrder)
+        }
+    }
+
+    fun finishLoader(){
+        lnLoader.visibility = View.GONE
+    }
+
+    override fun resultGetProductsBestBuy(arrProduct: ArrayList<Product>?) {}
+    override fun resultGetProductsByCatalogy(arrProduct: ArrayList<Product>?) {}
+    override fun resultGetProductBestFavorite(arrProduct : ArrayList<Product>?) {}
 }

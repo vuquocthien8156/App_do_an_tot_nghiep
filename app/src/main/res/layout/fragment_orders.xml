@@ -106,6 +106,7 @@
             android:id="@+id/viewpagerOrder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/relaToDepay"
             android:layout_below="@id/linearLine">
 
     </android.support.v4.view.ViewPager>
@@ -115,10 +116,72 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="30dp"
+            android:layout_above="@id/relaToDepay"
             android:src="@drawable/ic_format_list"
             android:background="@drawable/shape_btn_filter_order"
-            android:layout_marginEnd="30dp"/>
+            android:layout_marginEnd="42dp"/>
 
+    <RelativeLayout
+            android:id="@+id/relaToDepay"
+            android:focusable="true"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent">
+        <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_centerVertical="true"
+                android:textSize="12sp"
+                android:padding="2dp"
+                android:textColor="@color/colorIconsText"
+                android:background="@drawable/shape_stroke_rectangle"
+                android:text="200"/>
+        <TextView
+                android:id="@+id/txtToDepay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/go_to_cart"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorIconsText"
+                android:layout_toEndOf="@id/txtQuantity"
+                android:gravity="end"
+                android:textAllCaps="true"
+                android:layout_marginEnd="20dp"
+                android:layout_toStartOf="@id/txtSumPriceCart"
+        />
+        <TextView
+                android:id="@+id/txtSumPriceCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textSize="16sp"
+                android:text="50.000đ"
+                android:textColor="@color/colorIconsText"
+                android:layout_marginEnd="15dp"
+                android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/lnLoader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:background="#fff"
+            android:layout_alignParentStart="true"
+            android:gravity="center">
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 </RelativeLayout>

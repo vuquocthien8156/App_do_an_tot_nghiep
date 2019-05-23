@@ -2,23 +2,48 @@ package com.example.qthien.t__t.view.view_login
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import com.example.qthien.t__t.FragmentChosseGenderBottom
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Customer
+import com.example.qthien.t__t.presenter.pre_login.PreLogin
 import kotlinx.android.synthetic.main.fragment_enter_info.*
 import kotlinx.android.synthetic.main.fragment_enter_info.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EnterInfoFragment : Fragment() {
+class EnterInfoFragment : Fragment() , ILogin {
+
+    interface ResultFragmentCallActivity{
+        fun popAllBackStack(customer: Customer , size : Int)
+    }
+
+    interface FragmentCallActivityEnterInfo{
+        fun result(customer: Customer)
+    }
+
+    var customer : Customer? = null
+
+    var callActivity : ResultFragmentCallActivity? = null
+    var callActivityPhone : FragmentCallActivityEnterInfo? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if(context is ResultFragmentCallActivity)
+            callActivity = context
+
+        if(context is FragmentCallActivityEnterInfo)
+            callActivityPhone = context
+    }
 
     override fun onResume() {
         super.onResume()
@@ -26,6 +51,23 @@ class EnterInfoFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val arrEmailPass = arguments?.getStringArrayList("email_pass")
+        customer = Customer(0, "", "", "", 0, 0, "", "", "", "", "")
+
+        if(arrEmailPass?.size != null) {
+            customer?.email = arrEmailPass[0]
+            customer?.password = arrEmailPass[1]
+        }
+        else{
+            customer?.email = ""
+            customer?.password = ""
+        }
+
+        val phone = arguments?.getString("phone")
+        if(phone != null)
+            customer?.phoneNumber = ""
+
+
         return layoutInflater.inflate(R.layout.fragment_enter_info , container , false)
     }
 
@@ -42,38 +84,17 @@ class EnterInfoFragment : Fragment() {
 
         view.btnContinuteInfo.setOnClickListener({
             if(checkValidate()){
-
-            }
-            else{
-
+                val arrBirthday = edtBirthday.text.toString().split("/")
+                customer?.birthday = "${arrBirthday[2]}/${arrBirthday[1]}/${arrBirthday[0]}"
+                customer?.nameCustomer = edtFullName.text.toString()
+                customer?.gender = when(edtGender.text.toString()){
+                    "Nam" -> 0
+                    else -> 1
+                }
+                PreLogin(this).register(customer!!)
             }
         })
 
-        // event text change
-        val textWatcher = object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-                if(!edtFullName.text.toString().isEmpty()) {
-                    textInputLayoutFullName.isErrorEnabled = false
-                }
-                if(!edtBirthday.text.toString().isEmpty()) {
-                    textInputLayoutBirthday.isErrorEnabled = false
-                }
-                if(edtGender.text.toString().isEmpty()){
-                    textInputLayoutGender.isErrorEnabled = false
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-        }
-
-        edtFullName.addTextChangedListener(textWatcher)
-        edtBirthday.addTextChangedListener(textWatcher)
-        edtGender.addTextChangedListener(textWatcher)
     }
 
     fun showDialogChosseGender(){
@@ -131,4 +152,40 @@ class EnterInfoFragment : Fragment() {
         }
         return b
     }
+
+    override fun resultRegisterAccount(idUser: Int?) {
+        Log.d("resultRegisterAccount" , idUser.toString())
+        if(idUser == null) {
+           return
+        }
+        else
+            Toast.makeText(context , R.string.fail_again , Toast.LENGTH_LONG).show()
+
+        if(customer != null){
+            customer!!.idCustomer = idUser
+            if(customer!!.phoneNumber != null) {
+                callActivityPhone?.result(customer!!)
+                context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).edit()
+                    .putString("phone" , customer!!.phoneNumber).apply()
+            }
+
+            if(customer!!.email != null) {
+                callActivity?.popAllBackStack(customer!!, 1)
+                context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).edit()
+                    .putString("email" , customer!!.email).apply()
+            }
+        }
+    }
+
+    override fun failure(message: String) {
+        Toast.makeText(context , message , Toast.LENGTH_LONG).show()
+    }
+
+    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {}
+
+    override fun resultLoginAccount(customer: Customer?) {}
+
+    override fun resultLoginPhone(customer: Customer?) {}
+
+    override fun resultLoginFacebook(customer: Customer?) {}
 }

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Customer
 import com.example.qthien.t__t.presenter.pre_login.PreLogin
 import com.facebook.accountkit.*
 import com.facebook.accountkit.ui.AccountKitActivity
@@ -27,8 +28,6 @@ class EnterEmailFragment : Fragment() , ILogin{
 
     val APP_REQUEST_CODE = 99
     var email = ""
-
-    var b = false
 
     override fun onResume() {
         super.onResume()
@@ -48,13 +47,13 @@ class EnterEmailFragment : Fragment() , ILogin{
             if(isValidEmail(email)) {
                 PreLogin(this).checkExistAccount(email)
                 txtShowError.setText("")
+                Log.d("Testttt" , "1")
             }
             else
                 txtShowError.setText(R.string.email_validation)
         })
 
         txtForgotPass.setOnClickListener {
-            test()
         }
 
         edtEnterEmail.addTextChangedListener(object : TextWatcher{
@@ -77,9 +76,10 @@ class EnterEmailFragment : Fragment() , ILogin{
 
     }
 
-    override fun resultExistAccount(boolean: Boolean) {
-        if(b) {
-            goToFragmentEnterPass(b)
+    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {
+        Log.d("emaikkk" , email)
+        if(!email.equals("")) {
+            goToFragmentEnterPass(true)
         }
         else{
             val alertDialog = AlertDialog.Builder(context)
@@ -87,14 +87,9 @@ class EnterEmailFragment : Fragment() , ILogin{
             alertDialog.setPositiveButton(R.string.continute , DialogInterface.OnClickListener { dialog, which ->
                 emailConfirm()
             })
-
             alertDialog.setNegativeButton(R.string.another_time , DialogInterface.OnClickListener { dialog, which -> })
             alertDialog.show()
         }
-    }
-
-    fun test(){
-        b = !b
     }
 
     fun emailConfirm() {
@@ -176,6 +171,21 @@ class EnterEmailFragment : Fragment() , ILogin{
 
     private fun showErrorActivity(error: AccountKitError) {
 
+    }
+
+    override fun failure(message: String) {
+    }
+
+    override fun resultRegisterAccount(idUser: Int?) {
+    }
+
+    override fun resultLoginAccount(customer: Customer?) {
+    }
+
+    override fun resultLoginPhone(customer: Customer?) {
+    }
+
+    override fun resultLoginFacebook(customer: Customer?) {
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.qthien.t__t.view.view_login
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -12,15 +13,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Customer
 import com.example.qthien.t__t.presenter.pre_login.PreLogin
 import kotlinx.android.synthetic.main.fragment_enter_password.*
 import kotlinx.android.synthetic.main.fragment_enter_password.view.*
 
-class EnterPassFragment : Fragment() , ILogin {
+class EnterPassFragment : Fragment() , ILogin{
 
     var isAcountNew : Boolean? = false
     var email : String? = ""
+
+    var callActivity : EnterInfoFragment.ResultFragmentCallActivity? = null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if(context is EnterInfoFragment.ResultFragmentCallActivity)
+            callActivity = context
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         isAcountNew = arguments?.getBoolean("b")
@@ -82,17 +93,40 @@ class EnterPassFragment : Fragment() , ILogin {
         edtEnterPassword.setSelection(edtEnterPassword.text.length)
     }
 
+
     fun evenClickBtnContinute(){
         if(isAcountNew ?: true){
-            PreLogin(this).loginAndGetUser(email!! , edtEnterPassword.text.toString())
+            Log.d("isAcountNew" , "true")
+            PreLogin(this).login(email!! , edtEnterPassword.text.toString())
         }else{
             val enterInfoFragment = EnterInfoFragment()
+            val bundle = Bundle()
+            bundle.putStringArrayList("email_pass" , arrayListOf(email , edtEnterPassword.text.toString()))
+            enterInfoFragment.arguments = bundle
             Log.d("isAcountNeww" , isAcountNew.toString())
             activity!!.supportFragmentManager.beginTransaction()
                 .replace(R.id.frmLoginEmail , enterInfoFragment, "enter_info").addToBackStack(null).commit()
         }
     }
 
-    override fun resultExistAccount(boolean: Boolean) {
+    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {}
+
+    override fun failure(message: String) {
+        Toast.makeText(context , message , Toast.LENGTH_LONG).show()
     }
+
+    override fun resultRegisterAccount(idUser : Int?) {}
+
+    override fun resultLoginAccount(customer: Customer?) {
+        if(customer != null) {
+            callActivity?.popAllBackStack(customer, 0)
+            Log.d("isAcountNew" , customer.toString())
+        }else
+            txtShowErrorPass.setText(R.string.error_pass)
+    }
+
+    override fun resultLoginPhone(customer: Customer?) {}
+
+    override fun resultLoginFacebook(customer: Customer?) {}
+
 }

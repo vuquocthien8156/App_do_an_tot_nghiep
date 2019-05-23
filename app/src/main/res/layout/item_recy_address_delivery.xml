@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+        <RelativeLayout
+                android:id="@+id/layout_item_lv_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#7FC2C2C2">
+            <TextView
+                    android:id="@+id/txtNameAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Vũ Quốc Thiên"
+                    android:padding="2dp"
+                    android:textColor="#000"
+                    android:textSize="18sp" />
+
+            <TextView
+                    android:id="@+id/txtPhoneAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNameAdd"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="15dp"
+                   />
+
+            <TextView
+                    android:id="@+id/txtAddressAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtPhoneAdd"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:maxEms="13"
+                    android:maxLines="2"
+                    />
+
+            <TextView
+                    android:id="@+id/txtDefaltAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtAddressAdd"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/address_delivery_default"
+                    android:padding="2dp"
+                    android:textStyle="bold"
+                    android:textColor="#ffaa00"
+            />
+
+            <ImageButton
+                    android:id="@+id/ibtnEdit"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_edit_orange"
+            />
+
+            <ImageButton
+                    android:id="@+id/ibtnRemove"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_below="@id/ibtnEdit"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_remove"
+                    android:scaleType="center"
+            />
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

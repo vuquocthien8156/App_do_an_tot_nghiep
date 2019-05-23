@@ -33,7 +33,7 @@ class ViewPagerAdapter(
 
         GlideApp.with(context)
             .load(listImg.get(position))
-            .centerCrop()
+            .fitCenter()
             .into(view.imageView)
 
         container.addView(view)

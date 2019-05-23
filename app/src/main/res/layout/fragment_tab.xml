@@ -4,14 +4,23 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:id="@+id/recylerProduct"
-                                            app:layout_constraintEnd_toEndOf="parent"
-                                            app:layout_constraintTop_toTopOf="parent"
-                                            app:layout_constraintStart_toStartOf="parent"
-                                            app:layout_constraintBottom_toBottomOf="parent">
+    <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nested"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recylerProduct"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

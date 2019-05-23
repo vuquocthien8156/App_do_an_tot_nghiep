@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_best_buy"
-          android:title="Mua nhiều"
-          />
-    <item android:id="@+id/menu_best_like"
-          android:title="Yêu thích nhiều"
-    />
-    <item android:id="@+id/menu_food"
-          android:title="Thức ăn"
-    />
-    <item android:id="@+id/menu_drink"
-          android:title="Mua nhiều"
-    />
+    <group android:id="@+id/gourp"
+            android:visible="true"
+            android:enabled="true">
+        <item android:title="Danh mục món"
+                >
+            <menu>
+                <item android:id="@+id/menu_best_buy"
+                      android:title="Mua nhiều"
+                      app:showAsAction="always"
+                      android:icon="@drawable/ic_favorite_red_24dp"
+                />
+                <item android:id="@+id/menu_best_like"
+                      android:title="Yêu thích nhiều"
+                      app:showAsAction="always"
+                      android:icon="@drawable/ic_favorite_red_24dp"
+                />
+                <item android:id="@+id/menu_food"
+                      android:title="Thức ăn"
+                      app:showAsAction="always"
+                      android:icon="@drawable/ic_favorite_red_24dp"
+                />
+                <item android:id="@+id/menu_drink"
+                      android:title="Mua nhiều"
+                      app:showAsAction="always"
+                      android:icon="@drawable/ic_favorite_red_24dp"
+                />
+            </menu>
+        </item>
+    </group>
 </menu>

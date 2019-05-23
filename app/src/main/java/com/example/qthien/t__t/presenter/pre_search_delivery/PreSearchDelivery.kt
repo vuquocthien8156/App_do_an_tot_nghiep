@@ -1,7 +1,7 @@
 package com.example.qthien.t__t.presenter.pre_search_delivery
 
 import android.content.Context
-import com.example.qthien.t__t.interactor.InteractorSearchDelivery
+import com.example.qthien.t__t.interactor.InSearchDelivery
 import com.example.qthien.t__t.model.Place
 import com.example.qthien.t__t.view.delivery_address.IViewSearchDelivery
 import java.net.URLEncoder
@@ -9,10 +9,10 @@ import java.net.URLEncoder
 class PreSearchDelivery(internal var context : Context,
                         internal var iViewSearchDelivery: IViewSearchDelivery)
                 : IPreSearchDelivery{
-    val interactorSearchDelivery : InteractorSearchDelivery
+    val interactorSearchDelivery : InSearchDelivery
 
     init {
-        interactorSearchDelivery = InteractorSearchDelivery(context , this)
+        interactorSearchDelivery = InSearchDelivery(context , this)
     }
 
     fun searchPlace(address : String){

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary">
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbarOrder"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".view.order_history.OrderHistoryDetailActivity"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="8dp">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:background="@drawable/shape_btn_main">
+                <TextView
+                        android:id="@+id/txtTitleInfoCustomer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryText"
+                        android:text="@string/info_customer_order"/>
+
+                <LinearLayout android:id="@+id/line1" android:layout_below="@id/txtTitleInfoCustomer"
+                              android:orientation="vertical" android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/colorSecondaryText"/>
+
+                <TextView
+                        android:id="@+id/txtNameCustomerDetailOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/line1"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textSize="14sp"
+                        android:text="Quốc Thiên"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableStart="@drawable/ic_userr"
+                        android:drawablePadding="10dp"/>
+
+                <LinearLayout android:id="@+id/line2" android:layout_below="@id/txtNameCustomerDetailOrder"
+                              android:orientation="vertical" android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/colorSecondaryText"/>
+
+                <TextView
+                        android:id="@+id/txtPhoneDetailOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/line2"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textSize="14sp"
+                        android:text="0782328156"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableStart="@drawable/ic_phone_orange"
+                        android:drawablePadding="10dp"/>
+
+                <LinearLayout android:id="@+id/line3" android:layout_below="@id/txtPhoneDetailOrder"
+                              android:orientation="vertical" android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/colorSecondaryText"/>
+
+                <TextView
+                        android:id="@+id/txtAddressDetailOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/line3"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textSize="14sp"
+                        android:text="45 Đường 3, Tam Bình, Thủ Đức"
+                        android:textColor="@color/colorPrimaryText"
+                        android:drawableStart="@drawable/ic_location_24dp"
+                        android:drawablePadding="10dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:background="@drawable/shape_btn_main">
+                <TextView
+                        android:id="@+id/txtTitleInfoStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryText"
+                        android:text="@string/list_status_order"/>
+
+                <LinearLayout android:id="@+id/line4" android:layout_below="@id/txtTitleInfoStatus"
+                              android:orientation="vertical" android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/colorSecondaryText"/>
+
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recylerStatusOrder"
+                        android:layout_below="@id/line4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:background="@drawable/shape_btn_main">
+
+                <TextView
+                        android:id="@+id/txtTitleInfoDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryText"
+                        android:text="@string/list_detail_order"/>
+
+                <LinearLayout android:id="@+id/line5" android:layout_below="@id/txtTitleInfoDetail"
+                              android:orientation="vertical" android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/colorSecondaryText"/>
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recy_detail_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/line5"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"
+                        >
+
+                </android.support.v7.widget.RecyclerView>
+
+                <LinearLayout android:id="@+id/line6" android:layout_below="@id/recy_detail_order"
+                              android:orientation="vertical" android:layout_width="match_parent"
+                              android:layout_height="1dp"
+                              android:background="@color/colorSecondaryText"/>
+
+                <RelativeLayout
+                        android:id="@+id/relaSum"
+                        android:layout_below="@id/line6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+                    <TextView
+                            android:id="@+id/txtSum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="6dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:layout_centerVertical="true"
+                            android:text="@string/total1"/>
+                    <TextView
+                            android:id="@+id/txtCountProduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/txtSum"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorSecondaryText"
+                            android:layout_centerVertical="true"
+                            android:text="@string/product"/>
+                    <TextView
+                            android:id="@+id/txtTotalProduct"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:text="50.000đ"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/relatranfom"
+                        android:layout_below="@id/relaSum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+                    <TextView
+                            android:id="@+id/txtTransportFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="6dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:layout_centerVertical="true"
+                            android:text="@string/transport_fee"/>
+
+                    <TextView
+                            android:id="@+id/txtTotalTransportFee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:text="50.000đ"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                        android:id="@+id/relaTotal"
+                        android:layout_below="@id/relatranfom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+                    <TextView
+                            android:id="@+id/txtTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="6dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:layout_centerVertical="true"
+                            android:text="@string/total"/>
+
+                    <TextView
+                            android:id="@+id/txtTotalSum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimaryText"
+                            android:text="50.000đ"/>
+                </RelativeLayout>
+
+                <TextView
+                        android:id="@+id/txtMethodDepay"
+                        android:layout_below="@id/relaTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/depay_delivery"
+                        android:layout_alignParentBottom="true"
+                        android:textSize="16sp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/ic_money"
+                        android:textColor="@color/colorPrimaryText"
+                        android:layout_marginBottom="8dp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

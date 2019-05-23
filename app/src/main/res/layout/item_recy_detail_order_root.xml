@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+        <RelativeLayout
+                android:id="@+id/relaRoot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:id="@+id/txtQuantityProductHOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginStart="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_stroke_rectangle_black"
+                    android:text="3"/>
+            <TextView
+                    android:id="@+id/txtNameProductHOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Trà sữa trân châu - (S)"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_toEndOf="@id/txtQuantityProductHOrder"
+                    android:layout_toStartOf="@id/txtPriceProductHOrder"/>
+            <TextView
+                    android:id="@+id/txtPriceProductHOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="14sp"
+                    android:layout_toStartOf="@id/ibtnExpand"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="50.000đ"/>
+            <ImageButton
+                    android:id="@+id/ibtnExpand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_expand_up"/>
+
+        </RelativeLayout>
+
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                android:id="@+id/expandLinear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/relaRoot"
+                app:ael_duration="300"
+                app:ael_expanded="false"
+                app:ael_interpolator="bounce"
+                android:orientation="vertical"
+        >
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/Detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

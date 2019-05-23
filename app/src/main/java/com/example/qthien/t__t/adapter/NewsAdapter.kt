@@ -10,7 +10,7 @@ import com.example.qthien.t__t.R
 class NewsAdapter(internal var context : Context
                   , internal var arrNews : ArrayList<String>) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder
-        = ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recyler_news , p0 , false))
+            = ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recyler_news , p0 , false))
 
     override fun getItemCount(): Int = 5
 

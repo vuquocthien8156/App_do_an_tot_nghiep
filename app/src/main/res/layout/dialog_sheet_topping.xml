@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ProgressBar
+                android:id="@+id/progress_load_topping"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        <TextView
+                android:id="@+id/txtTitleTopping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/colorPrimaryText"
+                android:text="@string/topping_for_drink"/>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyToping"
+                android:layout_below="@id/txtTitleTopping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recyToping"
+                android:padding="2dp">
+
+            <TextView
+                    android:id="@+id/txtParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_topping_selected"
+                    android:textColor="@color/colorPrimaryText"
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="2dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="1dp"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recy_topping_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_below="@id/txtParent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+            >
+
+            </android.support.v7.widget.RecyclerView>
+
+            <Button
+                    android:id="@+id/btnComplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recy_topping_selected"
+                    android:text="@string/back"
+                    android:textColor="@color/colorIconsText"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/shape_btn_cart_remove"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

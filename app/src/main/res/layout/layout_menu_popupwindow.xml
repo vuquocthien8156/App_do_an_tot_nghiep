@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:background="@drawable/shape_btn_main"
+                android:backgroundTint="#fff"
+                android:paddingBottom="5dp">
+    <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/colorPrimaryText"
+            android:text="@string/list_food"/>
+    <ListView
+            android:id="@+id/lvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_below="@id/txtTitle"
+            android:layout_marginBottom="5dp"
+            android:divider="@color/color_grey_light"
+            android:dividerHeight="1dp"
+            android:layout_alignParentStart="true"
+    >
+    </ListView>
+</RelativeLayout>

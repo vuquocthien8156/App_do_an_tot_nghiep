@@ -4,6 +4,8 @@
     <string name="ACCOUNT_KIT_CLIENT_TOKEN">4ea88815f0a7390406c7063710ff85e5</string>
     <string name="fb_login_protocol_scheme">fb2145774708791940</string>
     <string name="ak_login_protocol_scheme">ak2145774708791940</string>
+    <string name="GOOGLE_API_KEY">AIzaSyBEtHZA4KtIuDqm36pkbCYBqa_KyzN2RVQ</string>
+    <string name="GOOGLE_CLIENT_ID">963558543837-jnnf0fhnoooe5aiqn5a3s2pi15m1k16r.apps.googleusercontent.com</string>
     <string name="continute">Tiếp tục</string>
     <string name="login_with_phone">PhoneNumber</string>
     <string name="your_email">Email của bạn</string>
@@ -43,15 +45,13 @@
     <string name="password">Mật khẩu</string>
     <string name="birthday">Sinh nhật</string>
     <string name="text">
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     </string>
     <string name="account">Tài khoản</string>
     <string name="product_like">Nhiều yêu thích</string>
     <string name="eat">Thức ăn</string>
     <string name="drink">Đồ uống</string>
-    <string name="product_buy_the_most">Mua nhiều</string>
+    <string name="product_best_order">Đặt nhiều</string>
     <string name="chosse_method">Chọn phương thức</string>
     <string name="chosse_picture">Chọn hình</string>
     <string name="camera">Máy ảnh</string>
@@ -76,4 +76,75 @@
     <string name="carts">Giỏ hàng</string>
     <string name="customer_evaluation">Khách hàng đánh giá</string>
     <string name="write_evaluation">Viết đánh giá</string>
+    <string name="thanks">Cám ơn</string>
+    <string name="reply">Trả lời</string>
+    <string name="order_now">Đặt hàng ngay</string>
+    <string name="get_info_fail">Lỗi lấy thông tin vui lòng thử lại</string>
+    <string name="fail_again">Có sự cố xảy ra vui lòng thử lại</string>
+    <string name="error_pass">Sai mật khẩu vui lòng thử lại</string>
+    <string name="enter_your_evaluation">Nhập đánh giá của bạn</string>
+    <string name="small">Nhỏ</string>
+    <string name="fit">Vừa</string>
+    <string name="large">Lớn</string>
+    <string name="topping_for_drink"> Topping cho thức uống</string>
+    <string name="provisional">Tạm tính</string>
+    <string name="add_cart">Thêm vào giỏ</string>
+    <string name="name">Tên</string>
+    <string name="quantity">Số lượng</string>
+    <string name="price">Thành tiền</string>
+    <string name="click_remove_item">Nhấn một dòng để xóa trong danh sách</string>
+    <string name="question_your_note">Bạn có muốn dặn dò gì không?</string>
+    <string name="enter_note">Nhập ghi chú</string>
+    <string name="ok">Xong</string>
+    <string name="your_note">Dặn dò của bạn</string>
+    <string name="list_food">Danh mục món</string>
+    <string name="go_to_cart">Đến giỏ hàng</string>
+    <string name="search_product_favorite">Tìm kiến sản phẩm yêu thích</string>
+    <string name="view_topping_selected">Danh sách toping đã chọn</string>
+    <string name="not_topping_selected">Chưa có topping nào được chọn</string>
+    <string name="info_customer_order">Thông tin giao hàng</string>
+    <string name="list_status_order">Trạng thái đơn hàng</string>
+    <string name="update_info_success">Cập nhật thông tin thành công</string>
+    <string name="update_info_fail">Có sự cố xảy ra vui lòng thử lại sau</string>
+    <string name="list_detail_order">Chi tiết đơn hàng</string>
+    <string name="depay_delivery">Thanh toán khi giao hàng</string>
+    <string name="total1">Tổng</string>
+    <string name="product">( 10 sản phẩm )</string>
+    <string name="transport_fee">Phí vận chuyển</string>
+    <string name="total">Tổng cộng</string>
+    <string name="scan_id_user">Quét mã thành viên</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="my_location">Vị trí của bạn</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="go_to_depay">Thanh toán</string>
+    <string name="directory">Dẫn đường</string>
+    <string name="phone_account_exist">Số điện thoại đã được sửa dụng bởi một tài khoản khác</string>
+    <string name="not_update">[Chưa cập nhật]</string>
+    <string name="book_address">Sổ địa chỉ</string>
+    <string name="save">Lưu</string>
+    <string name="turn_off">Tắt</string>
+    <string name="turn_on">Bật</string>
+    <string name="address">Địa chỉ</string>
+    <string name="select_address_default">Chọn địa chỉ làm mặc định</string>
+    <string name="info_delivery">Thông tin giao hàng</string>
+    <string name="address_delivery_default">Địa chỉ giao hàng mặc định</string>
+    <string name="edit">Chỉnh sửa</string>
+    <string name="your_cart">Giỏ hàng của bạn</string>
+    <string name="example_note">Ví dụ : Ít đá , ngọt 30%</string>
+    <string name="update_cart">Cập nhật giỏ hàng</string>
+    <string name="remove_cart">Xóa</string>
+    <string name="error_phone">Vui lòng nhập số điện thoại của bạn</string>
+    <string name="error_phone_exist">Số điện thoại đã tồn tại</string>
+    <string name="add_topping">Thêm topping cho thức uống</string>
+    <string name="back">Trở lại</string>
+    <string name="update">Cập nhật</string>
+    <string name="update_topping">Chỉnh sửa topping</string>
+    <string name="error_add_topping">Để đảm bảo chất lượng của thức uống, mỗi ly chỉ được thêm tối đa 3 phần topping bất
+        kì !!!
+    </string>
+    <string name="noti">Thông báo</string>
+    <string name="know">Đã hiểu</string>
+    <string name="can_not_know">Có thể bạn chưa biết</string>
+    <string name="lead_add_topping">Cuộn ngang danh sách topping để xem được nhiều hơn !!!</string>
+    <string name="not_show_again">Không nhắc lại</string>
 </resources>

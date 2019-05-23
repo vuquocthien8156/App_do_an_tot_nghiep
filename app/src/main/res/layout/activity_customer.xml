@@ -32,7 +32,7 @@
                         android:layout_height="70dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/icon_main"
-                        android:background="@drawable/shape_avata"
+                        android:background="@drawable/shape_avata1"
                 />
                 <ImageView
                         android:id="@+id/imgCamera"
@@ -108,6 +108,21 @@
                 android:background="#fff"
                 android:padding="15dp"
                 android:layout_alignParentBottom="true">
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true">
+                <ProgressBar
+                        android:id="@+id/progressUpdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:layout_marginTop="120dp"/>
+            </FrameLayout>
+
             <LinearLayout
                     android:id="@+id/lnInfoName"
                     android:layout_width="match_parent"
@@ -234,12 +249,12 @@
                             android:textSize="16sp"
                             android:textColor="@color/colorPrimaryText"
                             android:enabled="false"
+                            android:focusableInTouchMode="false"
                             android:paddingStart="10dp"
                             android:paddingEnd="5dp"
                             android:paddingTop="3dp"
                             android:inputType="phone"
                             android:paddingBottom="3dp"
-                            android:text="21/8"
                             android:background="@color/color_grey_light"/>
                 </LinearLayout>
             </LinearLayout>
@@ -331,7 +346,6 @@
                             android:focusableInTouchMode="false"
                             android:paddingBottom="3dp"
                             android:text="vuquocthien8156@gmail.com"
-                            android:drawableEnd="@drawable/ic_chevron_right"
                             android:background="@color/color_grey_light"/>
                 </LinearLayout>
             </LinearLayout>

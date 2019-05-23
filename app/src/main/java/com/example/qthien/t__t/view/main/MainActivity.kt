@@ -5,47 +5,81 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Customer
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicationMain
+, AccountFragment.FragmentAccountCommnunicationMain {
 
-    lateinit var newsFragment : NewsFragment
-    lateinit var accountFragment: AccountFragment
+    override fun checkSelectedFragmentNews() {
+        navigationView.selectedItemId = R.id.nav_news
+    }
+
+    override fun checkedFragmentOrder() {
+        navigationView.selectedItemId = R.id.nav_order
+    }
+
+    var newsFragment : NewsFragment? = null
+    var accountFragment: AccountFragment ?= null
+    var fragmentOrder : OrderFragment ?= null
+    var fragmentActi : Fragment ?= null
+
+    companion object {
+        var customer : Customer? = null
+        var customerFB : Customer? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         newsFragment = NewsFragment.newInstance()
-        openFragment(newsFragment)
-    }
+        fragmentActi = newsFragment
 
+        supportFragmentManager.beginTransaction()
+            .add(R.id.frmContainer, newsFragment!! , "news").commit()
+
+
+    }
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_news -> {
-                openFragment(newsFragment)
+                hideAndShowFragment(fragmentActi!! , newsFragment!!)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_order -> {
-                val fragmentOrder = OrderFragment.newInstance()
-                openFragment(fragmentOrder)
+                if(fragmentOrder == null) {
+                    fragmentOrder = OrderFragment.newInstance()
+                    addFragment(fragmentOrder!!)
+                }
+                hideAndShowFragment(fragmentActi!! , fragmentOrder!!)
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_account -> {
-                accountFragment = AccountFragment.newInstance()
-                openFragment(accountFragment)
+                if(accountFragment == null) {
+                    accountFragment = AccountFragment.newInstance()
+                    addFragment(accountFragment!!)
+                }
+                else
+                    hideAndShowFragment(fragmentActi!! , accountFragment!!)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    private fun openFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frmContainer, fragment)
-        transaction.commit()
+    fun addFragment(fr : Fragment){
+        supportFragmentManager.beginTransaction().add(R.id.frmContainer , fr).hide(fragmentActi!!).show(fr).commit()
+        fragmentActi = fr
     }
 
+    fun hideAndShowFragment(fragHide : Fragment , fragShow : Fragment){
+        supportFragmentManager.beginTransaction().hide(fragHide).show(fragShow).commit()
+        fragmentActi = fragShow
+    }
 }
