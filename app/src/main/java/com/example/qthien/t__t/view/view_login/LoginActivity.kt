@@ -165,7 +165,6 @@ class LoginActivity : AppCompatActivity() , ILogin  {
                 } else if (loginResult.wasCancelled()) {
                     toastMessage = "Login Cancelled"
                 } else {
-                    lnLoader.visibility = View.VISIBLE
                     if (loginResult.accessToken != null) {
                         toastMessage = "Success "
                     } else {
@@ -178,6 +177,7 @@ class LoginActivity : AppCompatActivity() , ILogin  {
                     // loginResult.getAuthorizationCode()
                     // and pass it to your server and exchange it for an access token.
                     // Success! Start your next activity...
+                    lnLoader.visibility = View.VISIBLE
 
                     getPhoneAccountkit()
                 }
@@ -216,6 +216,7 @@ class LoginActivity : AppCompatActivity() , ILogin  {
         AccountKit.getCurrentAccount(object : AccountKitCallback<Account>{
             override fun onSuccess(p0: Account?) {
                 phone = p0?.phoneNumber.toString()
+                phone = phone.replace("+" , "")
                 ToastString(phone)
                 preLogin.checkExistAccount(phone)
             }
@@ -229,28 +230,31 @@ class LoginActivity : AppCompatActivity() , ILogin  {
 
     override fun failure(message: String) {
         ToastString(message)
+        lnLoader.visibility = View.GONE
     }
 
     override fun resultLoginPhone(customer: Customer?) {
         Log.d("resultLoginPhone" , "Doooo")
-        lnLoader.visibility = View.GONE
 
         if(customer != null) {
             getSharedPreferences("Login" , Context.MODE_PRIVATE).edit()
                 .putString("phone" , customer.phoneNumber).apply()
             startIntent(customer)
         }
-        else
+        else {
             ToastString(getString(R.string.fail_again))
+            lnLoader.visibility = View.GONE
+        }
     }
 
     override fun resultLoginFacebook(customer: Customer?){
         Log.d("resultLoginFacebook" , "Doooo")
-        lnLoader.visibility = View.GONE
         if(customer != null)
             startIntent(customer)
-        else
+        else {
             ToastString(getString(R.string.fail_again))
+            lnLoader.visibility = View.GONE
+        }
     }
 
     fun startIntent(customer: Customer? , customerFB : Customer? = null){
@@ -265,11 +269,15 @@ class LoginActivity : AppCompatActivity() , ILogin  {
             if (id_fb.equals("") && email.equals("")) {
                 if(phone.equals("")) {
                     val i = Intent(this, EnterInfoActivity::class.java)
+                    Log.d("phoneeeeeeee" , this.phone)
                     i.putExtra("phone", this.phone)
                     startActivityForResult(i, REQUEST_CODE_INFO)
+                    lnLoader.visibility = View.GONE
                 }
-                else
+                else {
+                    lnLoader.visibility = View.VISIBLE
                     preLogin.loginPhoneUser(phone!!)
+                }
             }
             else{
                 lnLoader.visibility = View.GONE

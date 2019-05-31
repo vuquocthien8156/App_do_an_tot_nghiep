@@ -1,6 +1,7 @@
 package com.example.qthien.t__t.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.util.SortedList
 import android.support.v7.widget.RecyclerView
@@ -8,12 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.presenter.pre_product_favorite.PreProductFavoriteActi
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
+import com.example.qthien.t__t.view.cart.AddToCartActivity
+import com.example.qthien.t__t.view.detail_product.DetailProductActivity
 import com.example.qthien.t__t.view.main.MainActivity
 import com.example.qthien.t__t.view.product_favorite.IViewProductFavoriteActi
-import com.example.qthien.week3_ryder.GlideApp
 import kotlinx.android.synthetic.main.item_recy_product_favorite.view.*
 import java.text.DecimalFormat
 
@@ -22,7 +25,19 @@ class ProductFavoriteAdapter(var context : Context,
                              var mComparator: Comparator<Product>? = null):
     RecyclerView.Adapter<ProductFavoriteAdapter.ViewHolder>() , IViewProductFavoriteActi {
 
+    interface CommunicateActivity{
+        fun removeLastPosition()
+        fun change()
+    }
+
+    var communicateActivity : CommunicateActivity? = null
+    init {
+        if(context is CommunicateActivity)
+            communicateActivity = context as CommunicateActivity
+    }
+
     var positionClick = -1
+
     private val mSortedList =
         SortedList<Product>(Product::class.java, object : SortedList.Callback<Product>() {
             override fun compare(a: Product, b: Product): Int {
@@ -78,7 +93,7 @@ class ProductFavoriteAdapter(var context : Context,
                 price = p.priceLProduct
             }
         }
-        vh.txtPrice.setText(DecimalFormat("#.###").format(price))
+        vh.txtPrice.setText(DecimalFormat("#,###,###").format(price))
         vh.ibtnUnFavorite.setOnClickListener({
             positionClick = vh.adapterPosition
             vh.relaItem.setBackgroundColor(Color.LTGRAY)
@@ -94,13 +109,23 @@ class ProductFavoriteAdapter(var context : Context,
             vh.relaItem.setBackgroundColor(Color.WHITE)
             vh.relaItem.isEnabled = true
         }
+
+        vh.ibtnAddCart.setOnClickListener({
+            val i = Intent(context , AddToCartActivity::class.java)
+            i.putExtra("product" , p)
+            context.startActivity(i)
+        })
     }
 
     override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {}
 
     override fun favoriteProduct(resultCode: String) {
         mSortedList.removeItemAt(positionClick)
+        communicateActivity?.change()
         positionClick = -1
+        if(mSortedList.size() == 0){
+            communicateActivity?.removeLastPosition()
+        }
     }
 
     override fun failureFavorite(message: String) {
@@ -112,9 +137,9 @@ class ProductFavoriteAdapter(var context : Context,
         val txtName = itemView.txtNameProductFavorite
         val txtPrice = itemView.txtPriceProductFavorite
         val ibtnUnFavorite = itemView.ibtnUnFavorite
+        val ibtnAddCart = itemView.ibtnAddToCart
         val relaItem = itemView.relaItem
     }
-
 
     fun add(model: Product) {
         mSortedList.add(model)

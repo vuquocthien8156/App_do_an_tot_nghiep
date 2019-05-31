@@ -54,19 +54,16 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
     }
 
     override fun removerTopping(position: Int) {
-        arrTopingSelected.removeAt(position)
+        arrTopingSelected.get(position).quantity -= 1
+
+        if(arrTopingSelected.get(position).quantity == 0)
+            arrTopingSelected.removeAt(position)
+
         if (arrTopingSelected.size == 0)
             txtParent.setText(com.example.qthien.t__t.R.string.not_topping_selected)
         adapterOrder.notifyDataSetChanged()
 
-        if(arrTopingSelected.equals(arrTopingSelectedOld)){
-            btnComplete.setText(R.string.back)
-            btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_remove)
-        }
-        else{
-            btnComplete.setText(R.string.update)
-            btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_update)
-        }
+        checkChange()
     }
 
     override fun selectedTopping(position: Int) {
@@ -78,7 +75,6 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
             val p = arrTopingSelected.find { it.idProduct == tpSelected.idProduct }
 
             val product = ToppingProductCart(
-                0,
                 tpSelected.idProduct, tpSelected.nameProduct, tpSelected.priceProduct, 1
             )
             if (p != null) {
@@ -99,7 +95,18 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
         adapterOrder.notifyDataSetChanged()
         txtParent.setText(com.example.qthien.t__t.R.string.view_topping_selected)
 
-        if(arrTopingSelected.equals(arrTopingSelectedOld)){
+        checkChange()
+    }
+
+    fun checkChange(){
+        var i = 0
+        for(topping in arrTopingSelected){
+            val t = arrTopingSelectedOld.find { it.equals(topping) }
+            if(t != null)
+                i += 1
+        }
+
+        if(i == arrTopingSelected.size){
             btnComplete.setText(R.string.back)
             btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_remove)
         }
@@ -166,7 +173,7 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
         val alert = AlertDialog.Builder(context!!)
 
         alert.setTitle(R.string.can_not_know)
-        alert.setIcon(R.drawable.icon_main)
+        alert.setIcon(R.drawable.ic_mainn)
         alert.setMessage(R.string.lead_add_topping)
         alert.setPositiveButton(R.string.know , ({ dialogInterface: DialogInterface, i: Int ->
             onCancel(dialogInterface)
@@ -182,7 +189,7 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
     fun showArleTopping(){
         val alert = AlertDialog.Builder(context!!)
         alert.setTitle(R.string.noti)
-        alert.setIcon(R.drawable.icon_main)
+        alert.setIcon(R.drawable.ic_main)
         alert.setMessage(R.string.error_add_topping)
         alert.setPositiveButton(R.string.know , ({ dialogInterface: DialogInterface, i: Int ->
             onCancel(dialogInterface)

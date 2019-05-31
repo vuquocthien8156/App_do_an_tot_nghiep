@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.adapter.NewsAdapter
 import com.example.qthien.t__t.adapter.ViewPagerAdapter
@@ -26,12 +27,14 @@ import com.example.qthien.t__t.view.delivery_address.SearchDeliverryAddressActiv
 import com.example.qthien.t__t.view.product_favorite.IViewProductFavoriteActi
 import com.example.qthien.t__t.view.view_login.ILogin
 import com.example.qthien.t__t.view.view_login.LoginActivity
-import com.example.qthien.week3_ryder.GlideApp
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.GraphResponse
 import com.facebook.HttpMethod
+import com.facebook.accountkit.Account
 import com.facebook.accountkit.AccountKit
+import com.facebook.accountkit.AccountKitCallback
+import com.facebook.accountkit.AccountKitError
 import kotlinx.android.synthetic.main.fragment_news.*
 
 class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
@@ -64,6 +67,7 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         else
             setLogout()
         lnLoader.visibility = View.GONE
+        communicationToMain?.visibleLoader(View.GONE)
         Log.d("emaillll" , "News" + customer.toString())
     }
 
@@ -74,6 +78,7 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         else
             setLogout()
         lnLoader.visibility = View.GONE
+        communicationToMain?.visibleLoader(View.GONE)
     }
 
     override fun resultLoginFacebook(customer: Customer?) {
@@ -84,6 +89,7 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         }else
             setLogout()
         lnLoader.visibility = View.GONE
+        communicationToMain?.visibleLoader(View.GONE)
     }
 
     val arrPoster = arrayListOf("http://quangcaotantheky.com/wp-content/uploads/2017/10/c-mau-bien-quang-cao-tra-sua-e1513221415389.jpg"
@@ -97,6 +103,7 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
 
     interface FragmentNewsCommnunicationMain{
         fun checkedFragmentOrder()
+        fun visibleLoader(visible : Int)
     }
 
     var communicationToMain : FragmentNewsCommnunicationMain? = null
@@ -165,7 +172,6 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
 
     override fun onStart() {
         super.onStart()
-        Toast.makeText(context , "onStart" , Toast.LENGTH_LONG).show()
         if(MainActivity.customer == null && MainActivity.customerFB == null)
             setLogout()
         else
@@ -177,12 +183,12 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
     fun checkLogin()
     {
         val email = context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).getString("email" , null)
-        val phone = context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).getString("phone" , null)
 
-        if (AccountKit.getCurrentAccessToken() != null && phone != null) {
-            PreLogin(this).loginPhoneUser(phone)
+        if (AccountKit.getCurrentAccessToken() != null) {
+            getPhoneAccountkit()
         }
 
+        Log.d("loginPhone" , (com.facebook.AccessToken.getCurrentAccessToken() != null).toString())
         if(com.facebook.AccessToken.getCurrentAccessToken() != null){
             getInfoUserFacebook()
         }
@@ -193,6 +199,23 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         }
         else
             lnLoader.visibility = View.GONE
+    }
+
+
+    fun getPhoneAccountkit(){
+        AccountKit.getCurrentAccount(object : AccountKitCallback<Account> {
+            override fun onSuccess(p0: Account?) {
+               val phone = p0?.phoneNumber.toString()
+                Toast.makeText(context , phone , Toast.LENGTH_LONG).show()
+                PreLogin(this@NewsFragment).loginPhoneUser(phone.replace("+" , ""))
+            }
+
+            override fun onError(p0: AccountKitError?) {
+                Log.d("ErrorAcountKit" , p0.toString())
+
+                Toast.makeText(context , R.string.fail_again , Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -242,6 +265,7 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         Log.d("cccccccc" ,"DO nè")
         GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/images/logo1.png")
             .into(imgAvataNews)
+        toolbarNews.setOnClickListener({})
     }
 
     private fun getInfoUserFacebook() {

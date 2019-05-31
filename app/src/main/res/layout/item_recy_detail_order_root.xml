@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:id="@+id/txtQuantityProductHOrder"
+                    android:id="@+id/txtQuantityProductOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="3dp"
@@ -31,7 +31,7 @@
                     android:background="@drawable/shape_stroke_rectangle_black"
                     android:text="3"/>
             <TextView
-                    android:id="@+id/txtNameProductHOrder"
+                    android:id="@+id/txtNameProductOrder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -39,10 +39,10 @@
                     android:layout_marginStart="8dp"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimaryText"
-                    android:layout_toEndOf="@id/txtQuantityProductHOrder"
-                    android:layout_toStartOf="@id/txtPriceProductHOrder"/>
+                    android:layout_toEndOf="@id/txtQuantityProductOrder"
+                    android:layout_toStartOf="@id/txtPriceProductOrder"/>
             <TextView
-                    android:id="@+id/txtPriceProductHOrder"
+                    android:id="@+id/txtPriceProductOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

@@ -36,7 +36,7 @@
     </style>
 
     <style name="SpashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/img_plash</item>
+        <item name="android:windowBackground">@drawable/layer_splash</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 </resources>

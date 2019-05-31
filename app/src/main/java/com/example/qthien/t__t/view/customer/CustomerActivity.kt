@@ -22,13 +22,12 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import com.example.qthien.t__t.FragmentChosseGenderBottom
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
 import com.example.qthien.t__t.presenter.pre_customer.PreCustomerActivity
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.main.ChosseMethodPictureFragment
 import com.example.qthien.t__t.view.main.MainActivity
-import com.example.qthien.week3_ryder.GlideApp
 import kotlinx.android.synthetic.main.activity_customer.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -55,6 +54,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
             Toast.makeText(this, com.example.qthien.t__t.R.string.update_info_success, Toast.LENGTH_LONG).show()
             customer = customerUpdate
             MainActivity.customer = customer
+            real_path = ""
             updateComplete()
         } else
             Toast.makeText(this, com.example.qthien.t__t.R.string.update_info_fail, Toast.LENGTH_LONG).show()
@@ -79,19 +79,11 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
 
         customer = MainActivity.customer
         if (customer != null) {
-            customerFB = MainActivity.customerFB!!
+            if(MainActivity.customerFB != null)
+                customerFB = MainActivity.customerFB
             txtFullName.setText(customer!!.nameCustomer)
 
-            if(customer?.avatar == null) {
-                if(customerFB?.avatar == null)
-                    GlideApp.with(this).load("${RetrofitInstance.baseUrl}/images/logo1.png")
-                        .into(imgAvata)
-                else
-                    GlideApp.with(this).load(customerFB!!.avatar)
-                        .into(imgAvata)
-            }else
-                GlideApp.with(this).load(RetrofitInstance.baseUrl + "/" + customer?.avatar)
-                    .into(imgAvata)
+            loadAvata()
         }
 
         ibtnEditAndOk.setOnClickListener({
@@ -112,6 +104,19 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         loadEventEdtPass()
 
         loadData()
+    }
+
+    private fun loadAvata() {
+        if(customer?.avatar == null) {
+            if(customerFB?.avatar == null)
+                GlideApp.with(this).load("${RetrofitInstance.baseUrl}/images/logo1.png")
+                    .into(imgAvata)
+            else
+                GlideApp.with(this).load(customerFB!!.avatar)
+                    .into(imgAvata)
+        }else
+            GlideApp.with(this).load(RetrofitInstance.baseUrl + "/" + customer?.avatar)
+                .into(imgAvata)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -311,6 +316,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         )
 
         loadData()
+        loadAvata()
         imgAvata.setOnClickListener({})
     }
 
@@ -338,7 +344,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
             if (!gender.contains("[")) if (gender.equals("Nam")) 0 else 1 else null,
             customer!!.point,
             if (!birthday.contains("[")) edtBirthdayInfo.text.toString() else null,
-            edtEmailInfoo.text.toString(),
+            if(edtEmailInfoo.text.equals("")) null else edtEmailInfoo.text.toString(),
             customer!!.address,
             urlImage,
             null

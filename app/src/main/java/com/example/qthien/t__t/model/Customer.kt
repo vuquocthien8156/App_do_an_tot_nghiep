@@ -21,10 +21,10 @@ data class Customer(
     @SerializedName("ngay_sinh")
     var birthday : String?,
     @SerializedName("email")
-    var email : String?,
+    var email : String? = null,
     @SerializedName("dia_chi")
     var address : String?,
     @SerializedName("avatar")
-    var avatar : String?,
+    var avatar : String? = null,
     var password : String?
 ) : Parcelable

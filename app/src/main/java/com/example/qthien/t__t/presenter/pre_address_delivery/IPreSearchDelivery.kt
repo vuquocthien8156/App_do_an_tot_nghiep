@@ -1,4 +1,4 @@
-package com.example.qthien.t__t.presenter.pre_search_delivery
+package com.example.qthien.t__t.presenter.pre_address_delivery
 
 import com.example.qthien.t__t.model.Place
 

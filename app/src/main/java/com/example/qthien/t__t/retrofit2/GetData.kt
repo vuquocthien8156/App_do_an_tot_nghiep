@@ -52,12 +52,34 @@ interface GetData {
         @Field("phone") phone: String?,
         @Field("avatar_path") urlAvata: String?) : Call<ResponseDefault>
 
+    @GET("/api/getAllAddressByUser")
+    fun getAllAddressByUser(@Query("ma_tai_khoan") idAccount : Int) : Call <ResponseInfoAddress>
+
+    @POST("/api/insertAddressOrder")
+    fun insertAddressByUser(@Body address : InfoAddress) : Call<ResponseDefault>
+
+    @POST("/api/updateAddressOrder")
+    fun updateAddressByUser(@Body address : InfoAddress) : Call<ResponseDefault>
+
+    // Order
+    @GET("/api/getOrderOfCustomer")
+    fun getOrderByUser(@Query("id_KH") idCustomer: Int) : Call<ResponseOrder>
+    @GET("/api/getOrderDetail")
+    fun getOrderDetail(@Query("ma_don_hang") idOrder : Int) : Call<ResponseDetailOrder>
+
+    // Branch
+    @GET("/api/getBranch")
+    fun getBranchFolowArea() : Call<ResponseBranch>
+
     //Cart
     @GET("/api/getCartOfCustomer")
     fun getCartOfUser(@Query("id_KH") idCustomer: Int) : Call<ResponseCart>
 
     @POST("/api/add-cart")
     fun addCart(@Body cartPlus : CartPlus) : Call<ResponseDefault>
+
+    @POST("/api/update-cart")
+    fun updateCart(@Body cartMain : MainProductCart) : Call<ResponseDefault>
 
     @FormUrlEncoded
     @POST("/api/delete-cart")
@@ -106,4 +128,8 @@ interface GetData {
 
     @GET("/api/productType")
     fun getAllCatalogy() : Call<ResponseCatalogy>
+
+    fun getEvaluationForProduct(@Query("ma_san_pham") idProduct : Int ,
+                                @Query("page") page : Int) : Call<ResponseEvaluation>
+
 }

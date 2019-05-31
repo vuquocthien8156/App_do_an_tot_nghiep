@@ -1,11 +1,15 @@
 package com.example.qthien.t__t.view.product_favorite
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.example.qthien.t__t.adapter.ProductFavoriteAdapter
 import com.example.qthien.t__t.model.Product
@@ -16,19 +20,39 @@ import java.text.Normalizer
 import java.util.regex.Pattern
 
 
-class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi {
+class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi,
+        ProductFavoriteAdapter.CommunicateActivity {
+
+    override fun change() {
+        change = true
+    }
+
+    override fun removeLastPosition() {
+        relaFavorite.visibility = View.VISIBLE
+        recyProductsFavorite.visibility = View.GONE
+        itemMenu?.setVisible(false)
+    }
 
     override fun favoriteProduct(resultCode : String) {}
 
     override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {
-        if(arrResult != null){
+        Log.d("swipeRefreshLayout" , arrResult?.size.toString())
+        if(arrResult != null && arrResult.size > 0){
             arrProducts.clear()
             arrProducts.addAll(arrResult)
-            adapter.clear()
             adapter.add(arrResult)
+            relaFavorite.visibility = View.GONE
+            recyProductsFavorite.visibility = View.VISIBLE
+            itemMenu?.setVisible(true)
+        }
+        else {
+            itemMenu?.setVisible(false)
+            relaFavorite.visibility = View.VISIBLE
+            recyProductsFavorite.visibility = View.GONE
         }
 
         swipeRefreshLayout.setRefreshing(false)
+        Log.d("swipeRefreshLayout" , swipeRefreshLayout.isRefreshing.toString())
     }
 
     override fun failureFavorite(message: String) {
@@ -45,6 +69,8 @@ class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi {
     lateinit var adapter : ProductFavoriteAdapter
     lateinit var arrProducts : ArrayList<Product>
     lateinit var preProductFavorite : PreProductFavoriteActi
+    var change = false
+    var itemMenu : MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,9 +91,25 @@ class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi {
 
         preProductFavorite.getProductFavorite(MainActivity.customer!!.idCustomer)
 
+        swipeRefreshLayout.setRefreshing(true)
+
         swipeRefreshLayout.setOnRefreshListener{
             preProductFavorite.getProductFavorite(MainActivity.customer!!.idCustomer)
         }
+
+        btnContinuteOrder.setOnClickListener({
+//            val intent = Intent(this , MainActivity::class.java)
+//            if(change)
+//                intent.putExtra("change" , change)
+//            setResult(Activity.RESULT_OK , intent)
+            createSharePre()
+            finish()
+        })
+    }
+
+    fun createSharePre(){
+        getSharedPreferences("Favorite" , Context.MODE_PRIVATE).edit()
+                .putBoolean( "changeFavorite" , change).apply()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -75,10 +117,19 @@ class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi {
         return super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {
+//        val intent = Intent(this , MainActivity::class.java)
+//        if(change)
+//            intent.putExtra("change" , change)
+//        setResult(Activity.RESULT_CANCELED , intent)
+        createSharePre()
+        super.onBackPressed()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(com.example.qthien.t__t.R.menu.menu_product_favorite, menu)
-        val menuItem = menu?.findItem(com.example.qthien.t__t.R.id.menu_search_product_favorite)
-        val searchView = menuItem?.actionView as SearchView
+        itemMenu = menu?.findItem(com.example.qthien.t__t.R.id.menu_search_product_favorite)
+        val searchView = itemMenu?.actionView as SearchView
         searchView.setBackgroundColor(Color.WHITE)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -102,21 +153,5 @@ class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi {
         val nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD)
         val pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
         return pattern.matcher(nfdNormalizedString).replaceAll("")
-    }
-
-    private fun filter(models: List<Product>, query: String?): List<Product> {
-        val lowerCaseQuery = query?.toLowerCase()
-
-        val filteredModelList = ArrayList<Product>()
-        if(lowerCaseQuery != null){
-            for (model in models) {
-                val text = model.nameProduct.toLowerCase()
-                if (text.contains(lowerCaseQuery)) {
-                    filteredModelList.add(model)
-                }
-            }
-        }
-
-        return filteredModelList
     }
 }

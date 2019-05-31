@@ -33,6 +33,7 @@
                     android:drawableStart="@drawable/ic_search_white_24dp"
                     android:drawablePadding="10dp"
                     android:paddingEnd="10dp"
+                    android:maxLines="1"
                     android:textCursorDrawable="@null"
                     android:paddingStart="10dp"
                     android:imeOptions="actionSearch"

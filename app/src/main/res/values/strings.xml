@@ -109,7 +109,7 @@
     <string name="list_detail_order">Chi tiết đơn hàng</string>
     <string name="depay_delivery">Thanh toán khi giao hàng</string>
     <string name="total1">Tổng</string>
-    <string name="product">( 10 sản phẩm )</string>
+    <string name="product">sản phẩm</string>
     <string name="transport_fee">Phí vận chuyển</string>
     <string name="total">Tổng cộng</string>
     <string name="scan_id_user">Quét mã thành viên</string>
@@ -147,4 +147,16 @@
     <string name="can_not_know">Có thể bạn chưa biết</string>
     <string name="lead_add_topping">Cuộn ngang danh sách topping để xem được nhiều hơn !!!</string>
     <string name="not_show_again">Không nhắc lại</string>
+    <string name="order_history">Lịch sửa đơn hàng</string>
+    <string name="orderr">Đơn hàng</string>
+    <string name="continue_order">Tiếp tục mua hàng</string>
+    <string name="no_favotite_continute_order">Bạn chưa yêu thích sản phẩm nào !!!</string>
+    <string name="no_order_continute_order">Bạn chưa có đơn hàng nào !!!</string>
+    <string name="add_address">Thêm thông tin giao hàng</string>
+    <string name="please_enter_full_info">Vui lòng nhập đủ thông tin</string>
+    <string name="no_address_info">Bạn chưa có thông tin giao hàng nào !!!</string>
+    <string name="press_add_address">Thêm một thông tin</string>
+    <string name="delete">Xóa</string>
+    <string name="restore">Thêm lại</string>
+    <string name="you_delete_item">Bạn vừa xóa một thông tin</string>
 </resources>

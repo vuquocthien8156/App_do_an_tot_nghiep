@@ -16,11 +16,22 @@
             android:padding="5dp">
         <TextView
                 android:id="@+id/txtNameCustomerOrder"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:text="Vũ Quốc Thiên"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimaryText"/>
+        <TextView
+                android:id="@+id/txtPhoneCustomerOrder"
+                android:layout_width="wrap_content"
+                android:text="0782328156"
+                android:layout_toEndOf="@id/txtNameCustomerOrder"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
                 android:layout_alignParentTop="true"
                 android:textSize="14sp"
                 android:textColor="@color/colorPrimaryText"/>

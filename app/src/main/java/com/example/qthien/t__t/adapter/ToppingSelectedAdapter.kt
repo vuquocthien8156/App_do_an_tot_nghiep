@@ -21,20 +21,12 @@ class ToppingSelectedAdapter(var context: Context
         fun removerTopping(position: Int)
     }
 
-    interface CommunicationCart{
-
-    }
 
     var communicationActiAdd : CommunicationActiAdd? = null
-    var communicationCart : CommunicationCart? = null
 
     init {
         if(context is CommunicationActiAdd){
             communicationActiAdd = context as CommunicationActiAdd
-        }
-
-        if(context is CommunicationCart){
-            communicationCart = context as CommunicationCart
         }
     }
 
@@ -46,11 +38,13 @@ class ToppingSelectedAdapter(var context: Context
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val t = arrTopping.get(position)
-        setAnimation( holder.itemView ,position)
+
         if(communicationActiAdd == null)
             holder.ibtn.visibility = View.GONE
-        else
+        else {
             holder.ibtn.visibility = View.VISIBLE
+            setAnimation( holder.itemView ,position)
+        }
 
         holder.txtName.setText(t.nameProduct)
         holder.txtPrice.setText(DecimalFormat("###,###,###").format(t.priceProduct)+" đ")

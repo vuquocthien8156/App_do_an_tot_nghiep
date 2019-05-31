@@ -1,16 +1,29 @@
 package com.example.qthien.t__t.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DetailOrder(
-    var idCart : Int,
+    @SerializedName("ma_chi_tiet")
+    var idDetailOrder : Int,
+    @SerializedName("ma_san_pham")
+    var idProduct : Int,
+    @SerializedName("ten")
+    var nameProduct : String,
+    @SerializedName("so_luong")
     var quantity : Int,
+    @SerializedName("don_gia")
     var unitPrice : Long,
+    @SerializedName("kich_co")
     var size : String,
-    var product: Product,
-    var arrTopping : ArrayList<Product>?,
+    @SerializedName("gia_khuyen_mai")
+    var priceDiscount : Long,
+    @SerializedName("thanh_tien")
     var total : Long,
-    var note : String
-) : Parcelable
+    @SerializedName("ghi_chu")
+    var note : String,
+    @SerializedName("topping")
+    var arrTopping : ArrayList<ToppingOrder>?
+    ) : Parcelable

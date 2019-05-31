@@ -134,6 +134,10 @@ class TabFragment : Fragment() , IViewFragOrder {
         }
     }
 
+    fun notifidatasetChangeRecycler(){
+        adapterListproduct.notifyDataSetChanged()
+    }
+
     fun setScrollToPositionFolowIdCata(id: Int?){
         var p = 0
         val size = arrCatalogy?.size ?: 0

@@ -31,7 +31,6 @@
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/icon_main"
                         android:background="@drawable/shape_avata1"
                 />
                 <ImageView
@@ -345,7 +344,6 @@
                             android:inputType="textEmailAddress"
                             android:focusableInTouchMode="false"
                             android:paddingBottom="3dp"
-                            android:text="vuquocthien8156@gmail.com"
                             android:background="@color/color_grey_light"/>
                 </LinearLayout>
             </LinearLayout>

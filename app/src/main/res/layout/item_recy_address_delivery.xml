@@ -1,98 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+>
 
-    <LinearLayout
+    <FrameLayout
+            android:id="@id/relaRoot"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/rowBGEdit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_gravity="end"
+            android:background="#1CBD23"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:id="@+id/view_backgroundEdit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/edit_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_edit"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rowBGDelete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_gravity="end"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="vertical"
             >
 
-        <RelativeLayout
-                android:id="@+id/layout_item_lv_select"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#7FC2C2C2">
-            <TextView
-                    android:id="@+id/txtNameAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Vũ Quốc Thiên"
-                    android:padding="2dp"
-                    android:textColor="#000"
-                    android:textSize="18sp" />
+                android:layout_height="match_parent"
+                >
 
-            <TextView
-                    android:id="@+id/txtPhoneAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtNameAdd"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="15dp"
-                   />
-
-            <TextView
-                    android:id="@+id/txtAddressAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtPhoneAdd"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
-                    android:maxEms="13"
-                    android:maxLines="2"
-                    />
-
-            <TextView
-                    android:id="@+id/txtDefaltAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/txtAddressAdd"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/address_delivery_default"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    android:textColor="#ffaa00"
-            />
-
-            <ImageButton
-                    android:id="@+id/ibtnEdit"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_alignParentTop="true"
+                <ImageView
+                    android:id="@+id/delete_icon"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="20dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_edit_orange"
-            />
-
-            <ImageButton
-                    android:id="@+id/ibtnRemove"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_below="@id/ibtnEdit"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@android:color/transparent"
                     android:src="@drawable/ic_remove"
-                    android:scaleType="center"
-            />
-        </RelativeLayout>
-    </LinearLayout>
+                    android:tint="@color/colorIconsText"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/rowFG"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:visibility="visible">
+            <RelativeLayout
+                    android:id="@+id/layout_item_lv_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="#7FE2E2E2">
+                <TextView
+                        android:id="@+id/txtNameAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Vũ Quốc Thiên"
+                        android:padding="2dp"
+                        android:textColor="#000"
+                        android:textSize="18sp"/>
+
+                <TextView
+                        android:id="@+id/txtPhoneAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtNameAdd"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="15dp"
+                />
+
+                <TextView
+                        android:id="@+id/txtAddressAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtPhoneAdd"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:maxEms="13"
+                        android:maxLines="2"
+                />
+
+                <TextView
+                        android:id="@+id/txtDefaltAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtAddressAdd"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/address_delivery_default"
+                        android:padding="2dp"
+                        android:textStyle="bold"
+                        android:textColor="#ffaa00"
+                />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

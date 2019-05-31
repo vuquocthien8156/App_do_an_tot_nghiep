@@ -10,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.DetailOrder
 import com.example.qthien.t__t.model.ToppingProductCart
 import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter
 import com.github.aakira.expandablelayout.Utils
 import kotlinx.android.synthetic.main.item_recy_detail_order_root.view.*
+import java.text.DecimalFormat
 
-class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<String>)
+class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<DetailOrder>)
     : RecyclerView.Adapter<DetailOrderAdapter.ViewHolder>(){
 
     var arrBoolean : SparseBooleanArray
@@ -29,9 +31,15 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<String
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder=
         ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recy_detail_order_root , p0 ,false))
 
-    override fun getItemCount(): Int = 5
+    override fun getItemCount(): Int = arrDetail.size
 
-    override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position : Int) {
+        val arr = arrDetail[position]
+
+        holder.txtQuantity.text = arr.quantity.toString()
+        holder.txtNameProduct.text = arr.nameProduct
+        holder.txtPrice.text = DecimalFormat("###,###,###").format(arr.total) + " đ"
+
         holder.setIsRecyclable(false)
 
         holder.expandableLinearLayout.setInRecyclerView(false)
@@ -41,19 +49,19 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<String
 
             override fun onPreOpen() {
                 changeRotate(holder.ibtn, 180f, 0f).start()
-                arrBoolean.put(p1, true)
+                arrBoolean.put(position, true)
             }
 
             override fun onPreClose() {
                 //                holder.expandableLinearLayout.initLayout();
 
                 changeRotate(holder.ibtn, 0f, 180f).start()
-                arrBoolean.put(p1, false)
+                arrBoolean.put(position , false)
             }
 
         })
         // kich hoat btn
-        holder.ibtn.setRotation(if (arrBoolean.get(p1)) 0f else 180f)
+        holder.ibtn.setRotation(if (arrBoolean.get(position)) 0f else 180f)
         holder.relaRoot.setOnClickListener(View.OnClickListener {
             // toggle vua dong vua mo?
             holder.expandableLinearLayout.toggle()
@@ -62,19 +70,26 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<String
 
         //ibtn không nằm trong layout thỳ quay lên
         if (!holder.ibtn.isInLayout()) {
-            arrBoolean.put(p1, false)
-            holder.ibtn.setRotation(if (arrBoolean.get(p1)) 0f else 180f)
+            arrBoolean.put(position, false)
+            holder.ibtn.setRotation(if (arrBoolean.get(position)) 0f else 180f)
         } else
             holder.expandableLinearLayout.initLayout()
 
 
-        val arrTopping = ArrayList<ToppingProductCart>()
-        arrTopping.add(ToppingProductCart(1 , 1 , "Trân châu đen" , 10000 , 1))
-        arrTopping.add(ToppingProductCart(2 , 2 , "Trân châu trắng" , 10000 , 1))
-        arrTopping.add(ToppingProductCart(3 , 3 , "Thạch trái cây" , 6000 , 1))
+        if(arr.arrTopping != null){
+            holder.ibtn.visibility = View.VISIBLE
 
-        holder.recyToping.layoutManager = LinearLayoutManager(context , LinearLayoutManager.VERTICAL , false)
-        holder.recyToping.adapter = ToppingSelectedAdapter(context , arrTopping)
+            val arrTopping = ArrayList<ToppingProductCart>()
+            for(t in arr.arrTopping!!){
+                arrTopping.add(ToppingProductCart( t.idProduct , t.nameProduct , t.unitPrice , t.quantity))
+            }
+
+            holder.recyToping.layoutManager = LinearLayoutManager(context , LinearLayoutManager.VERTICAL , false)
+            holder.recyToping.adapter = ToppingSelectedAdapter(context , arrTopping)
+        }
+        else
+            holder.ibtn.visibility = View.GONE
+
     }
 
     private fun changeRotate(ibtn: ImageButton, from: Float, to: Float): ObjectAnimator {
@@ -89,5 +104,8 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<String
         val ibtn = itemView.ibtnExpand
         val expandableLinearLayout = itemView.expandLinear
         val relaRoot = itemView.relaRoot
+        val txtQuantity = itemView.txtQuantityProductOrder
+        val txtNameProduct = itemView.txtNameProductOrder
+        val txtPrice = itemView.txtPriceProductOrder
     }
 }

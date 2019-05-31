@@ -19,7 +19,7 @@ class ViewPagerTabAdapter(
     var arrCatalogyProduct: ArrayList<CatalogyProduct>?
 ) : FragmentPagerAdapter(fm) {
 
-    var registeredFragments = SparseArray<Fragment>()
+    private var registeredFragments = SparseArray<Fragment>()
 
     override fun getItem(position: Int): Fragment? {
         val fragment : Fragment
@@ -40,6 +40,14 @@ class ViewPagerTabAdapter(
             }
         }
         return fragment
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+        val f = `object` as TabFragment?
+        if(f != null)
+            f.notifidatasetChangeRecycler()
+        Log.d("chanesss" , "true")
+        return super.getItemPosition(`object`);
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {

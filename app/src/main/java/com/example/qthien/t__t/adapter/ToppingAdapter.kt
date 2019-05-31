@@ -7,10 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.week3_ryder.GlideApp
 import kotlinx.android.synthetic.main.item_recy_topping.view.*
 import java.text.DecimalFormat
 

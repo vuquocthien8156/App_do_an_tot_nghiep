@@ -1,7 +1,8 @@
 package com.example.qthien.t__t.interactor
 
+import android.util.Log
 import com.example.qthien.t__t.model.CartPlus
-import com.example.qthien.t__t.model.ResponseCheckFavorite
+import com.example.qthien.t__t.model.MainProductCart
 import com.example.qthien.t__t.model.ResponseDefault
 import com.example.qthien.t__t.presenter.pre_cart.IPreAddCart
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
@@ -20,6 +21,7 @@ class InAddCart(var iPreAddCart: IPreAddCart){
 
             override fun onResponse(call: Call<ResponseDefault>, response: Response<ResponseDefault>) {
                 val r = response.body()
+
                 if(r != null)
                     iPreAddCart.successAddCart(r.status)
                 else
@@ -28,24 +30,37 @@ class InAddCart(var iPreAddCart: IPreAddCart){
         })
     }
 
-    fun checkFavoriteProduct(idUser : Int , idProduct : Int){
-        val call = instance.checkFavoriteProduct(idUser , idProduct)
-        call.enqueue(object : Callback<ResponseCheckFavorite>{
-            override fun onFailure(call: Call<ResponseCheckFavorite>, t: Throwable) {
+    fun updateCart(cart : MainProductCart){
+        val call = instance.updateCart(cart)
+        call.enqueue(object : Callback<ResponseDefault> {
+            override fun onFailure(call: Call<ResponseDefault>, t: Throwable) {
                 iPreAddCart.failureAddCart(t.message.toString())
             }
 
-            override fun onResponse(call: Call<ResponseCheckFavorite>, response: Response<ResponseCheckFavorite>) {
+            override fun onResponse(call: Call<ResponseDefault>, response: Response<ResponseDefault>) {
                 val r = response.body()
-                if(r != null){
-                    if(r.status.equals("ok")){
-                        iPreAddCart.checkFavoriteProduct(r.check)
-                    }
-                    else
-                        iPreAddCart.checkFavoriteProduct(null)
-                }
+                Log.d("UpdateCarrtt" , response.toString())
+                if(r != null)
+                    iPreAddCart.successUpdateCart(r.status)
                 else
-                    iPreAddCart.checkFavoriteProduct(null)
+                    iPreAddCart.successUpdateCart(null)
+            }
+        })
+    }
+
+    fun deleteCart(idCart : Int){
+        val call = instance.deleteCart(idCart)
+        call.enqueue(object : Callback<ResponseDefault> {
+            override fun onFailure(call: Call<ResponseDefault>, t: Throwable) {
+                iPreAddCart.failureAddCart(t.message.toString())
+            }
+
+            override fun onResponse(call: Call<ResponseDefault>, response: Response<ResponseDefault>) {
+                val r = response.body()
+                if(r != null)
+                    iPreAddCart.successDeleteCart(r.status)
+                else
+                    iPreAddCart.successDeleteCart(null)
             }
         })
     }

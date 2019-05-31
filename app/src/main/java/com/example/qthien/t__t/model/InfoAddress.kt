@@ -5,16 +5,17 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class AddressDelivery(
-    @SerializedName("ma_thong_tin")
-    var idInfo : Int,
+data class  InfoAddress (
+    @SerializedName("id")
+    var idAddress : Int,
     @SerializedName("ten_nguoi_nhan")
     var nameCustomer : String,
-    @SerializedName("dia_chi")
-    var addressDelivery : String,
     @SerializedName("so_dien_thoai")
-    var phoneNumber : String,
+    var phoneCustomer : String,
+    @SerializedName("dia_chi")
+    var addressInfo : String,
     @SerializedName("chinh")
     var main : Int,
-    var delete : Int
+    var ma_tai_khoan : Int,
+    var da_xoa : Int = 0
 ) : Parcelable

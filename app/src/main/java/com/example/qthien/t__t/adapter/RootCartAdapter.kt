@@ -10,10 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.MainProductCart
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.week3_ryder.GlideApp
 import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter
 import com.github.aakira.expandablelayout.Utils
 import kotlinx.android.synthetic.main.item_recy_cart_root.view.*
@@ -52,8 +52,14 @@ class RootCartAdapter(var context : Context, var arrCart : ArrayList<MainProduct
             .load("${RetrofitInstance.baseUrl}/${c.imageUrl}")
             .into(holder.imgProduct)
 
-        holder.txtName.setText(c.nameProduct)
-        holder.txtPrice.setText(DecimalFormat("###,###,###").format(c.priceProduct)+" đ")
+        holder.txtName.setText("${c.nameProduct} (${c.size})")
+        val price = when(c.size){
+            "S" -> c.priceProduct
+            "M" -> c.priceMProduct
+            else -> c.priceLProduct
+        }
+
+        holder.txtPrice.setText(DecimalFormat("###,###,###").format(price)+" đ")
         holder.txtQuantity.setText(c.quantity.toString())
 
         holder.setIsRecyclable(false)

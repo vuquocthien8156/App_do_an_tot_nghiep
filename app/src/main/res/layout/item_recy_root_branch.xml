@@ -26,7 +26,6 @@
                 android:id="@+id/recylerRootBranch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
                 >
 
         </android.support.v7.widget.RecyclerView>

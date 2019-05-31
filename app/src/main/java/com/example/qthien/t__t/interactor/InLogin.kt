@@ -88,8 +88,6 @@ class InLogin(var iPreLogin: IPreLogin) {
 
             override fun onResponse(call: Call<com.example.qthien.t__t.model.ResponseLogin>, response: Response<ResponseLogin>) {
                 val r = response.body()
-                Log.d("responseCheckExist" , response.toString())
-                Log.d("responseCheckExist" , response.body().toString())
                 if(r?.status.equals("ok")){
                     iPreLogin.resultRegisterAccount(r?.customer?.idCustomer)
                 }

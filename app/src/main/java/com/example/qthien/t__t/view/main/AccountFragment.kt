@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
@@ -19,7 +20,6 @@ import com.example.qthien.t__t.view.delivery_address.DeliveryAddressActivity
 import com.example.qthien.t__t.view.order_history.OrderHistoryActivity
 import com.example.qthien.t__t.view.product_favorite.ProductFavoriteActivity
 import com.example.qthien.t__t.view.view_login.LoginActivity
-import com.example.qthien.week3_ryder.GlideApp
 import com.facebook.accountkit.AccountKit
 import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.fragment_account.*
@@ -32,6 +32,7 @@ class AccountFragment : Fragment() {
 
     interface FragmentAccountCommnunicationMain{
         fun checkSelectedFragmentNews()
+        fun checkSelectedFragmentOrder()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,6 +47,7 @@ class AccountFragment : Fragment() {
 
     var communicationToMain : FragmentAccountCommnunicationMain? = null
     val REQUEST_CODE_LOGIN = 1
+    val REQUEST_TO_ORDER = 2
     var call = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,7 +64,7 @@ class AccountFragment : Fragment() {
 
         txtFavorite.setOnClickListener({
             if(MainActivity.customer != null)
-                startActivity(Intent(context , ProductFavoriteActivity::class.java))
+                startActivityForResult(Intent(context , ProductFavoriteActivity::class.java) , REQUEST_TO_ORDER)
             else {
                 startActivityForResult(Intent(context, LoginActivity::class.java), REQUEST_CODE_LOGIN)
                 call = "favorite"
@@ -70,7 +72,7 @@ class AccountFragment : Fragment() {
         })
         txtHistoryOrder.setOnClickListener({
             if(MainActivity.customer != null)
-                startActivity(Intent(context , OrderHistoryActivity::class.java))
+                startActivityForResult(Intent(context , OrderHistoryActivity::class.java) , REQUEST_TO_ORDER)
             else {
                 startActivityForResult(Intent(context, LoginActivity::class.java), REQUEST_CODE_LOGIN)
                 call = "history"
@@ -100,7 +102,7 @@ class AccountFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         Toast.makeText(context , "onStart" , Toast.LENGTH_LONG).show()
-        if(MainActivity.customer == null && MainActivity.customerFB == null)
+        if(MainActivity.customer == null)
             setLogout()
         else
             setLogin(MainActivity.customer!!)
@@ -124,6 +126,14 @@ class AccountFragment : Fragment() {
                     startActivityForResult(Intent(context, OrderHistoryActivity::class.java), REQUEST_CODE_LOGIN)
                 if(call.equals("address"))
                     startActivity(Intent(context , DeliveryAddressActivity::class.java))
+            }
+        }
+
+        if(requestCode == REQUEST_TO_ORDER){
+            when(resultCode){
+                Activity.RESULT_OK -> {
+                    communicationToMain?.checkSelectedFragmentOrder()
+                }
             }
         }
     }

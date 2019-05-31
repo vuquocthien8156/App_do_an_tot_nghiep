@@ -153,8 +153,8 @@ class PlaceAutocompleteAdapter(
 
 
     override fun onBindViewHolder(mPredictionHolder: PlaceViewHolder, i: Int) {
-        mPredictionHolder.mAddressSecond.text = mResultList!![i].seccondText
-        mPredictionHolder.mAddressPrimary.text = mResultList!![i].primaryText
+        mPredictionHolder.mAddressSecond.text = mResultList?.get(i)?.seccondText
+        mPredictionHolder.mAddressPrimary.text = mResultList?.get(i)?.primaryText
 
         mPredictionHolder.mParentLayout.setOnClickListener { mListener.onPlaceClick(mResultList, i) }
     }
@@ -167,7 +167,7 @@ class PlaceAutocompleteAdapter(
     }
 
     fun getItem(position: Int): PlaceAutocomplete {
-        return mResultList!![position]
+        return mResultList?.get(position)!!
     }
 
     /*

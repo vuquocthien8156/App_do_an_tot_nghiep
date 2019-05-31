@@ -65,6 +65,8 @@ class EnterInfoFragment : Fragment() , ILogin {
 
         val phone = arguments?.getString("phone")
         if(phone != null)
+            customer?.phoneNumber = phone
+        else
             customer?.phoneNumber = ""
 
 
@@ -156,23 +158,22 @@ class EnterInfoFragment : Fragment() , ILogin {
     override fun resultRegisterAccount(idUser: Int?) {
         Log.d("resultRegisterAccount" , idUser.toString())
         if(idUser == null) {
-           return
-        }
-        else
             Toast.makeText(context , R.string.fail_again , Toast.LENGTH_LONG).show()
+        }
+        else {
+            if (customer != null) {
+                customer!!.idCustomer = idUser
+                if (customer!!.phoneNumber != null) {
+                    callActivityPhone?.result(customer!!)
+                    context!!.getSharedPreferences("Login", Context.MODE_PRIVATE).edit()
+                        .putString("phone", customer!!.phoneNumber).apply()
+                }
 
-        if(customer != null){
-            customer!!.idCustomer = idUser
-            if(customer!!.phoneNumber != null) {
-                callActivityPhone?.result(customer!!)
-                context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).edit()
-                    .putString("phone" , customer!!.phoneNumber).apply()
-            }
-
-            if(customer!!.email != null) {
-                callActivity?.popAllBackStack(customer!!, 1)
-                context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).edit()
-                    .putString("email" , customer!!.email).apply()
+                if (customer!!.email != null) {
+                    callActivity?.popAllBackStack(customer!!, 1)
+                    context!!.getSharedPreferences("Login", Context.MODE_PRIVATE).edit()
+                        .putString("email", customer!!.email).apply()
+                }
             }
         }
     }

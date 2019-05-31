@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MainProductCart (
-    @SerializedName("id")
+    @SerializedName("ma_gio_hang")
     var idProductCart : Int,
     @SerializedName("ma_san_pham")
     var idProduct : Int,

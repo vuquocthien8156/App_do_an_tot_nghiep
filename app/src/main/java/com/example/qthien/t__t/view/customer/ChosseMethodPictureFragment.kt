@@ -1,4 +1,4 @@
-package com.example.qthien.t__t.view.main
+package com.example.qthien.t__t.view.customer
 
 import android.content.Context
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import com.example.qthien.t__t.R
 import kotlinx.android.synthetic.main.fragment_chosse_method_picture.*
 
@@ -49,7 +48,7 @@ class ChosseMethodPictureFragment() : DialogFragment() , View.OnClickListener{
     override fun onResume() {
         super.onResume()
         getDialog().getWindow()?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

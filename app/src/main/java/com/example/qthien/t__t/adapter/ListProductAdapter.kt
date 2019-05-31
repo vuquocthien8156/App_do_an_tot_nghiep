@@ -21,12 +21,10 @@ class ListProductAdapter(internal var context: Context,
 
     override fun onBindViewHolder(vh: ViewHolder, p1: Int) {
         val arr = arrListProduct[p1].arrProduct
-        if(arr != null) {
-            val layoutManager = GridLayoutManager(context , 2)
-            vh.recyclerView.layoutManager = layoutManager
-            val adapter = ProductsAdapter(context, arr)
-            vh.recyclerView.adapter = adapter
-        }
+        val layoutManager = GridLayoutManager(context , 2)
+        vh.recyclerView.layoutManager = layoutManager
+        val adapter = ProductsAdapter(context, arr)
+        vh.recyclerView.adapter = adapter
     }
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){

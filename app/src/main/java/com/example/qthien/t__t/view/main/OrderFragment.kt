@@ -5,9 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.Gravity
@@ -17,7 +18,6 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.qthien.t__t.adapter.FilterAdapter
 import com.example.qthien.t__t.adapter.ViewPagerTabAdapter
-import com.example.qthien.t__t.model.AddressDelivery
 import com.example.qthien.t__t.model.CatalogyProduct
 import com.example.qthien.t__t.model.LatLng
 import com.example.qthien.t__t.model.Product
@@ -36,27 +36,29 @@ class OrderFragment : Fragment() , IViewFragOrder {
         fun newInstance() : OrderFragment = OrderFragment()
     }
 
-    val REQUEST_FINE_LOCATION = 100
-    val REQUEST_CODE_ADDRESS = 101
-    var address : String? = null
-    var infoDelivery : AddressDelivery? = null
-    var latLngNow : LatLng? = null
-    var arrCatalogyProduct : ArrayList<CatalogyProduct>? = null
-    lateinit var adapterViewPager : ViewPagerTabAdapter
-    var fragmentSelected : Fragment? = null
-    var filter = false
+    private val REQUEST_FINE_LOCATION = 100
+    private val REQUEST_CODE_ADDRESS = 101
+    private var address : String? = null
+    private var latLngNow : LatLng? = null
+    private var arrCatalogyProduct : ArrayList<CatalogyProduct>? = null
+    private var adapterViewPager : ViewPagerTabAdapter? = null
+    private var fragmentSelected : Fragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        if(ActivityCompat.checkSelfPermission(context!! ,
-                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(activity!! ,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION) ,
-                    REQUEST_FINE_LOCATION)
-        else {
-            Log.d("TAGGG" , "Yes")
-            PreFragOrder(context!! , this).getLocation()
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(context!!,
+                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        REQUEST_FINE_LOCATION)
+            else {
+                Log.d("TAGGG", "Yes")
+                PreFragOrder(context!!, this).getLocation()
+            }
         }
+        else
+            PreFragOrder(context!!, this).getLocation()
 
         return layoutInflater.inflate(com.example.qthien.t__t.R.layout.fragment_orders , container , false)
     }
@@ -92,12 +94,19 @@ class OrderFragment : Fragment() , IViewFragOrder {
         viewpagerOrder.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
-                fragmentSelected = adapterViewPager.getRegisteredFragment(position)
+                fragmentSelected = adapterViewPager?.getRegisteredFragment(position)
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
     }
+
+    fun updateViewPager(){
+        if(adapterViewPager != null) {
+            adapterViewPager?.notifyDataSetChanged()
+        }
+    }
+
 
     private fun showAddress(address : String) {
 //        FragmentDialogShowAddress.newInstance(address)

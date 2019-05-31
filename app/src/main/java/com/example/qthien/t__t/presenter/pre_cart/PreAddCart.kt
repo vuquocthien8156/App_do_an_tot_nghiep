@@ -2,12 +2,16 @@ package com.example.qthien.t__t.presenter.pre_cart
 
 import com.example.qthien.t__t.interactor.InAddCart
 import com.example.qthien.t__t.model.CartPlus
+import com.example.qthien.t__t.model.MainProductCart
 import com.example.qthien.t__t.view.cart.IAddToCartActi
 
 class PreAddCart(var iAddToCartActi: IAddToCartActi) : IPreAddCart {
+    override fun successUpdateCart(message: String?) {
+        iAddToCartActi.successUpdateCart(message)
+    }
 
-    override fun checkFavoriteProduct(check: Int?) {
-        iAddToCartActi.checkFavoriteProduct(check)
+    override fun successDeleteCart(message: String?) {
+        iAddToCartActi.successDeleteCart(message)
     }
 
     override fun failureAddCart(message: String) {
@@ -23,7 +27,11 @@ class PreAddCart(var iAddToCartActi: IAddToCartActi) : IPreAddCart {
         InAddCart(this).addCart(cart)
     }
 
-    fun checkFavoriteProduct(idUser : Int , idProduct : Int) {
-        InAddCart(this).checkFavoriteProduct(idUser , idProduct)
+    fun updateCart(cart : MainProductCart) {
+        InAddCart(this).updateCart(cart)
+    }
+
+    fun deleteCart(idCart : Int) {
+        InAddCart(this).deleteCart(idCart)
     }
 }

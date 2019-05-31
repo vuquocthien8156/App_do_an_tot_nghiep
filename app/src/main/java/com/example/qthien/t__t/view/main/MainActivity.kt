@@ -1,5 +1,6 @@
 package com.example.qthien.t__t.view.main
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
@@ -11,6 +12,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicationMain
 , AccountFragment.FragmentAccountCommnunicationMain {
+    override fun visibleLoader(visible : Int) {
+        frmLoader.visibility = visible
+    }
+
+    override fun checkSelectedFragmentOrder() {
+        navigationView.selectedItemId = R.id.nav_order
+    }
 
     override fun checkSelectedFragmentNews() {
         navigationView.selectedItemId = R.id.nav_news
@@ -35,6 +43,8 @@ class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicati
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        Thread.setDefaultUncaughtExceptionHandler(MyExceptionHandler(this))
+
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         newsFragment = NewsFragment.newInstance()
@@ -57,7 +67,6 @@ class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicati
                     addFragment(fragmentOrder!!)
                 }
                 hideAndShowFragment(fragmentActi!! , fragmentOrder!!)
-
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_account -> {
@@ -81,5 +90,15 @@ class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicati
     fun hideAndShowFragment(fragHide : Fragment , fragShow : Fragment){
         supportFragmentManager.beginTransaction().hide(fragHide).show(fragShow).commit()
         fragmentActi = fragShow
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        val change = getSharedPreferences("Favorite" , Context.MODE_PRIVATE).getBoolean("changeFavorite" , false)
+        if(change) {
+            fragmentOrder?.updateViewPager()
+            getSharedPreferences("Favorite" , Context.MODE_PRIVATE)?.edit()
+                    ?.remove("changeFavorite")?.apply()
+        }
     }
 }

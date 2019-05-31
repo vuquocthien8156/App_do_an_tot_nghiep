@@ -1,15 +1,21 @@
 package com.example.qthien.t__t.view.cart
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.adapter.ToppingSelectedAdapter
 import com.example.qthien.t__t.model.CartPlus
@@ -21,7 +27,6 @@ import com.example.qthien.t__t.presenter.pre_product_favorite.PreProductFavorite
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
 import com.example.qthien.t__t.view.main.MainActivity
 import com.example.qthien.t__t.view.product_favorite.IViewProductFavoriteActi
-import com.example.qthien.week3_ryder.GlideApp
 import kotlinx.android.synthetic.main.activity_add_to_cart.*
 import java.text.DecimalFormat
 
@@ -34,35 +39,68 @@ class AddToCartActivity : AppCompatActivity(),
     DialogSheetTopping.CompleteTopping {
 
     override fun completeEditTopping(arrToppingEdit: ArrayList<ToppingProductCart>) {
+
         arrToppingSelected.clear()
-        arrToppingSelected.addAll(arrToppingEdit)
+
+        if(btnAddCart.getTag() != R.drawable.ic_add_shopping_cart_24dp){
+            var i = 0
+            val arrOld = arrCartOld?.get(position)?.arrTopping
+            for(topping in arrToppingEdit){
+                val t = arrOld?.find { it.equals(topping) }
+                if(t != null)
+                    i += 1
+            }
+
+            if(arrOld?.size ==  arrToppingEdit.size) {
+                if (arrOld.size == i) {
+                    checkChange(false)
+                    arrToppingSelected.addAll(arrOld)
+                } else {
+                    checkChange(true)
+                    arrToppingSelected.addAll(arrToppingEdit)
+                }
+            }
+            else {
+                checkChange(true)
+                arrToppingSelected.addAll(arrToppingEdit)
+            }
+        }
+        else {
+            arrToppingSelected.addAll(arrToppingEdit)
+            Toast.makeText(this, arrToppingEdit.size.toString() , Toast.LENGTH_LONG).show()
+        }
+
+        Log.d("btnnnn" , cart.toString())
+
         adapterOrder.notifyDataSetChanged()
-        if(arrToppingSelected.size > 0)
+
+        if(arrToppingSelected.size > 0){
             txtAddtopping.setText(R.string.update_topping)
-        else
+            txtAddtopping.setTextColor(ContextCompat.getColor(this , R.color.colorPrimaryText))
+            relaTopping.setBackgroundColor(Color.parseColor("#ffffff"))
+        }
+        else {
             txtAddtopping.setText(R.string.add_topping)
+            txtAddtopping.setTextColor(ContextCompat.getColor(this , R.color.colorIconsText))
+            relaTopping.setBackgroundColor( ContextCompat.getColor(this , R.color.colorSecondaryText))
+        }
 
         caculationPriceTmp()
     }
 
     override fun failureFavorite(message: String) {
+        frmLoader.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun failureAddCart(message: String) {
+        frmLoader.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun checkFavoriteProduct(check: Int?) {
-//        if (check != null) {
-//            checkFavorite = if (check == 1) true else false
-//            setFavorite()
-//        }
-    }
-
     override fun favoriteProduct(resultCode: String) {
-        Log.d("favoriteProduct", resultCode)
         if (resultCode.equals("ok")) {
+            change = true
             checkFavorite = !checkFavorite
             if(checkFavorite){
                 arrFavoriteString?.add(product?.idProduct.toString())
@@ -70,7 +108,6 @@ class AddToCartActivity : AppCompatActivity(),
             else{
                 arrFavoriteString?.remove(product?.idProduct.toString())
             }
-            Log.d("arrrFavorite" , arrFavoriteString.toString())
 
             getSharedPreferences("Favorite" , Context.MODE_PRIVATE).edit()
                 .putString( "arrFavorite" , arrFavoriteString.toString()).apply()
@@ -81,10 +118,51 @@ class AddToCartActivity : AppCompatActivity(),
 
     override fun successAddCart(status: String?) {
         if(status != null && status.equals("Success")){
-            Toast.makeText(this, "Add cart success", Toast.LENGTH_LONG).show()
+//            val i = Intent(this , MainActivity::class.java)
+//            i.putExtra("change" , change)
+//            setResult(Activity.RESULT_OK , i)
+            createSharePre()
+            finish()
         }
-        else
+        else {
             Toast.makeText(this, "Add cart fail", Toast.LENGTH_LONG).show()
+            frmLoader.visibility = View.GONE
+        }
+    }
+
+    override fun successUpdateCart(message: String?) {
+        if(message != null && message.equals("Success")){
+            successUpdateCart()
+        }
+        else {
+            Toast.makeText(this, "Update cart fail", Toast.LENGTH_LONG).show()
+            frmLoader.visibility = View.GONE
+        }
+    }
+
+    override fun successDeleteCart(message: String?) {
+        if(message != null && message.equals("Success")){
+            if(cart == null){
+                Log.d("quantityyyy" , arrCartOld!!.get(checkExist).quantity.toString())
+                arrCartOld!!.get(checkExist).quantity += edtQuantity.text.toString().toInt()
+                Log.d("quantityyyy" , arrCartOld!!.get(checkExist).quantity.toString())
+                PreAddCart(this).updateCart(arrCartOld!!.get(checkExist))
+                arrCartOld!!.removeAt(position)
+            }
+            else
+                successUpdateCart()
+        }
+        else {
+            Toast.makeText(this, "Delete cart fail", Toast.LENGTH_LONG).show()
+            frmLoader.visibility = View.GONE
+        }
+    }
+
+    fun successUpdateCart(){
+        val i = Intent(this , CartActivity::class.java)
+        i.putParcelableArrayListExtra("arrCartNews" , arrCartOld)
+        setResult(Activity.RESULT_OK , i)
+        finish()
     }
 
     override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {}
@@ -101,10 +179,13 @@ class AddToCartActivity : AppCompatActivity(),
         private lateinit var arrToppingSelected : ArrayList<ToppingProductCart>
 
         private var cart : MainProductCart? = null
+        private var arrCartOld : ArrayList<MainProductCart>? = null
+        private var position : Int = -1
 
-        private lateinit var cartPlus : CartPlus
+        private var arrFavoriteString : ArrayList<String>? = null
 
-        var arrFavoriteString : ArrayList<String>? = null
+        private var checkExist = -1
+        private var change = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,18 +193,26 @@ class AddToCartActivity : AppCompatActivity(),
 
         product = intent.extras!!.get("product") as Product?
 
-        cart = intent.extras!!.get("cart") as MainProductCart?
+        arrCartOld = intent.extras!!.getParcelableArrayList("arrCart")
 
         btnAddCart.setTag(R.drawable.ic_add_shopping_cart_24dp)
 
         arrToppingSelected = ArrayList()
 
-        createObjectCartPlus()
-
-        if(cart != null)
-           loadCart()
+        if(arrCartOld != null) {
+            position = intent.extras!!.getInt("position")
+            cart = arrCartOld?.get(position)?.copy()
+            loadCart()
+        }
+        else
+            cart = MainProductCart(0 , product!!.idProduct , "" , 0L, 0L , 0L,
+                0 , "" , 1 , "" , "" , arrToppingSelected)
 
         imgClose.setOnClickListener({
+//            val i = Intent(this , MainActivity::class.java)
+//            i.putExtra("change" , change)
+//            setResult(Activity.RESULT_CANCELED , i)
+            createSharePre()
             finish()
         })
 
@@ -146,9 +235,6 @@ class AddToCartActivity : AppCompatActivity(),
 
         setUpInfoProduct()
         caculationPriceTmp()
-
-        val preAdd = PreAddCart(this)
-        preAdd.checkFavoriteProduct(MainActivity.customer?.idCustomer!!, product!!.idProduct)
 
         Log.d("proddđ" , product.toString())
         if(product!!.mainCatalogy == 1) {
@@ -176,28 +262,31 @@ class AddToCartActivity : AppCompatActivity(),
         checkFavorite()
     }
 
-    fun checkFavorite(){
-        val stringFavorite = getSharedPreferences("Favorite" , Context.MODE_PRIVATE).getString("arrFavorite" , null)
-        if(stringFavorite != null){
-            val arrFavorite = stringFavorite.replace("[" , "").replace("]" , "").split(",")
-            arrFavoriteString = ArrayList()
-            arrFavoriteString?.addAll(arrFavorite)
-            if(arrFavorite.find { it.trim().equals(product?.idProduct.toString()) } != null) {
-                checkFavorite = true
-            }else
-                checkFavorite = false
-            setFavorite()
+    fun checkChange(b : Boolean){
+        if(b){
+            btnAddCart.setTag(R.drawable.ic_check_white_22dp)
+            btnAddCart.setImageDrawable(getDrawable(R.drawable.ic_check_white_22dp))
+            btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_update)
+        }
+        else{
+            btnAddCart.setTag(R.drawable.ic_arrow_back_white_24dp)
+            btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_remove)
+            btnAddCart.setImageDrawable(getDrawable(R.drawable.ic_arrow_back_white_24dp))
         }
     }
 
-    private fun createObjectCartPlus() {
-        val cartAdd = MainProductCart(
-            0,
-            product?.idProduct ?: cart!!.idProduct,
-            "" , 0L , 0L , 0L , 0 , "" ,
-            0 , "" , "" , arrToppingSelected)
-
-        cartPlus = CartPlus(MainActivity.customer!!.idCustomer, cartAdd)
+    fun checkFavorite() {
+        val stringFavorite = getSharedPreferences("Favorite", Context.MODE_PRIVATE).getString("arrFavorite", null)
+        if (stringFavorite != null) {
+            val arrFavorite = stringFavorite.replace("[", "").replace("]", "").split(",")
+            arrFavoriteString = ArrayList()
+            arrFavoriteString?.addAll(arrFavorite)
+            if (arrFavorite.find { it.trim().equals(product?.idProduct.toString()) } != null) {
+                checkFavorite = true
+            } else
+                checkFavorite = false
+            setFavorite()
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -206,57 +295,121 @@ class AddToCartActivity : AppCompatActivity(),
             cart!!.nameProduct, cart!!.priceProduct , cart!!.priceMProduct , cart!!.priceLProduct ,
             "" , 0 , cart!!.imageUrl , "" , 0 , cart!!.mainCatalogy)
 
-        arrToppingSelected.addAll(cart!!.arrTopping)
-
-        when(cart!!.size){
-            "S" ->  {
-                setActiBtnAndUnActiBtn(btnS, btnL, btnM)
-                txtPriceProduct.setText(formatPrice.format(cart!!.priceProduct) + " đ")
-                cartPlus.cart.size = "S"
-            }
-            "M" ->  {
-                setActiBtnAndUnActiBtn(btnM, btnL, btnS)
-                txtPriceProduct.setText(formatPrice.format(cart!!.priceProduct) + " đ")
-                cartPlus.cart.size = "M"
-            }
-            "L" ->  {
-                setActiBtnAndUnActiBtn(btnL, btnS, btnM)
-                txtPriceProduct.setText(formatPrice.format(cart!!.priceProduct) + " đ")
-                cartPlus.cart.size = "L"
-            }
+        if(cart!!.arrTopping.size > 0) {
+            arrToppingSelected.addAll(cart!!.arrTopping)
+            cart!!.arrTopping = arrToppingSelected
+            txtAddtopping.setTextColor(ContextCompat.getColor(this , R.color.colorPrimaryText))
+            relaTopping.setBackgroundColor(Color.parseColor("#ffffff"))
+            txtAddtopping.setText(R.string.update_topping)
         }
 
-        if(cart != null && cart!!.note != null)
+        edtQuantity.setText(cart!!.quantity.toString())
+
+        if(cart != null)
             edtNote.setText(cart!!.note)
 
-        btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_update)
-        btnAddCart.setImageDrawable(getDrawable(R.drawable.ic_check_white_22dp))
-        btnAddCart.setTag(R.drawable.ic_check_white_22dp)
+        edtNote.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(edtNote.text?.equals(cart!!.note) ?: false)
+                    checkChange(false)
+                else
+                    checkChange(true)
+            }
+        })
+
+        btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_remove)
+        btnAddCart.setImageDrawable(getDrawable(R.drawable.ic_arrow_back_white_24dp))
+        btnAddCart.setTag(R.drawable.ic_arrow_back_white_24dp)
     }
 
     fun eventAddCart(){
         btnAddCart.setOnClickListener({
             when(btnAddCart.getTag() as Int){
                 R.drawable.ic_add_shopping_cart_24dp ->{
-                    cartPlus.cart.quantity = edtQuantity.text.toString().toInt()
+                    val cartPlus = CartPlus(MainActivity.customer!!.idCustomer , cart!!)
                     PreAddCart(this).addCart(cartPlus)
+                    frmLoader.visibility = View.VISIBLE
                 }
                 R.drawable.ic_check_white_22dp -> {
+                    checkExist = -1
+                    val idProduct = cart?.idProduct
+                    val size = cart?.size
+                    val note = cart?.note
+                    val topping = cart?.arrTopping ?: ArrayList()
 
+                    for(i in 0 until arrCartOld!!.size){
+                        if(i != position){
+                            val idProductOld = arrCartOld!![i].idProduct
+                            val sizeOld = arrCartOld!![i].size
+                            val noteOld = arrCartOld!![i].note
+                            val toppingOld = arrCartOld!![i].arrTopping
+
+                            if(idProductOld == idProduct
+                                    && sizeOld.equals(size)
+                                    && noteOld.equals(note)){
+                                var a = 0
+                                for(top in topping){
+                                    val t = toppingOld.find { it.equals(top) }
+                                    if(t != null)
+                                        a += 1
+                                }
+
+                                if(arrCartOld!![i].arrTopping.size == a)
+                                    checkExist = i
+                            }
+                        }
+                    }
+                    Log.d("checkExist", checkExist.toString())
+
+                    frmLoader.visibility = View.VISIBLE
+
+                    if(checkExist != -1){
+                        PreAddCart(this).deleteCart(cart!!.idProductCart)
+                        cart = null
+                    }
+                    else{
+                        if(cart != null) {
+                            arrCartOld!![position] = cart!!
+                            PreAddCart(this).updateCart(cart!!)
+                        }
+                    }
                 }
                 R.drawable.ic_remove_shopping_cart_white_24dp ->{
+                    if(cart != null) {
+                        Log.d("DeleteCarrtt" , cart!!.idProductCart.toString())
+                        arrCartOld?.removeAt(position)
+                        PreAddCart(this).deleteCart(cart!!.idProductCart)
+                        frmLoader.visibility = View.VISIBLE
+                    }
+                }
 
+                R.drawable.ic_arrow_back_white_24dp -> {
+                    finish()
                 }
             }
         })
     }
 
+    fun createSharePre(){
+        getSharedPreferences("Favorite" , Context.MODE_PRIVATE).edit()
+                .putBoolean( "changeFavorite" , change).apply()
+    }
+
+    override fun onBackPressed() {
+        createSharePre()
+        super.onBackPressed()
+    }
+
     fun setFavorite() {
         if (checkFavorite) {
-            btnFavorite.setImageDrawable(getDrawable(com.example.qthien.t__t.R.drawable.ic_favorite_red_24dp))
-            btnFavorite.setBackgroundResource(com.example.qthien.t__t.R.drawable.shape_btn_un_favorite)
-        } else {
             btnFavorite.setImageDrawable(getDrawable(com.example.qthien.t__t.R.drawable.ic_favorite_white_24dp))
+            btnFavorite.setBackgroundResource(com.example.qthien.t__t.R.drawable.shape_btn_unn_favorite)
+        } else {
+            btnFavorite.setImageDrawable(getDrawable(com.example.qthien.t__t.R.drawable.ic_favorite_red_24dp))
             btnFavorite.setBackgroundResource(com.example.qthien.t__t.R.drawable.shape_btn_favorite)
         }
     }
@@ -274,53 +427,76 @@ class AddToCartActivity : AppCompatActivity(),
                 priceNow = product!!.priceProduct
                 val name = txtNameProduct.text.toString() + " (S)"
                 txtNameProduct.setText(name)
-                setActiBtnAndUnActiBtn(btnS, btnL, btnM)
+                if (arrCartOld == null) {
+                    cart?.size = "S"
+                    setActiBtnAndUnActiBtn(btnS, btnL, btnM, "S")
+                }
             }
             product!!.priceMProduct != 0.toLong() -> {
                 priceNow = product!!.priceMProduct
-                setActiBtnAndUnActiBtn(btnM, btnL, btnS)
+                setActiBtnAndUnActiBtn(btnM, btnL, btnS, "M")
                 val name = txtNameProduct.text.toString() + " (M)"
-                txtNameProduct.setText(name)
+                if (arrCartOld == null ) {
+                    cart?.size = "M"
+                    txtNameProduct.setText(name)
+                }
             }
             product!!.priceLProduct != 0.toLong() -> {
                 priceNow = product!!.priceLProduct
-                setActiBtnAndUnActiBtn(btnL, btnS, btnM)
+                setActiBtnAndUnActiBtn(btnL, btnS, btnM, "L")
                 val name = txtNameProduct.text.toString() + " (L)"
-                txtNameProduct.setText(name)
+                if (arrCartOld == null ){
+                    cart?.size = "L"
+                    txtNameProduct.setText(name)
+                }
             }
         }
+
+        Log.d("btnnnn" , cart!!.size)
+        if(arrCartOld != null){
+            when(cart!!.size){
+                "S" -> { btnS.performClick() }
+                "M" -> { btnM.performClick() }
+                "L" -> { btnL.performClick() }
+            }
+        }
+
         txtPriceProduct.text = formatPrice.format(priceNow) + " đ"
+    }
+
+    fun checkChangeSize(size : String){
+        if(btnAddCart.getTag() != R.drawable.ic_add_shopping_cart_24dp) {
+            if (arrCartOld?.get(position)?.size?.equals(size) ?: false)
+                checkChange(false)
+            else {
+                checkChange(true)
+            }
+            cart?.size = size
+        }
     }
 
     @SuppressLint("SetTextI18n")
     override fun onClick(v: View?) {
         when (v?.id) {
             com.example.qthien.t__t.R.id.btnS -> {
-                setActiBtnAndUnActiBtn(btnS, btnL, btnM)
-                setPriceClick(product!!.priceProduct)
-                cartPlus.cart.size = "S"
+                priceNow = product!!.priceProduct
+                setActiBtnAndUnActiBtn(btnS, btnL, btnM , "S")
             }
             com.example.qthien.t__t.R.id.btnM -> {
-                setActiBtnAndUnActiBtn(btnM, btnL, btnS)
-                setPriceClick(product!!.priceMProduct)
-                cartPlus.cart.size = "M"
+                priceNow = product!!.priceMProduct
+                setActiBtnAndUnActiBtn(btnM, btnL, btnS , "M")
             }
             com.example.qthien.t__t.R.id.btnL -> {
-                setActiBtnAndUnActiBtn(btnL, btnS, btnM)
-                setPriceClick(product!!.priceLProduct)
-                cartPlus.cart.size = "L"
+                priceNow = product!!.priceLProduct
+                setActiBtnAndUnActiBtn(btnL, btnS, btnM , "L")
             }
             com.example.qthien.t__t.R.id.ibtnPlus -> {
                 val quantity_now = edtQuantity.text.toString()
                 val quantity_plus = quantity_now.toInt() + 1
                 edtQuantity.setText(quantity_plus.toString())
-                txtPriceProduct.setText("${formatPrice.format(quantity_plus * priceNow)} đ")
                 ibtnMinus.isEnabled = true
-
-                if(cart != null){
-                    btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_update)
-                    btnAddCart.setImageDrawable(getDrawable(R.drawable.ic_check_white_22dp))
-                }
+                cart?.quantity = quantity_plus
+                checkQuantity(quantity_plus)
 
                 caculationPriceTmp()
             }
@@ -328,20 +504,21 @@ class AddToCartActivity : AppCompatActivity(),
                 val quantity_now = edtQuantity.text.toString()
                 val quantity_minus = quantity_now.toInt() - 1
 
-                if (quantity_now.toInt() == 0) {
-                    edtQuantity.setText(quantity_now)
-                    txtPriceProduct.setText("$priceNow đ")
-                    if(cart == null)
-                        ibtnMinus.isEnabled = false
-                } else {
-                    if(quantity_minus == 0) {
-                        ibtnMinus.isEnabled = false
-                        btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_remove)
-                        btnAddCart.setImageResource(R.drawable.ic_remove_shopping_cart_white_24dp)
-                        btnAddCart.setTag(R.drawable.shape_btn_cart_remove)
-                    }
+                if (quantity_minus > 0) {
+                    checkQuantity(quantity_minus)
                     edtQuantity.setText(quantity_minus.toString())
-                    txtPriceProduct.setText("${formatPrice.format(quantity_minus * priceNow)} đ")
+                    cart?.quantity = quantity_minus
+                } else {
+                    if(arrCartOld == null)
+                        ibtnMinus.isEnabled = false
+                    else{
+                        edtQuantity.setText(quantity_now)
+                        cart?.quantity = quantity_now.toInt()
+
+                        btnAddCart.setTag(R.drawable.ic_arrow_back_white_24dp)
+                        btnAddCart.setBackgroundResource(R.drawable.shape_btn_cart_remove)
+                        btnAddCart.setImageDrawable(getDrawable(R.drawable.ic_arrow_back_white_24dp))
+                    }
                 }
                 caculationPriceTmp()
             }
@@ -355,29 +532,40 @@ class AddToCartActivity : AppCompatActivity(),
         }
     }
 
+    fun checkQuantity(quantity : Int){
+        if(arrCartOld != null){
+            if(arrCartOld!!.get(position).quantity == quantity)
+                checkChange(false)
+            else
+                checkChange(true)
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     fun caculationPriceTmp(){
         var price = priceNow * edtQuantity.text.toString().toInt()
-//        for(i in arrToppingSelected)
-            price += arrToppingSelected.sumBy { it.priceProduct.toInt() * it.quantity }
+        price += arrToppingSelected.sumBy { it.priceProduct.toInt() * it.quantity }
         txtSumPrice.setText(formatPrice.format(price) + " đ")
     }
 
-    @SuppressLint("SetTextI18n")
-    fun setPriceClick(price: Long) {
-        priceNow = price
-        val priceNoww = price * edtQuantity.text.toString().toInt()
-        txtPriceProduct.setText(formatPrice.format(priceNoww) + " đ")
-        caculationPriceTmp()
-    }
-
-    fun setActiBtnAndUnActiBtn(btnActi: Button, btnUnActi1: Button, btnUnActi2: Button) {
+    fun setActiBtnAndUnActiBtn(
+        btnActi: Button,
+        btnUnActi1: Button,
+        btnUnActi2: Button,
+        s: String
+    ) {
         btnActi.background = getDrawable(com.example.qthien.t__t.R.drawable.shap_btn_size_acti)
         btnActi.setTextColor(Color.WHITE)
         btnUnActi1.background = getDrawable(com.example.qthien.t__t.R.drawable.shape_btn_size_nomal)
         btnUnActi1.setTextColor(Color.BLACK)
         btnUnActi2.background = getDrawable(com.example.qthien.t__t.R.drawable.shape_btn_size_nomal)
         btnUnActi2.setTextColor(Color.BLACK)
+
+        caculationPriceTmp()
+        cart?.size = s
+        checkChangeSize(s)
+        txtNameProduct.text = product?.nameProduct + " ($s)"
+        txtPriceProduct.setText("${formatPrice.format(priceNow)} đ")
     }
 
     override fun transmissionNote(note: String) {

@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.week3_ryder.GlideApp
 import kotlinx.android.synthetic.main.item_recycler_search_product.view.*
 import java.text.DecimalFormat
 
