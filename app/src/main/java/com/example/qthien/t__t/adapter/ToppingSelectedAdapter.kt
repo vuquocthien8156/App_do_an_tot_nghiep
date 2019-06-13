@@ -21,6 +21,7 @@ class ToppingSelectedAdapter(var context: Context
         fun removerTopping(position: Int)
     }
 
+    var remove = false
 
     var communicationActiAdd : CommunicationActiAdd? = null
 
@@ -43,7 +44,8 @@ class ToppingSelectedAdapter(var context: Context
             holder.ibtn.visibility = View.GONE
         else {
             holder.ibtn.visibility = View.VISIBLE
-            setAnimation( holder.itemView ,position)
+            if(!remove)
+                setAnimation( holder.itemView ,position)
         }
 
         holder.txtName.setText(t.nameProduct)
@@ -52,6 +54,7 @@ class ToppingSelectedAdapter(var context: Context
 
         holder.ibtn.setOnClickListener({
             communicationActiAdd?.removerTopping(position)
+            remove = true
         })
     }
 

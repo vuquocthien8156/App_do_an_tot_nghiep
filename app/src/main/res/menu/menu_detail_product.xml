@@ -16,7 +16,7 @@
           android:icon="@drawable/ic_share_white_30dp"
           app:showAsAction="always"/>
 
-    <item android:id="@+id/menu_carts"
+    <item android:id="@+id/menu_cartss"
           android:title="@string/carts"
           android:icon="@drawable/ic_shopping_cart_white_36dp"
           app:actionLayout="@layout/badge_icon_layout"

@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.example.qthien.t__t">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.qthien.t__t">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-            android:name=".MyApplication"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".view.LawActivity">
-        </activity>
-        <activity android:name=".view.delivery_address.DeliveryAddressActivity">
-        </activity>
-        <activity android:name=".view.view_login.EnterInfoActivity">
-        </activity>
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".view.customer.ChangePasswordActivity"></activity>
+        <activity android:name=".view.order.OrderActivity" />
+        <activity android:name=".view.ealuation.SelectedImgActivity" />
+        <activity android:name=".view.main.DetailNewsActivity" />
+        <activity android:name=".view.main.NewsActivity" />
+        <activity android:name=".view.ealuation.CreateEvaluationActivity" />
+        <activity android:name=".view.detail_product.ViewFullScreenImageActivity" />
+        <activity android:name=".view.ealuation.EvaluationActivity" />
+        <activity android:name=".view.WebActivity" />
+        <activity android:name=".view.delivery_address.DeliveryAddressActivity" />
+        <activity android:name=".view.view_login.EnterInfoActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -35,98 +41,84 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="@string/google_maps_key"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <activity
-                android:name=".view.MapsActivity"
-                android:label="@string/title_activity_maps">
-        </activity>
-        <activity android:name=".view.order_history.OrderHistoryDetailActivity">
-        </activity>
-        <activity android:name=".view.cart.CartActivity">
-        </activity>
-        <activity android:name=".view.order_history.OrderHistoryActivity">
-        </activity>
-        <activity android:name=".view.product_favorite.ProductFavoriteActivity">
-        </activity>
-        <activity android:name=".view.BarcodeActivity">
-        </activity>
-        <activity android:name=".view.reply_ealuation.DetailEvaluationActivity">
-        </activity>
-        <activity android:name=".view.branch.BranchActivity">
-        </activity>
+            android:name=".view.delivery_address.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".view.order.OrderHistoryDetailActivity" />
+        <activity android:name=".view.cart.CartActivity" />
+        <activity android:name=".view.order.OrderHistoryActivity" />
+        <activity android:name=".view.product_favorite.ProductFavoriteActivity" />
+        <activity android:name=".view.BarcodeActivity" />
         <activity
-                android:name=".view.cart.AddToCartActivity"
-                android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".view.detail_product.DetailProductActivity">
-        </activity>
-        <activity android:name=".view.delivery_address.SearchDeliverryAddressActivity">
-        </activity>
-        <activity android:name=".view.customer.CustomerActivity">
-        </activity>
+            android:name=".view.ealuation.DetailEvaluationActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".view.branch.BranchActivity" />
         <activity
-                android:name=".view.main.MainActivity"
-                android:theme="@style/SpashTheme"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".view.cart.AddToCartActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".view.detail_product.DetailProductActivity" />
+        <activity android:name=".view.delivery_address.SearchDeliverryAddressActivity" />
+        <activity android:name=".view.customer.CustomerActivity" />
+        <activity
+            android:name=".view.main.MainActivity"
+            android:theme="@style/SpashTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <meta-data
-                android:name="com.facebook.accountkit.ApplicationName"
-                android:value="@string/app_name"/>
+            android:name="com.facebook.accountkit.ApplicationName"
+            android:value="@string/app_name" />
         <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/FACEBOOK_APP_ID"/>
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
         <meta-data
-                android:name="com.facebook.accountkit.ClientToken"
-                android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN"/>
+            android:name="com.facebook.accountkit.ClientToken"
+            android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />
 
-        <activity android:name="com.facebook.accountkit.ui.AccountKitActivity"/>
+        <activity android:name="com.facebook.accountkit.ui.AccountKitActivity" />
 
         <meta-data
-                android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/FACEBOOK_APP_ID"/>
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FACEBOOK_APP_ID" />
 
         <activity
-                android:name="com.facebook.FacebookActivity"
-                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                android:label="@string/app_name"/>
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
         <activity
-                android:name="com.facebook.CustomTabActivity"
-                android:exported="true">
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme"/>
+                <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
         <activity android:name="com.facebook.accountkit.ui.AccountKitEmailRedirectActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/ak_login_protocol_scheme"/>
+                <data android:scheme="@string/ak_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.view_login.LoginActivity">
-        </activity>
-        <activity android:name=".view.view_login.EmailLoginActivity">
-        </activity>
-        <activity android:name=".view.customer.EnterEmailPhoneActivity">
-        </activity>
-        <activity android:name=".view.search_product.SearchProductActivity">
-        </activity>
+        <activity android:name=".view.view_login.LoginActivity" />
+        <activity android:name=".view.view_login.EmailLoginActivity" />
+        <activity android:name=".view.customer.EnterEmailPhoneActivity" />
+        <activity android:name=".view.search_product.SearchProductActivity" />
     </application>
 
 </manifest>

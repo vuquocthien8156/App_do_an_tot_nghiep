@@ -24,18 +24,22 @@ class EnterPassFragment : Fragment() , ILogin{
 
     var isAcountNew : Boolean? = false
     var email : String? = ""
-
+    var fragmentCallActivityLoginEmail : EnterEmailFragment.FragmentCallActivityLoginEmail? = null
     var callActivity : EnterInfoFragment.ResultFragmentCallActivity? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if(context is EnterInfoFragment.ResultFragmentCallActivity)
             callActivity = context
+        if(context is EnterEmailFragment.FragmentCallActivityLoginEmail)
+            fragmentCallActivityLoginEmail = context
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        fragmentCallActivityLoginEmail?.visibleLoader(false)
+
         isAcountNew = arguments?.getBoolean("b")
-        Log.d("isAcountNew" , isAcountNew.toString())
         email = arguments?.getString("email")
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_enter_password , container , false)
         view.ibtnShowHidePass.setImageResource(R.drawable.ic_visibility_off)
@@ -48,49 +52,83 @@ class EnterPassFragment : Fragment() , ILogin{
         view.ibtnShowHidePass.setOnClickListener({
             val re =  view.ibtnShowHidePass.getTag()
             if(re == R.drawable.ic_visibility_off){
-                setHideOrShowPass(HideReturnsTransformationMethod.getInstance() , R.drawable.ic_visibility)
+                setHideOrShowPass(HideReturnsTransformationMethod.getInstance() , R.drawable.ic_visibility , it)
             }
             else{
-                setHideOrShowPass(PasswordTransformationMethod.getInstance() , R.drawable.ic_visibility_off)
+                setHideOrShowPass(PasswordTransformationMethod.getInstance() , R.drawable.ic_visibility_off , it)
+            }
+        })
+
+        view.ibtnShowHidePassConfirm.setOnClickListener({
+            val re =  view.ibtnShowHidePassConfirm.getTag()
+            if(re == R.drawable.ic_visibility_off){
+                setHideOrShowPass(HideReturnsTransformationMethod.getInstance() , R.drawable.ic_visibility , it)
+            }
+            else{
+                setHideOrShowPass(PasswordTransformationMethod.getInstance() , R.drawable.ic_visibility_off , it)
             }
         })
 
         if(isAcountNew ?: true){
             txtTitlePass.setText(R.string.enter_pass_login)
             (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.enter_pass)
+            lnConfirmPass.visibility = View.GONE
         } else{
             txtTitlePass.setText(R.string.enter_pass_register)
             (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.create_pass)
+            lnConfirmPass.visibility = View.VISIBLE
         }
 
         btnContinutePassword.setOnClickListener({
-            if(edtEnterPassword.text.length > 2){
-                evenClickBtnContinute()
-                txtShowErrorPass.setText("")
+            if(edtEnterPassword.text.length > 6){
+                var b = edtEnterPassword.text.toString().equals(edtEnterPasswordConfirm.text.toString())
+                if(lnConfirmPass.visibility == View.GONE) b = true
+                if(b){
+                    evenClickBtnContinute()
+                    txtShowErrorPass.setText("")
+                    txtShowErrorPassConfirm.setText("")
+                }
+                else{
+                    txtShowErrorPassConfirm.setText(R.string.erorr_pass_confirm)
+                }
             } else
                 txtShowErrorPass.setText(R.string.password_validate)
         })
 
-        edtEnterPassword.addTextChangedListener(object : TextWatcher {
+        val textChange = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (edtEnterPassword.text.length > 6) {
                     txtShowErrorPass.setText("")
                 }
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(edtEnterPassword.text.equals(edtEnterPasswordConfirm.text)){
+                    txtShowErrorPassConfirm.setText("")
+                }
             }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-        })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        }
+
+        edtEnterPassword.addTextChangedListener(textChange)
+        edtEnterPasswordConfirm.addTextChangedListener(textChange)
     }
 
-    private fun setHideOrShowPass(method: TransformationMethod, icon: Int) {
-        edtEnterPassword.transformationMethod = method
-        ibtnShowHidePass.setImageResource(icon)
-        ibtnShowHidePass.setTag(icon)
-        edtEnterPassword.setSelection(edtEnterPassword.text.length)
+    private fun setHideOrShowPass(method: TransformationMethod, icon: Int, it: View) {
+        when(it.id){
+            R.id.ibtnShowHidePass ->{
+                edtEnterPassword.transformationMethod = method
+                ibtnShowHidePass.setImageResource(icon)
+                ibtnShowHidePass.setTag(icon)
+                edtEnterPassword.setSelection(edtEnterPassword.text.length)
+            }
+            R.id.ibtnShowHidePassConfirm ->{
+                edtEnterPasswordConfirm.transformationMethod = method
+                ibtnShowHidePassConfirm.setImageResource(icon)
+                ibtnShowHidePassConfirm.setTag(icon)
+                edtEnterPasswordConfirm.setSelection(edtEnterPasswordConfirm.text.length)
+            }
+        }
     }
 
 
@@ -98,6 +136,7 @@ class EnterPassFragment : Fragment() , ILogin{
         if(isAcountNew ?: true){
             Log.d("isAcountNew" , "true")
             PreLogin(this).login(email!! , edtEnterPassword.text.toString())
+            fragmentCallActivityLoginEmail?.visibleLoader(true)
         }else{
             val enterInfoFragment = EnterInfoFragment()
             val bundle = Bundle()
@@ -109,20 +148,20 @@ class EnterPassFragment : Fragment() , ILogin{
         }
     }
 
-    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {}
-
     override fun failure(message: String) {
         Toast.makeText(context , message , Toast.LENGTH_LONG).show()
+        fragmentCallActivityLoginEmail?.visibleLoader(false)
     }
 
     override fun resultRegisterAccount(idUser : Int?) {}
 
     override fun resultLoginAccount(customer: Customer?) {
-        if(customer != null) {
+        if (customer != null) {
             callActivity?.popAllBackStack(customer, 0)
-            Log.d("isAcountNew" , customer.toString())
-        }else
+        } else {
             txtShowErrorPass.setText(R.string.error_pass)
+            fragmentCallActivityLoginEmail?.visibleLoader(false)
+        }
     }
 
     override fun resultLoginPhone(customer: Customer?) {}

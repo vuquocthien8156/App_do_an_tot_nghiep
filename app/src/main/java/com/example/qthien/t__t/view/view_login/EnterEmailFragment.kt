@@ -1,7 +1,7 @@
 package com.example.qthien.t__t.view.view_login
 
 import android.app.AlertDialog
-import android.content.DialogInterface
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,19 +15,28 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
-import com.example.qthien.t__t.presenter.pre_login.PreLogin
+import com.example.qthien.t__t.presenter.pre_login.PreCheckExist
 import com.facebook.accountkit.*
 import com.facebook.accountkit.ui.AccountKitActivity
 import com.facebook.accountkit.ui.AccountKitConfiguration
 import com.facebook.accountkit.ui.LoginType
 import kotlinx.android.synthetic.main.fragment_enter_email.*
 
+class EnterEmailFragment : Fragment() , ILogin , ICheckExistAccount{
 
-
-class EnterEmailFragment : Fragment() , ILogin{
+    interface FragmentCallActivityLoginEmail{
+        fun visibleLoader(b: Boolean)
+    }
 
     val APP_REQUEST_CODE = 99
     var email = ""
+    var emailConfirm = ""
+    var fragmentCallActivityLoginEmail : FragmentCallActivityLoginEmail? = null
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if(context is FragmentCallActivityLoginEmail)
+            fragmentCallActivityLoginEmail = context
+    }
 
     override fun onResume() {
         super.onResume()
@@ -45,9 +54,10 @@ class EnterEmailFragment : Fragment() , ILogin{
         btnContinuteEmail.setOnClickListener({
             email = edtEnterEmail.text.toString()
             if(isValidEmail(email)) {
-                PreLogin(this).checkExistAccount(email)
+                PreCheckExist(this).checkExistAccount(email)
                 txtShowError.setText("")
                 Log.d("Testttt" , "1")
+                fragmentCallActivityLoginEmail?.visibleLoader(true)
             }
             else
                 txtShowError.setText(R.string.email_validation)
@@ -73,7 +83,6 @@ class EnterEmailFragment : Fragment() , ILogin{
 
     fun isValidEmail(target: CharSequence?): Boolean {
         return if (target == null) false else android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
-
     }
 
     override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {
@@ -82,13 +91,19 @@ class EnterEmailFragment : Fragment() , ILogin{
             goToFragmentEnterPass(true)
         }
         else{
-            val alertDialog = AlertDialog.Builder(context)
-            alertDialog.setMessage(R.string.comfirm_mail)
-            alertDialog.setPositiveButton(R.string.continute , DialogInterface.OnClickListener { dialog, which ->
-                emailConfirm()
-            })
-            alertDialog.setNegativeButton(R.string.another_time , DialogInterface.OnClickListener { dialog, which -> })
-            alertDialog.show()
+            if(edtEnterEmail.text.toString().equals(emailConfirm)){
+                goToFragmentEnterPass(false)
+            }
+            else {
+                fragmentCallActivityLoginEmail?.visibleLoader(false)
+                val alertDialog = AlertDialog.Builder(context)
+                alertDialog.setMessage(R.string.comfirm_mail)
+                alertDialog.setPositiveButton(R.string.continute, { dialog, which ->
+                    emailConfirm()
+                })
+                alertDialog.setNegativeButton(R.string.another_time, { dialog, which -> })
+                alertDialog.show()
+            }
         }
     }
 
@@ -161,6 +176,7 @@ class EnterEmailFragment : Fragment() , ILogin{
         AccountKit.getCurrentAccount(object : AccountKitCallback<Account> {
             override fun onSuccess(p0: Account?) {
                 email = p0?.email.toString()
+                emailConfirm = email
             }
 
             override fun onError(p0: AccountKitError?) {
@@ -170,7 +186,6 @@ class EnterEmailFragment : Fragment() , ILogin{
     }
 
     private fun showErrorActivity(error: AccountKitError) {
-
     }
 
     override fun failure(message: String) {

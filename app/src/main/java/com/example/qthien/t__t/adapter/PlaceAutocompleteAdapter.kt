@@ -131,8 +131,9 @@ class PlaceAutocompleteAdapter(
                     PlaceAutocomplete(
                         prediction.placeId.toString(),
                         prediction.getPrimaryText(STYLE_BOLD),
-                        prediction.getSecondaryText(STYLE_BOLD1)
-                )
+                        prediction.getSecondaryText(STYLE_BOLD1),
+                        prediction.getFullText(STYLE_BOLD)
+                    )
                 )
             }
 
@@ -192,7 +193,8 @@ class PlaceAutocompleteAdapter(
      */
     inner class PlaceAutocomplete internal constructor(var placeId: CharSequence,
                                                        var primaryText: CharSequence,
-                                                       var seccondText: CharSequence) {
+                                                       var seccondText: CharSequence,
+                                                       var fullText : CharSequence) {
         override fun toString(): String {
             return seccondText.toString()
         }

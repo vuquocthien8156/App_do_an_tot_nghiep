@@ -22,7 +22,9 @@ class ProductsAdapter(internal var context: Context,
                       internal var arrProducts: ArrayList<Product>
 ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
+
     var arrFavorite = ArrayList<String>()
+
     init {
         val stringFavorite = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE).getString("arrFavorite", null)
         if(stringFavorite != null)
@@ -37,6 +39,7 @@ class ProductsAdapter(internal var context: Context,
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(vh: ViewHolder, p1: Int) {
+
         val p = arrProducts.get(p1)
         GlideApp.with(context)
             .load("${RetrofitInstance.baseUrl}/${p.imageProduct}")

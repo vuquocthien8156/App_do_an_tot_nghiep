@@ -14,4 +14,5 @@
     <color name="color_nav">#e1e1e1</color>
     <color name="not_selected_nav">#000</color>
     <color name="blue">#3DA3F7</color>
+    <color name="colortext_un_endable_btn">#9B9B9B</color>
 </resources>

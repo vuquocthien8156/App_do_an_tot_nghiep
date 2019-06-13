@@ -2,7 +2,6 @@ package com.example.qthien.t__t.interactor
 
 import android.util.Log
 import com.example.qthien.t__t.model.Customer
-import com.example.qthien.t__t.model.ResponseCheckExist
 import com.example.qthien.t__t.model.ResponseLogin
 import com.example.qthien.t__t.presenter.pre_login.IPreLogin
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
@@ -53,8 +52,8 @@ class InLogin(var iPreLogin: IPreLogin) {
         })
     }
 
-    fun loginFacebook(id_fb : String , email : String , name : String){
-        val call = instance.loginUserFacebook(id_fb , email , name)
+    fun loginFacebook(id_fb : String , email : String , name : String , url : String){
+        val call = instance.loginUserFacebook(id_fb , email , name , url)
         call.enqueue(object : Callback<ResponseLogin>{
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
                 Log.d("responseeeeeFail" , t.toString())
@@ -98,28 +97,6 @@ class InLogin(var iPreLogin: IPreLogin) {
         })
     }
 
-    fun checkExistAccount(word : String){
-        val call = instance.checkExistUser(word.replace("+" , ""))
-        call.enqueue(object : Callback<com.example.qthien.t__t.model.ResponseCheckExist>{
-            override fun onFailure(call: Call<ResponseCheckExist>, t: Throwable) {
-                iPreLogin.failure(t.message.toString())
-            }
-
-            override fun onResponse(call: Call<ResponseCheckExist>, response: Response<ResponseCheckExist>) {
-                val responseCheckExist = response.body()
-                Log.d("responseCheckExist" , response.toString())
-                Log.d("responseCheckExist" , response.body().toString())
-                if(responseCheckExist?.status.equals("ok")){
-                    iPreLogin.resultExistAccount(responseCheckExist?.email ?: "" ,
-                        responseCheckExist?.id_fb ?: "" ,
-                        responseCheckExist?.phone ?: "")
-                }
-                else
-                    iPreLogin.resultExistAccount("" , "" , "")
-            }
-
-        })
-    }
 
     fun getInfoByEmail(email: String) {
         val call = instance.getInfoByEmail(email)

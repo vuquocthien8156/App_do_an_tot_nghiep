@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.NestedScrollView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,10 @@ import com.example.qthien.t__t.R
 import com.example.qthien.t__t.adapter.NewsAdapter
 import com.example.qthien.t__t.adapter.ViewPagerAdapter
 import com.example.qthien.t__t.model.Customer
+import com.example.qthien.t__t.model.News
 import com.example.qthien.t__t.model.Product
+import com.example.qthien.t__t.presenter.pre_frag_news.PreFragNews
+import com.example.qthien.t__t.presenter.pre_frag_news.PreQuantityAndPrice
 import com.example.qthien.t__t.presenter.pre_login.PreLogin
 import com.example.qthien.t__t.presenter.pre_product_favorite.PreProductFavoriteActi
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
@@ -37,12 +41,34 @@ import com.facebook.accountkit.AccountKitCallback
 import com.facebook.accountkit.AccountKitError
 import kotlinx.android.synthetic.main.fragment_news.*
 
-class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
+class NewsFragment : Fragment() , IViewFragNews, ILogin , IViewProductFavoriteActi , IQuantityAndPrice {
 
     override fun favoriteProduct(resultCode: String) {}
     override fun failureFavorite(message: String) {}
-    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {}
     override fun resultRegisterAccount(idUser: Int?) {}
+
+    override fun failureNews(message: String) {
+        Toast.makeText(context , message , Toast.LENGTH_LONG).show()
+    }
+
+    override fun failureQuantityAndPrice(message: String) {
+        Toast.makeText(context , message , Toast.LENGTH_LONG).show()
+    }
+
+    override fun successQuantityAndPrice(quantity: Int, price: Int) {
+        if(quantity != -1){
+            val share = context!!.getSharedPreferences("QuantityPrice" , Activity.MODE_PRIVATE).edit()
+            share.putInt("quantity" , quantity)
+            share.putInt("price" , price)
+            share.apply()
+        }
+    }
+
+    override fun successGetNews(arrNews: ArrayList<News>) {
+        if(arrNews.size > 0)
+            this.arrNews.addAll(arrNews)
+        adapterNew.notifyDataSetChanged()
+    }
 
     override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {
         if(arrResult != null){
@@ -67,7 +93,6 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         else
             setLogout()
         lnLoader.visibility = View.GONE
-        communicationToMain?.visibleLoader(View.GONE)
         Log.d("emaillll" , "News" + customer.toString())
     }
 
@@ -78,7 +103,6 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         else
             setLogout()
         lnLoader.visibility = View.GONE
-        communicationToMain?.visibleLoader(View.GONE)
     }
 
     override fun resultLoginFacebook(customer: Customer?) {
@@ -89,7 +113,6 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         }else
             setLogout()
         lnLoader.visibility = View.GONE
-        communicationToMain?.visibleLoader(View.GONE)
     }
 
     val arrPoster = arrayListOf("http://quangcaotantheky.com/wp-content/uploads/2017/10/c-mau-bien-quang-cao-tra-sua-e1513221415389.jpg"
@@ -104,10 +127,12 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
     interface FragmentNewsCommnunicationMain{
         fun checkedFragmentOrder()
         fun visibleLoader(visible : Int)
+        fun visibleNavigation(boolean: Boolean)
     }
 
     var communicationToMain : FragmentNewsCommnunicationMain? = null
-
+    lateinit var arrNews : ArrayList<News>
+    lateinit var adapterNew : NewsAdapter
     val REQUEST_CODE_LOGIN = 1
     var tagg = ""
 
@@ -131,8 +156,11 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         viewpagerMain.startAutoScroll(4000)
         indicator.setViewPager(viewpagerMain)
 
+        arrNews = ArrayList()
         recylerMain.layoutManager = LinearLayoutManager(context , LinearLayoutManager.VERTICAL , false)
-        recylerMain.adapter = NewsAdapter(context!! , arrayListOf(""))
+        adapterNew = NewsAdapter(context!! , arrNews)
+        recylerMain.adapter = adapterNew
+        recylerMain.isNestedScrollingEnabled = false
 
         btnToOrder.setOnClickListener({
             communicationToMain?.checkedFragmentOrder()
@@ -157,26 +185,52 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
             startActivityForResult(Intent(context , LoginActivity::class.java) , REQUEST_CODE_LOGIN)
         })
 
+        txtReadAll.setOnClickListener({
+            startActivity(Intent(context , NewsActivity::class.java))
+        })
+
+        // call news
+        PreFragNews(this).getNews(0)
+
         checkLogin()
+
+        nestedNews.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY) {
+//                Toast.makeText(context, "Scroll DOWN", Toast.LENGTH_LONG).show()
+                communicationToMain?.visibleNavigation(false)
+            }
+            if (scrollY < oldScrollY) {
+//                Toast.makeText(context, "Scroll UP", Toast.LENGTH_LONG).show()
+                communicationToMain?.visibleNavigation(true)
+            }
+
+            if (scrollY == 0) {
+                Toast.makeText(context, "TOP SCROLL", Toast.LENGTH_LONG).show()
+            }
+
+            if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+
+            }
+        })
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         Toast.makeText(context , hidden.toString() , Toast.LENGTH_LONG).show()
         if(!hidden)
-            if(MainActivity.customer != null) {
-                setLogin(MainActivity.customer!!)
-            }else
+            if(MainActivity.customer == null)
                 setLogout()
     }
 
     override fun onStart() {
         super.onStart()
-        if(MainActivity.customer == null && MainActivity.customerFB == null)
+        Log.d("logggoutt" , "${MainActivity.customer?.phoneNumber} onStart")
+        if(MainActivity.customer == null)
             setLogout()
         else
-            if(MainActivity.customer != null)
+            if(MainActivity.customer != null) {
                 setLogin(MainActivity.customer!!)
+            }
     }
 
 
@@ -197,8 +251,10 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
             PreLogin(this).getInfoByEmail(email)
             Log.d("emaillll" , "Main")
         }
-        else
+        else {
             lnLoader.visibility = View.GONE
+            communicationToMain?.visibleLoader(View.GONE)
+        }
     }
 
 
@@ -223,9 +279,6 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         if(requestCode == REQUEST_CODE_LOGIN && resultCode == Activity.RESULT_OK && data != null)
         {
             MainActivity.customer = data.extras!!.getParcelable("customer") as Customer?
-            val c = MainActivity.customer
-            if(c != null)
-                setLogin(c)
         }
     }
 
@@ -234,16 +287,14 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
         lnPoint.visibility = View.VISIBLE
         btnLoginNowNews.visibility = View.GONE
 
-        Log.d("urrllll" , "${RetrofitInstance.baseUrl}/${c.avatar}")
         if(c.avatar != null)
-            GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/${c.avatar}")
-            .into(imgAvataNews)
-        else
-            if(MainActivity.customerFB != null)
-                GlideApp.with(context!!).load(MainActivity.customerFB!!.avatar)
-                    .into(imgAvataNews)
+            if(!c.avatar!!.contains("https://"))
+                GlideApp.with(this).load(RetrofitInstance.baseUrl + "/" + c.avatar)
+                        .into(imgAvataNews)
             else
-                GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/images/logo1.png")
+                GlideApp.with(this).load(c.avatar).into(imgAvataNews)
+        else
+            GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/images/logo1.png")
                     .into(imgAvataNews)
 
         if(c.point == null)
@@ -255,7 +306,14 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
             startActivity(Intent(context , CustomerActivity::class.java))
         })
 
-        PreProductFavoriteActi(this).getProductFavorite(MainActivity.customer!!.idCustomer)
+        PreProductFavoriteActi(this).getProductFavorite(c.idCustomer)
+        PreQuantityAndPrice(this).getQuantityAndPrice(c.idCustomer)
+        communicationToMain?.visibleLoader(View.GONE)
+
+        Log.d("logggoutt" , "${MainActivity.customer?.phoneNumber} Login")
+        val dialogUpdatePhone = UpdateNumberPhone()
+        dialogUpdatePhone.isCancelable = false
+        MainActivity.customer?.phoneNumber ?: dialogUpdatePhone.show(childFragmentManager , "updatePhone")
     }
 
     fun setLogout(){
@@ -282,20 +340,8 @@ class NewsFragment : Fragment() , ILogin , IViewProductFavoriteActi {
                         val email = response.jsonObject.get("email")
                         val url = response.jsonObject.getJSONObject("picture")
                             .getJSONObject("data").get("url")
-                        MainActivity.customerFB = Customer(
-                            0 ,
-                            id.toString() ,
-                            name.toString(),
-                            null,
-                            null,
-                            null,
-                            null,
-                            email.toString(),
-                            null,
-                            url.toString(),
-                            null
-                        )
-                        PreLogin(this@NewsFragment).loginFacebook(id.toString(), email.toString() , name.toString())
+
+                        PreLogin(this@NewsFragment).loginFacebook(id.toString(), email.toString() , name.toString() , url.toString())
                     }
                     else
                         Toast.makeText(context , "Null" , Toast.LENGTH_SHORT).show()

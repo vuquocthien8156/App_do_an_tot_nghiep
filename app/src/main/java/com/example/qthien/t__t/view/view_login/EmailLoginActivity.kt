@@ -6,13 +6,18 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import com.example.qthien.t__t.FragmentChosseGenderBottom
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
 import kotlinx.android.synthetic.main.activity_email_login.*
 
 class EmailLoginActivity : AppCompatActivity() , EnterInfoFragment.ResultFragmentCallActivity
-    ,  FragmentChosseGenderBottom.FragmentBottomGenderListener  {
+    ,  FragmentChosseGenderBottom.FragmentBottomGenderListener , EnterEmailFragment.FragmentCallActivityLoginEmail {
+
+    override fun visibleLoader(b: Boolean) {
+        lnLoader.visibility = if(b) View.VISIBLE else View.GONE
+    }
 
     override fun popAllBackStack(customer: Customer , size : Int) {
         for(i in 0..size){

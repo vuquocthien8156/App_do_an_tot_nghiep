@@ -3,6 +3,7 @@ package com.example.qthien.t__t.view.delivery_address
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,8 +64,11 @@ class DialogEditCreateAddress : DialogFragment() , IDialogEditCreateAddress {
 
             if(infoAddress?.main == 1){
                 switchDefault.isChecked = true
+                isCheckedd = true
                 switchDefault.isEnabled = false
             }
+            else
+                isCheckedd = false
         }
 
         switchDefault.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
@@ -77,12 +81,17 @@ class DialogEditCreateAddress : DialogFragment() , IDialogEditCreateAddress {
             val name = edtNameCustomer.text.toString()
             val phone = edtPhone.text.toString()
             val address = edtAddress.text.toString()
+            var main = if(isCheckedd) 1 else 0
+            if(main == infoAddress?.main)
+                main = -1
+
             if(!name.equals("") && !phone.equals("") && !address.equals("")){
                 if(infoAddress != null){
                     infoAddress?.nameCustomer = name
                     infoAddress?.phoneCustomer = phone
                     infoAddress?.addressInfo = address
-                    infoAddress?.main = if(isCheckedd) 1 else 0
+                    infoAddress?.main = main
+                    Log.d("mainnnnnnnnn" , main.toString())
                     PreAddEditAddressDialog(this).updateAddressInfo(infoAddress!!)
                 }
                 else{

@@ -3,11 +3,15 @@ package com.example.qthien.t__t.presenter.pre_frag_order
 import android.content.Context
 import com.example.qthien.t__t.interactor.InFragOrder
 import com.example.qthien.t__t.model.CatalogyProduct
-import com.example.qthien.t__t.model.LatLng
+import com.example.qthien.t__t.model.InfoAddress
 import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.view.main.IViewFragOrder
 
 class PreFragOrder(var context : Context , var iViewFragOrder: IViewFragOrder) : IPreFragOrder {
+    override fun resultGetAddressDefault(infoAddress: InfoAddress?) {
+        iViewFragOrder.resultGetAddressDefault(infoAddress)
+    }
+
     override fun resultGetProductBestFavorite(arrProduct: ArrayList<Product>?) {
         iViewFragOrder.resultGetProductBestFavorite(arrProduct)
     }
@@ -31,6 +35,10 @@ class PreFragOrder(var context : Context , var iViewFragOrder: IViewFragOrder) :
     }
 
     // function
+    fun getAddressInfo(idCus : Int){
+        interactorFragOrder.getAddressInfo(idCus)
+    }
+
     fun getProductsBestBuy() {
         interactorFragOrder.getProductsBestBuy()
     }
@@ -47,11 +55,15 @@ class PreFragOrder(var context : Context , var iViewFragOrder: IViewFragOrder) :
         interactorFragOrder.getProductBestFavorite()
     }
 
+    fun removeRequest(){
+        interactorFragOrder.removeRequest()
+    }
+
     fun getLocation(){
         interactorFragOrder.getLocation()
     }
 
-    override fun successGetLocationAddress(address: String, latLng: LatLng) {
+    override fun successGetLocationAddress(address: String, latLng: com.google.android.gms.maps.model.LatLng) {
         iViewFragOrder.successGetLocationAddress(address , latLng)
     }
 

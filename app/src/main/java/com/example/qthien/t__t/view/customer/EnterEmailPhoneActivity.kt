@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.text.InputType
 import android.widget.Toast
 import com.example.qthien.t__t.model.Customer
-import com.example.qthien.t__t.presenter.pre_login.PreLogin
+import com.example.qthien.t__t.presenter.pre_login.PreCheckExist
+import com.example.qthien.t__t.view.view_login.ICheckExistAccount
 import com.example.qthien.t__t.view.view_login.ILogin
 import com.facebook.accountkit.AccountKit
 import com.facebook.accountkit.AccountKitError
@@ -19,22 +20,35 @@ import com.facebook.accountkit.ui.LoginType
 import kotlinx.android.synthetic.main.activity_enter_email_phone.*
 
 
-class EnterEmailPhoneActivity : AppCompatActivity() , ILogin {
+class EnterEmailPhoneActivity : AppCompatActivity() , ILogin , ICheckExistAccount {
 
     override fun failure(message: String) {
         Toast.makeText(this , message , Toast.LENGTH_LONG).show()
     }
 
     override fun resultExistAccount(email: String?, id_fb: String?, phone: String?) {
-        if(phone != "")
-            txtShowError.setText(com.example.qthien.t__t.R.string.error_phone_exist)
-        else
-            verifiPhone(edtEnterEmailPhone.getText().toString())
+        if(type.equals("phone")){
+            if(phone != "")
+                txtShowError.setText(com.example.qthien.t__t.R.string.error_phone_exist)
+            else
+                verifiPhone(edtEnterEmailPhone.getText().toString())
+        }
+        else{
+            if(email != "")
+                txtShowError.setText(com.example.qthien.t__t.R.string.error_email_exist)
+            else {
+                val i = Intent(this , CustomerActivity::class.java)
+                i.putExtra("email" , edtEnterEmailPhone.text.toString())
+                setResult(Activity.RESULT_OK , i)
+                finish()
+            }
+        }
     }
 
-    var type = ""
+    var type : String? = ""
     val APP_REQUEST_CODE = 1
     val phoneRequest = ""
+    var text : String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,18 +62,32 @@ class EnterEmailPhoneActivity : AppCompatActivity() , ILogin {
         txtTitleMailPhone.setText(intent.extras?.getString("txt_title")!!)
         edtEnterEmailPhone.setHint(intent.extras?.getString("hint")!!)
 
-        type = intent.extras?.getString("type")!!
+        type = intent.extras?.getString("type")
+        text = intent.extras?.getString("text")
+
+        if(text != null)
+            edtEnterEmailPhone.setText(text)
 
         if(type.equals("phone"))
             edtEnterEmailPhone.inputType = InputType.TYPE_CLASS_PHONE
+        else
+            edtEnterEmailPhone.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 
         btnContinute.setOnClickListener({
             if(type.equals("phone")) {
                 val phone = edtEnterEmailPhone.getText().toString()
                 if (checkValidatePhone(phone)) {
-                    PreLogin(this).checkExistAccount(phone.replaceFirst("0" , "+84"))
+                    PreCheckExist(this).checkExistAccount(phone.replaceFirst("0" , "+84"))
                 } else {
                     txtShowError.setText(com.example.qthien.t__t.R.string.error_phone)
+                }
+            }
+            else{
+                val email = edtEnterEmailPhone.getText().toString()
+                if (isValidEmail(email)) {
+                    PreCheckExist(this).checkExistAccount(email)
+                } else {
+                    txtShowError.setText(com.example.qthien.t__t.R.string.error_email)
                 }
             }
         })
@@ -67,6 +95,11 @@ class EnterEmailPhoneActivity : AppCompatActivity() , ILogin {
 
     private fun checkValidatePhone(phone : String): Boolean {
         return android.util.Patterns.PHONE.matcher(phone).matches();
+    }
+
+
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return if (target == null) false else android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 
     private fun verifiPhone(phone : String) {
@@ -121,7 +154,7 @@ class EnterEmailPhoneActivity : AppCompatActivity() , ILogin {
 
     private fun successPhone() {
         val i = Intent(this , CustomerActivity::class.java)
-        i.putExtra("phoneResult" , edtEnterEmailPhone.text.toString().replaceFirst("0" , "84"))
+        i.putExtra("phoneResult" , edtEnterEmailPhone.text.toString().replaceFirst("84" , "0"))
         setResult(Activity.RESULT_OK , i)
         finish()
     }
@@ -129,7 +162,6 @@ class EnterEmailPhoneActivity : AppCompatActivity() , ILogin {
     private fun showErrorActivity(error: AccountKitError) {
 
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

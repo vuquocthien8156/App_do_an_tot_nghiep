@@ -5,15 +5,26 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicationMain
-, AccountFragment.FragmentAccountCommnunicationMain {
+, AccountFragment.FragmentAccountCommnunicationMain , OrderFragment.OrderFragmentCallMain {
+
+    override fun visibleNavigation(boolean: Boolean) {
+
+        if(boolean) {
+            navigationView.visibility = View.VISIBLE
+        }else {
+            navigationView.visibility = View.GONE
+        }
+    }
+
     override fun visibleLoader(visible : Int) {
         frmLoader.visibility = visible
+        navigationView.visibility = View.VISIBLE
     }
 
     override fun checkSelectedFragmentOrder() {
@@ -35,7 +46,6 @@ class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicati
 
     companion object {
         var customer : Customer? = null
-        var customerFB : Customer? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +65,16 @@ class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicati
 
 
     }
+
+    override fun onBackPressed() {
+        if(!newsFragment!!.isHidden)
+            super.onBackPressed()
+        else {
+            hideAndShowFragment(fragmentActi!!, newsFragment!!)
+            navigationView.selectedItemId = R.id.nav_news
+        }
+    }
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_news -> {
@@ -94,6 +114,8 @@ class MainActivity : AppCompatActivity() , NewsFragment.FragmentNewsCommnunicati
 
     override fun onRestart() {
         super.onRestart()
+
+        fragmentOrder?.setUpQuantityAndPrice()
         val change = getSharedPreferences("Favorite" , Context.MODE_PRIVATE).getBoolean("changeFavorite" , false)
         if(change) {
             fragmentOrder?.updateViewPager()

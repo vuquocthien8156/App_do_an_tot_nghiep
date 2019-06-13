@@ -1,12 +1,15 @@
 package com.example.qthien.t__t.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.InfoAddress
+import com.example.qthien.t__t.view.delivery_address.DeliveryAddressActivity
 import kotlinx.android.synthetic.main.item_recy_address_delivery.view.*
 
 class DeliveryAdapterAddress(var context : Context, var arrAdress : ArrayList<InfoAddress>)
@@ -31,7 +34,12 @@ class DeliveryAdapterAddress(var context : Context, var arrAdress : ArrayList<In
         else {
             vh.txtDefalt.setVisibility(View.GONE);
         }
-
+        vh.layout.setOnClickListener({
+            val i = Intent()
+            i.putExtra("address" , ad)
+            (context as DeliveryAddressActivity).setResult(Activity.RESULT_OK , i)
+            (context as DeliveryAddressActivity).finish()
+        })
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {

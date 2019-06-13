@@ -1,8 +1,17 @@
 package com.example.qthien.t__t.view.delivery_address
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
@@ -10,9 +19,8 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.qthien.t__t.R
 import com.example.qthien.t__t.adapter.PlaceAutocompleteAdapter
-import com.example.qthien.t__t.model.Place
-import com.example.qthien.t__t.view.MapsActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
@@ -25,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_search_deliverry_address.*
 import java.util.*
 
 
-class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery ,
+class SearchDeliverryAddressActivity : AppCompatActivity() ,
     PlaceAutocompleteAdapter.PlaceAutoCompleteInterface, GoogleApiClient.OnConnectionFailedListener,
     GoogleApiClient.ConnectionCallbacks{
 
@@ -39,6 +47,7 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
 
     var location : LatLng? = null
     val REQUEST_CODE_MAPS = 1
+    val REQUEST_FINE_LOCATION = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +61,8 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
             .addApi(Places.GEO_DATA_API)
             .build()
 
+        location = intent.getParcelableExtra("latlngLocation")
+
         initRecylerAndAdapter()
 
         eventEdtSeatch()
@@ -64,8 +75,64 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
         })
 
         btnSelectOnMap.setOnClickListener({
-            startActivityForResult(Intent(this , MapsActivity::class.java) , REQUEST_CODE_MAPS)
+            checkPermissionLocation()
         })
+    }
+
+    fun startIntentMaps(){
+        val i = Intent(this , MapsActivity::class.java)
+        i.putExtra("latlngLocation" , location)
+        startActivityForResult(i , REQUEST_CODE_MAPS)
+    }
+
+    fun checkGPS(){
+        val locationManager : LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGPSEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if(isGPSEnable) {
+            startIntentMaps()
+        }else{
+            displayDialogGotoSettingLocation()
+        }
+    }
+
+    fun displayDialogGotoSettingLocation(){
+        val builder = AlertDialog.Builder(this)
+        val action = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
+        val message = "Do you want open GPS setting?";
+
+        builder.setMessage(message)
+            .setPositiveButton("OK", ({ d: DialogInterface, id: Int ->
+                startActivity(Intent(action))
+                d.dismiss();
+            }))
+            .setNegativeButton("Cancel", ({ d: DialogInterface, id: Int ->
+
+            }))
+        builder.create().show();
+    }
+
+    fun checkPermissionLocation(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this ,
+                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        REQUEST_FINE_LOCATION)
+            else
+                checkGPS()
+        }
+        else
+            checkGPS()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(REQUEST_FINE_LOCATION == requestCode){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                checkGPS()
+            else
+                Toast.makeText(this , R.string.permission_deny , Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun initRecylerAndAdapter() {
@@ -91,9 +158,7 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
 
     private fun eventEdtSeatch() {
         edtSearchPlace.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (count > 0) {
@@ -117,9 +182,20 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
             }
 
             override fun afterTextChanged(s: Editable) {
-
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(REQUEST_CODE_MAPS == requestCode && resultCode == Activity.RESULT_OK && data != null){
+            val add = data.extras?.getString("address")
+            val i = Intent()
+            i.putExtra("full_address" , add)
+            setResult(RESULT_OK, i)
+            finish()
+        }
     }
 
 
@@ -145,11 +221,14 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
                     override fun onResult(places: PlaceBuffer) {
                         if (places.count == 1) {
                             //Do the things here on Click.....
-                            val data = Intent()
+                            Toast.makeText(applicationContext, mResultList[position].fullText.toString() , Toast.LENGTH_SHORT).show()
+
+                            val data = Intent(this@SearchDeliverryAddressActivity , DeliveryAddressActivity::class.java)
                             data.putExtra("lat", places.get(0).latLng.latitude.toString())
                             data.putExtra("lng", places.get(0).latLng.longitude.toString())
-                            data.putExtra("address" , mResultList[position].seccondText)
-                            data.putExtra("name_address" ,  mResultList[position].primaryText)
+                            data.putExtra("address" , mResultList[position].seccondText.toString())
+                            data.putExtra("full_address" , mResultList[position].fullText.toString())
+                            data.putExtra("name_address" ,  mResultList[position].primaryText.toString())
                             setResult(RESULT_OK, data)
                             finish()
                         } else {
@@ -174,17 +253,6 @@ class SearchDeliverryAddressActivity : AppCompatActivity() , IViewSearchDelivery
 
     override fun onConnectionSuspended(p0: Int) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-    }
-
-    override fun successSearchPlace(arrPlace: ArrayList<Place>) {
-
-    }
-
-    override fun failureSearchPlace(message: String) {
     }
 
     override fun supportNavigateUpTo(upIntent: Intent) {

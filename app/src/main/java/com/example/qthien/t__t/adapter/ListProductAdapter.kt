@@ -12,8 +12,9 @@ import kotlinx.android.synthetic.main.item_list_product.view.*
 
 class ListProductAdapter(internal var context: Context,
                          internal var arrListProduct: ArrayList<ProductByCatalogy>
-)
-            : RecyclerView.Adapter<ListProductAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ListProductAdapter.ViewHolder>(){
+
+
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder =
         ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list_product , p0 , false))
 

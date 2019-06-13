@@ -12,6 +12,7 @@ import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.presenter.pre_search_product.PreSearchProductActivity
 import kotlinx.android.synthetic.main.activity_search_product.*
 import java.text.Normalizer
+import java.util.*
 import java.util.regex.Pattern
 
 class SearchProductActivity : AppCompatActivity() , IViewSearchProductActivity {
@@ -72,22 +73,6 @@ class SearchProductActivity : AppCompatActivity() , IViewSearchProductActivity {
         return pattern.matcher(nfdNormalizedString).replaceAll("")
     }
 
-    private fun filter(models: List<Product>, query: String?): List<Product> {
-        val lowerCaseQuery = query?.toLowerCase()
-
-        val filteredModelList = ArrayList<Product>()
-        if(lowerCaseQuery != null){
-            for (model in models) {
-                val text = model.nameProduct.toLowerCase()
-                if (text.contains(lowerCaseQuery)) {
-                    filteredModelList.add(model)
-                }
-            }
-        }
-
-        return filteredModelList
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
@@ -95,9 +80,10 @@ class SearchProductActivity : AppCompatActivity() , IViewSearchProductActivity {
 
     override fun resultGetAllProduct(arrResult: ArrayList<Product>?) {
         if(arrResult != null) {
-            arrProducts.addAll(arrResult)
+            arrProducts.addAll(arrResult.filter { it.mainCatalogy != 3 })
             eventEdtSearch()
         }
+        Collections.shuffle(arrProducts)
         adapter.add(arrProducts)
     }
 

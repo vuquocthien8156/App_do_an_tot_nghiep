@@ -1,22 +1,31 @@
 package com.example.qthien.t__t.presenter.pre_login
 
+import android.util.Log
 import com.example.qthien.t__t.interactor.InLogin
 import com.example.qthien.t__t.model.Customer
 import com.example.qthien.t__t.view.view_login.ILogin
+import java.math.BigInteger
+import java.security.MessageDigest
 
 class PreLogin(var iLogin : ILogin) : IPreLogin {
 
     val moLogin : InLogin
+
+    fun String.md5(): String {
+        val md = MessageDigest.getInstance("MD5")
+        return BigInteger(1, md.digest(toByteArray())).toString(16).padStart(32, '0')
+    }
 
     init {
         moLogin = InLogin(this)
     }
 
     fun login(email : String , pass : String){
-        moLogin.login(email , pass)
+        Log.d("Mdđ5" , pass.md5())
+        moLogin.login(email , pass.md5())
     }
 
-    fun getInfoByEmail(email : String ){
+    fun getInfoByEmail(email : String){
         moLogin.getInfoByEmail(email)
     }
 
@@ -24,21 +33,16 @@ class PreLogin(var iLogin : ILogin) : IPreLogin {
         moLogin.loginPhone(phone)
     }
 
-    fun checkExistAccount(word : String){
-        moLogin.checkExistAccount(word)
-    }
-
     fun register(customer : Customer) {
+        if(!(customer.password ?: "").equals(""))
+            customer.password = customer.password?.md5()
         moLogin.register(customer)
     }
 
-    fun loginFacebook(id_fb : String , email : String , name : String){
-        moLogin.loginFacebook(id_fb , email , name)
+    fun loginFacebook(id_fb : String , email : String , name : String , url : String){
+        moLogin.loginFacebook(id_fb , email , name , url)
     }
 
-    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {
-        iLogin.resultExistAccount(email , id_fb , phone)
-    }
 
     override fun failure(message: String) {
         iLogin.failure(message)

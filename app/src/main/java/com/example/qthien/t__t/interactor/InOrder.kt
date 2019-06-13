@@ -2,13 +2,13 @@ package com.example.qthien.t__t.interactor
 
 import android.util.Log
 import com.example.qthien.t__t.model.ResponseOrder
-import com.example.qthien.t__t.presenter.order.IPreOrder
+import com.example.qthien.t__t.presenter.order.IPreOrderHistory
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class InOrder(var iPreOrder: IPreOrder) {
+class InOrder(var iPreOrder: IPreOrderHistory) {
 
     val instance = RetrofitInstance.getRetrofit
 

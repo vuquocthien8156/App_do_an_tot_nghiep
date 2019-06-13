@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
+import com.example.qthien.t__t.presenter.pre_login.PreCheckExist
 import com.example.qthien.t__t.presenter.pre_login.PreLogin
 import com.example.qthien.t__t.view.main.MainActivity
 import com.facebook.*
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 
 
-class LoginActivity : AppCompatActivity() , ILogin  {
+class LoginActivity : AppCompatActivity() , ILogin , ICheckExistAccount {
 
 
     var accessTokenKit : AccessToken? = null
@@ -85,13 +86,6 @@ class LoginActivity : AppCompatActivity() , ILogin  {
     }
 
     private fun getInfoUserFacebook(){
-
-//        com.facebook.AccessToken(
-//            "EAAefkhtJGoQBAFnV2anIPw0LMQYJAsQ0YEh4PlH1GjainawroJ0IlJrORXqke0N2CcIa5z5cHzhVFKbDokmePtqAoAx2iCtJbpRCszYws9gaiEah062jsT43zTkZBtZAGRrZA7Ev9jKknCfYoyNoeZC7AADb6QgAeNmZBZAlf9VNW2pP1ztDkx76WZASKHyZA1DTCWkzACjSpJRvXw3LZA1QdxzZBLy1jTwYEZD",
-//            "2145774708791940",
-//            "1759083097570150",
-//            arrayListOf("email"), null , null,null,null,null
-//        )
         GraphRequest(
             com.facebook.AccessToken.getCurrentAccessToken(),
             "/me?fields=id,name,email,picture",
@@ -108,20 +102,7 @@ class LoginActivity : AppCompatActivity() , ILogin  {
                         val url = response.jsonObject.getJSONObject("picture")
                             .getJSONObject("data").get("url")
 
-                        MainActivity.customerFB = Customer(
-                            0,
-                            id.toString(),
-                            name as String,
-                            null,
-                            null,
-                            null,
-                            null,
-                            email as String,
-                            null,
-                            url as String,
-                            null
-                        )
-                        preLogin.loginFacebook(id.toString() , email , name)
+                        preLogin.loginFacebook(id.toString() , email.toString() , name.toString() , url.toString())
                     }
                     else {
                         ToastString(getString(R.string.fail_again))
@@ -152,7 +133,6 @@ class LoginActivity : AppCompatActivity() , ILogin  {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         callbackManager?.onActivityResult(requestCode, resultCode, data)
         // Result account kit
         if (requestCode == APP_REQUEST_CODE) { // confirm that this response matches your request
@@ -216,9 +196,10 @@ class LoginActivity : AppCompatActivity() , ILogin  {
         AccountKit.getCurrentAccount(object : AccountKitCallback<Account>{
             override fun onSuccess(p0: Account?) {
                 phone = p0?.phoneNumber.toString()
+
                 phone = phone.replace("+" , "")
                 ToastString(phone)
-                preLogin.checkExistAccount(phone)
+                PreCheckExist(this@LoginActivity).checkExistAccount(phone)
             }
 
             override fun onError(p0: AccountKitError?) {
@@ -266,22 +247,16 @@ class LoginActivity : AppCompatActivity() , ILogin  {
 
     override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {
         if(!this.phone.equals("")) { // Login phone
-            if (id_fb.equals("") && email.equals("")) {
-                if(phone.equals("")) {
-                    val i = Intent(this, EnterInfoActivity::class.java)
-                    Log.d("phoneeeeeeee" , this.phone)
-                    i.putExtra("phone", this.phone)
-                    startActivityForResult(i, REQUEST_CODE_INFO)
-                    lnLoader.visibility = View.GONE
-                }
-                else {
-                    lnLoader.visibility = View.VISIBLE
-                    preLogin.loginPhoneUser(phone!!)
-                }
-            }
-            else{
+            if(phone.equals("")) {
+                val i = Intent(this, EnterInfoActivity::class.java)
+                Log.d("phoneeeeeeee" , this.phone)
+                i.putExtra("phone", this.phone)
+                startActivityForResult(i, REQUEST_CODE_INFO)
                 lnLoader.visibility = View.GONE
-                Toast.makeText(this , R.string.phone_account_exist, Toast.LENGTH_LONG).show()
+            }
+            else {
+                lnLoader.visibility = View.VISIBLE
+                preLogin.loginPhoneUser(phone!!)
             }
         }
     }

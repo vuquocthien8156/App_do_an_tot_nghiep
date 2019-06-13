@@ -1,20 +1,13 @@
 package com.example.qthien.t__t.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-//ma_danh_gia :
-//tai_khoan :
-//san_pham :
-//so_diem :
-//tieu_de :
-//noi_dung :
-//thoi_gian :
-//duyet :
-//so_cam_on :
-//images :
-//listChild :
-
+@Parcelize
 data class Evaluation(
+        @SerializedName("id_tk")
+        var idAccount : Int = 0,
         @SerializedName("ma_danh_gia")
         var idEvaluation: Int,
         @SerializedName("ten")
@@ -33,8 +26,8 @@ data class Evaluation(
         var done: Int,
         @SerializedName("so_cam_on")
         var quantityTks: Int,
-        @SerializedName("images")
+        @SerializedName("Hinh_anh")
         var images: ArrayList<String>,
-        @SerializedName("listChild")
+        @SerializedName("danh_gia_con")
         var childs: ArrayList<ChildEvaluation>
-)
+) : Parcelable

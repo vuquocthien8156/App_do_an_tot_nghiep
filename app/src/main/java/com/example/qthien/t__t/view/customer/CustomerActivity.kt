@@ -61,7 +61,8 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         progressUpdate.visibility = View.GONE
     }
 
-    private val REQUEST_CODE_CHANGE_INFO: Int = 102
+    private val REQUEST_CODE_CHANGE_PHONE: Int = 102
+    private val REQUEST_CODE_CHANGE_EMAIL: Int = 105
     private val REQUEST_PICK_IMAGE: Int = 100
     private val REQUEST_CAMERA: Int = 101
     private val REQUEST_PERMISSION_PICK = 103
@@ -79,10 +80,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
 
         customer = MainActivity.customer
         if (customer != null) {
-            if(MainActivity.customerFB != null)
-                customerFB = MainActivity.customerFB
             txtFullName.setText(customer!!.nameCustomer)
-
             loadAvata()
         }
 
@@ -108,15 +106,16 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
 
     private fun loadAvata() {
         if(customer?.avatar == null) {
-            if(customerFB?.avatar == null)
-                GlideApp.with(this).load("${RetrofitInstance.baseUrl}/images/logo1.png")
+            GlideApp.with(this).load("${RetrofitInstance.baseUrl}/images/logo1.png")
+                .into(imgAvata)
+        }else{
+            if(!customer?.avatar!!.contains("https://"))
+                GlideApp.with(this).load(RetrofitInstance.baseUrl + "/" + customer?.avatar)
                     .into(imgAvata)
             else
-                GlideApp.with(this).load(customerFB!!.avatar)
-                    .into(imgAvata)
-        }else
-            GlideApp.with(this).load(RetrofitInstance.baseUrl + "/" + customer?.avatar)
-                .into(imgAvata)
+                GlideApp.with(this).load(customer?.avatar).into(imgAvata)
+        }
+
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -124,7 +123,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         val notUpdate = getString(R.string.not_update)
 
         edtFullNameInfo.setText(customer?.nameCustomer)
-        edtPhoneInfo.setText(customer?.phoneNumber ?: notUpdate)
+        edtPhoneInfo.setText(customer?.phoneNumber?.replaceFirst("84" , "0") ?: notUpdate)
 
         var birthday = customer?.birthday
         if (birthday != null) {
@@ -158,11 +157,23 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         }
         edtGenderInfo.setText(gender)
 
-        if (customer?.email == null) {
+        if ( (customer?.email ?: "").equals("") && !(customer?.id_fb ?: "").equals("")) {
             lnInfoEmail.visibility = View.GONE
             lnInfoPassword.visibility = View.GONE
-        } else
-            edtEmailInfoo.setText(customer?.email)
+        } else{
+            if((customer?.email ?: "").equals("")){
+                edtEmailInfoo.setText(notUpdate)
+                edtEmailInfoo.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawable(R.drawable.ic_chevron_right), null)
+                edtEmailInfoo.setOnClickListener({
+                    loadEventEdtEmail()
+                })
+            }
+            else {
+                edtEmailInfoo.setText(customer?.email)
+                edtEmailInfoo.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                edtEmailInfoo.setOnClickListener({})
+            }
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -203,7 +214,9 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
             i.putExtra("txt_title", getString(com.example.qthien.t__t.R.string.enter_your_phone_number))
             i.putExtra("hint", getString(com.example.qthien.t__t.R.string.phone_number))
             i.putExtra("type" , "phone")
-            startActivityForResult(i, REQUEST_CODE_CHANGE_INFO)
+            if(!edtPhoneInfo.text.toString().contains("["))
+                i.putExtra("text" , edtPhoneInfo.text.toString())
+            startActivityForResult(i, REQUEST_CODE_CHANGE_PHONE)
         })
     }
 
@@ -214,8 +227,22 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         })
     }
 
-    fun loadEventEdtPass() {
+    fun loadEventEdtEmail() {
+        val i = Intent(this, EnterEmailPhoneActivity::class.java)
+        i.putExtra("title", getString(com.example.qthien.t__t.R.string.update_email))
+        i.putExtra("txt_title", getString(com.example.qthien.t__t.R.string.enter_your_email))
+        i.putExtra("hint", getString(com.example.qthien.t__t.R.string.your_email))
+        i.putExtra("type" , "email")
+        if(!edtEmailInfoo.text.toString().contains("["))
+            i.putExtra("text" , edtEmailInfoo.text.toString())
+        startActivityForResult(i, REQUEST_CODE_CHANGE_EMAIL)
+    }
 
+    fun loadEventEdtPass() {
+        edtPassInfoo.setOnClickListener({
+            val i = Intent(this , ChangePasswordActivity::class.java)
+            startActivity(i)
+        })
     }
 
     fun setCheckEdit() {
@@ -226,10 +253,13 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
 
         setPropertyEditText(edtFullNameInfo, true, Color.WHITE)
         setPropertyEditText(edtGenderInfo, true, Color.WHITE)
-        setPropertyEditText(edtEmailInfoo, true, Color.WHITE)
         if (customer?.birthday == null)
             setPropertyEditText(edtBirthdayInfo, true, Color.WHITE)
-        setPropertyEditText(edtPassInfoo, true, Color.WHITE)
+        if((customer?.email ?: "").equals("") && (customer?.id_fb ?: "").equals("")){
+            setPropertyEditText(edtEmailInfoo, true, Color.WHITE)
+        }
+        if(!(customer?.email ?: "").equals(""))
+            setPropertyEditText(edtPassInfoo, true, Color.WHITE)
         setPropertyEditText(edtPhoneInfo, true, Color.WHITE)
 
         imgCamera.visibility = View.VISIBLE
@@ -252,7 +282,6 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         val intentCamera = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intentCamera, REQUEST_CAMERA)
     }
-
 
     private fun checkPermissionChangeAvata(permission: String) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -294,16 +323,18 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
             false,
             ContextCompat.getColor(this, com.example.qthien.t__t.R.color.color_grey_light)
         )
+
         setPropertyEditText(
-            edtEmailInfoo,
-            false,
-            ContextCompat.getColor(this, com.example.qthien.t__t.R.color.color_grey_light)
+                edtEmailInfoo,
+                false,
+                ContextCompat.getColor(this, com.example.qthien.t__t.R.color.color_grey_light)
         )
         setPropertyEditText(
-            edtPassInfoo,
-            false,
-            ContextCompat.getColor(this, com.example.qthien.t__t.R.color.color_grey_light)
+                edtPassInfoo,
+                false,
+                ContextCompat.getColor(this, com.example.qthien.t__t.R.color.color_grey_light)
         )
+
         setPropertyEditText(
             edtPhoneInfo,
             false,
@@ -335,6 +366,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
         val name: String = edtFullNameInfo.text.toString()
         val phone: String = edtPhoneInfo.text.toString()
         val gender: String = edtGenderInfo.text.toString()
+        val email = edtEmailInfoo.text.toString()
 
         customerUpdate = Customer(
             customer!!.idCustomer,
@@ -344,7 +376,7 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
             if (!gender.contains("[")) if (gender.equals("Nam")) 0 else 1 else null,
             customer!!.point,
             if (!birthday.contains("[")) edtBirthdayInfo.text.toString() else null,
-            if(edtEmailInfoo.text.equals("")) null else edtEmailInfoo.text.toString(),
+            if(email.contains("[")) null else edtEmailInfoo.text.toString(),
             customer!!.address,
             urlImage,
             null
@@ -395,9 +427,14 @@ class CustomerActivity : AppCompatActivity(), FragmentChosseGenderBottom.Fragmen
                     imgAvata.setImageBitmap(bitmap)
                 }
 
-                REQUEST_CODE_CHANGE_INFO ->{
+                REQUEST_CODE_CHANGE_PHONE ->{
                     val phone = data.extras!!.getString("phoneResult")
                     edtPhoneInfo.setText(phone)
+                }
+
+                REQUEST_CODE_CHANGE_EMAIL->{
+                    val email = data.extras!!.getString("email")
+                    edtEmailInfoo.setText(email)
                 }
             }
     }

@@ -38,6 +38,7 @@ class ProductFavoriteActivity : AppCompatActivity() , IViewProductFavoriteActi,
     override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {
         Log.d("swipeRefreshLayout" , arrResult?.size.toString())
         if(arrResult != null && arrResult.size > 0){
+            adapter.remove(arrProducts)
             arrProducts.clear()
             arrProducts.addAll(arrResult)
             adapter.add(arrResult)

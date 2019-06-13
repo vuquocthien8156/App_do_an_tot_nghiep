@@ -91,5 +91,10 @@
 
     </LinearLayout>
 
-
+    <ProgressBar
+        android:id="@+id/progressLoader"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"/>
 </RelativeLayout>

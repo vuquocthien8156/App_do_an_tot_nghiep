@@ -53,12 +53,13 @@ class RootCartAdapter(var context : Context, var arrCart : ArrayList<MainProduct
             .into(holder.imgProduct)
 
         holder.txtName.setText("${c.nameProduct} (${c.size})")
-        val price = when(c.size){
+        var price = when(c.size){
             "S" -> c.priceProduct
             "M" -> c.priceMProduct
             else -> c.priceLProduct
         }
 
+        price += (price * c.quantity) + c.arrTopping.sumBy { (it.quantity*it.priceProduct).toInt() }
         holder.txtPrice.setText(DecimalFormat("###,###,###").format(price)+" đ")
         holder.txtQuantity.setText(c.quantity.toString())
 

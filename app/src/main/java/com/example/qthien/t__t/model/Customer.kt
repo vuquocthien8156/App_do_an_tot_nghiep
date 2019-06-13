@@ -9,7 +9,7 @@ data class Customer(
     @SerializedName("user_id")
     var idCustomer: Int,
     @SerializedName("fb_id")
-    var id_fb: String?,
+    var id_fb: String? = "",
     @SerializedName("ten")
     var nameCustomer: String?,
     @SerializedName("sdt")
@@ -21,10 +21,10 @@ data class Customer(
     @SerializedName("ngay_sinh")
     var birthday : String?,
     @SerializedName("email")
-    var email : String? = null,
+    var email : String? = "",
     @SerializedName("dia_chi")
     var address : String?,
     @SerializedName("avatar")
-    var avatar : String? = null,
+    var avatar : String?,
     var password : String?
 ) : Parcelable

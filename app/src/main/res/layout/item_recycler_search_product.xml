@@ -7,6 +7,7 @@
         android:layout_margin="5dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
+        android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -27,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:textSize="16sp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:textColor="@color/colorPrimaryText"
                 android:layout_toEndOf="@id/imgProductSearch"
                 android:layout_marginEnd="20dp"
@@ -41,7 +42,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:text="50.000đ"
                 android:layout_below="@id/txtNameProductSearch"
                 android:layout_marginEnd="20dp"/>

@@ -1,24 +1,55 @@
 package com.example.qthien.t__t.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.support.v7.util.SortedList
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Product
+import com.example.qthien.t__t.presenter.pre_product_favorite.PreProductFavoriteActi
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
+import com.example.qthien.t__t.view.cart.AddToCartActivity
+import com.example.qthien.t__t.view.detail_product.DetailProductActivity
+import com.example.qthien.t__t.view.main.MainActivity
+import com.example.qthien.t__t.view.product_favorite.IViewProductFavoriteActi
 import kotlinx.android.synthetic.main.item_recycler_search_product.view.*
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SearchProductAdapter(var context : Context,
                            var mComparator: Comparator<Product>? = null):
-    RecyclerView.Adapter<SearchProductAdapter.ViewHolder>() {
+    RecyclerView.Adapter<SearchProductAdapter.ViewHolder>() , IViewProductFavoriteActi {
+
+    override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {}
+
+    override fun favoriteProduct(resultCode: String) {
+        addOrRemoveFavorite()
+    }
+
+    override fun failureFavorite(message: String) {
+        Toast.makeText(context , message , Toast.LENGTH_LONG).show()
+    }
+
+    var arrFavorite = ArrayList<String>()
+    var position = -1
+    var idProduct = -1
+    var favo = -1
+    init {
+        val stringFavorite = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE).getString("arrFavorite", null)
+        if(stringFavorite != null)
+            arrFavorite.addAll(stringFavorite.replace("[", "").replace("]", "").split(","))
+    }
 
     private val mSortedList =
         SortedList<Product>(Product::class.java, object : SortedList.Callback<Product>() {
@@ -63,8 +94,21 @@ class SearchProductAdapter(var context : Context,
 
     override fun getItemCount(): Int = mSortedList.size()
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(vh: ViewHolder, p1: Int) {
         val p = mSortedList.get(p1)
+
+
+        if(arrFavorite.find { it.trim().equals(p.idProduct.toString()) } != null) {
+            vh.ibtnFavorite.setImageResource(R.drawable.ic_unlike)
+            vh.ibtnFavorite.setTag(R.drawable.ic_unlike)
+            Log.d("favoooooo" , "No")
+        }else {
+            vh.ibtnFavorite.setImageResource(R.drawable.ic_favorite_red_36dp)
+            vh.ibtnFavorite.setTag(R.drawable.ic_favorite_red_36dp)
+            Log.d("favoooooo" , "Yes")
+        }
+
         GlideApp.with(context)
             .load("${RetrofitInstance.baseUrl}/${p.imageProduct}")
             .into(vh.img)
@@ -81,15 +125,44 @@ class SearchProductAdapter(var context : Context,
                 price = p.priceLProduct
             }
         }
-        vh.txtPrice.setText(DecimalFormat("#.###").format(price))
+        vh.txtPrice.setText(DecimalFormat("#,###,###").format(price) + " đ")
 
         vh.ibtnAddCart.setOnClickListener({
-
+            val i = Intent(context , AddToCartActivity::class.java)
+            i.putExtra("product" , p)
+            context.startActivity(i)
         })
 
         vh.ibtnFavorite.setOnClickListener({
-
+            favo = 0
+            if(it.getTag() == R.drawable.ic_favorite_red_36dp){
+                favo = 1
+            }
+            this.position = p1
+            idProduct = p.idProduct
+            PreProductFavoriteActi(this).favoriteProduct(p.idProduct ,
+                    MainActivity.customer!!.idCustomer , favo)
         })
+
+        vh.layout.setOnClickListener({
+            val i = Intent(context , DetailProductActivity::class.java)
+            i.putExtra("product" , p)
+            context.startActivity(i)
+        })
+    }
+
+    fun addOrRemoveFavorite(){
+        Log.d("favoooooo" , arrFavorite.toString())
+        if(favo == 1){
+            arrFavorite.add(idProduct.toString().trim())
+        }
+        else{
+            arrFavorite.remove(idProduct.toString().trim())
+        }
+        context.getSharedPreferences("Favorite" , Context.MODE_PRIVATE).edit()
+                .putString( "arrFavorite" , arrFavorite.toString()).apply()
+        Log.d("favoooooo" , arrFavorite.toString())
+        notifyItemChanged(position)
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -98,6 +171,7 @@ class SearchProductAdapter(var context : Context,
         val txtPrice : TextView = itemView.txtPriceProductSearch
         val ibtnAddCart : ImageButton = itemView.ibtnAddToCart
         val ibtnFavorite : ImageButton = itemView.ibtnFavorite
+        val layout = itemView.layout
     }
 
     fun add(model: Product) {

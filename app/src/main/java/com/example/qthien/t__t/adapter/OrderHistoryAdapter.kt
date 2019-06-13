@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Order
-import com.example.qthien.t__t.view.order_history.OrderHistoryDetailActivity
+import com.example.qthien.t__t.view.order.OrderHistoryDetailActivity
 import kotlinx.android.synthetic.main.item_recy_history_order.view.*
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat

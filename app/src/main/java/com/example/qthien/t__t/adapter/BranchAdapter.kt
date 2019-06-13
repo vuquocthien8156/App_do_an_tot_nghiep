@@ -1,6 +1,8 @@
 package com.example.qthien.t__t.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +39,13 @@ class BranchAdapter(var context : Context, var arrBranch : ArrayList<Branch>)
             branchCallActivity?.startCallPhone(arrBranch[p1].phoneNumberBranch)
         }
 
+        p0.txtDirectory.setOnClickListener({
+            val gmmIntentUri = Uri.parse("google.navigation:q=${arrBranch[p1].latitude},${arrBranch[p1].longitude}")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            context.startActivity(mapIntent)
+        })
+
         GlideApp.with(context)
             .load("https://noithatcaphe.vn/images/2016/06/14/thiet-ke-noi-that-quan-cafe-phong-cach-co-dien-dep-doc-dao-2.jpg")
             .into(p0.img)
@@ -47,5 +56,6 @@ class BranchAdapter(var context : Context, var arrBranch : ArrayList<Branch>)
         val txtName = itemView.txtNameBranch
         val txtAddress = itemView.txtAddressBranch
         val txtPhone = itemView.txtPhoneBranch
+        val txtDirectory = itemView.txtDirectory
     }
 }

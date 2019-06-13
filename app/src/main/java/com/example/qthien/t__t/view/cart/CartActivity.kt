@@ -1,18 +1,22 @@
 package com.example.qthien.t__t.view.cart
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.Toast
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.adapter.RootCartAdapter
 import com.example.qthien.t__t.model.MainProductCart
 import com.example.qthien.t__t.presenter.pre_cart.PreCart
 import com.example.qthien.t__t.view.main.MainActivity
+import com.example.qthien.t__t.view.order.OrderActivity
 import kotlinx.android.synthetic.main.activity_cart.*
+import java.text.DecimalFormat
 
 class CartActivity : AppCompatActivity() , IViewCart , RootCartAdapter.AdapterCartCallActivity{
 
@@ -30,6 +34,7 @@ class CartActivity : AppCompatActivity() , IViewCart , RootCartAdapter.AdapterCa
         }
         else
             Toast.makeText(this , R.string.fail_again , Toast.LENGTH_LONG).show()
+        progressLoader.visibility = View.GONE
     }
 
     override fun failure(message: String) {
@@ -59,6 +64,25 @@ class CartActivity : AppCompatActivity() , IViewCart , RootCartAdapter.AdapterCa
         recyCart.isNestedScrollingEnabled = false
 
         PreCart(this).getAllCartUser(MainActivity.customer!!.idCustomer)
+
+        relaToDepay.setOnClickListener({
+            startActivity(Intent(this , OrderActivity::class.java))
+        })
+
+        setUpQuantityAndPrice()
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun setUpQuantityAndPrice(){
+        val share = getSharedPreferences("QuantityPrice" , Activity.MODE_PRIVATE)
+        val quantity = share.getInt("quantity" , 0)
+        val price = share.getInt("price" , 0)
+
+        if(quantity != 0){
+            relaToDepay.visibility = View.VISIBLE
+            txtQuantity.setText(quantity.toString())
+            txtSumPriceCart.setText(DecimalFormat("###,###,###").format(price)+ " đ")
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,11 +90,14 @@ class CartActivity : AppCompatActivity() , IViewCart , RootCartAdapter.AdapterCa
         if(requestCode == REQUEST_EDIT_CART && resultCode == Activity.RESULT_OK && data != null)
         {
             val arrUpdate :  ArrayList<MainProductCart>? = data.extras?.getParcelableArrayList("arrCartNews")
-            if(arrUpdate != null){
+            if(arrUpdate != null && arrUpdate.size > 0){
                 arrCart.clear()
                 arrCart.addAll(arrUpdate)
                 adapter.notifyDataSetChanged()
+                setUpQuantityAndPrice()
             }
+            else
+                finish()
         }
     }
 

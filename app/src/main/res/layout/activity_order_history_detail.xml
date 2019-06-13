@@ -23,7 +23,7 @@
     <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".view.order_history.OrderHistoryDetailActivity"
+            tools:context=".view.order.OrderHistoryDetailActivity"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
@@ -137,13 +137,22 @@
                         android:layout_height="match_parent"/>
             </RelativeLayout>
 
+            <ProgressBar
+                android:id="@+id/progressLoader"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:visibility="visible"
+                />
+
             <RelativeLayout
+                    android:id="@+id/relaDetailOrder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:padding="8dp"
+                    android:visibility="gone"
                     android:background="@drawable/shape_btn_main">
 
                 <TextView
@@ -211,7 +220,7 @@
                             android:layout_alignParentEnd="true"
                             android:textSize="16sp"
                             android:textColor="@color/colorPrimaryText"
-                            android:text="50.000đ"/>
+                            android:text="0đ"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -240,7 +249,7 @@
                             android:layout_alignParentEnd="true"
                             android:textSize="16sp"
                             android:textColor="@color/colorPrimaryText"
-                            android:text="50.000đ"/>
+                            android:text="0đ"/>
                 </RelativeLayout>
 
                 <RelativeLayout

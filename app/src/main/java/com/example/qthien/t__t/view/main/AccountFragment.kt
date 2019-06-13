@@ -9,15 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Customer
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.LawActivity
+import com.example.qthien.t__t.view.WebActivity
 import com.example.qthien.t__t.view.customer.CustomerActivity
 import com.example.qthien.t__t.view.delivery_address.DeliveryAddressActivity
-import com.example.qthien.t__t.view.order_history.OrderHistoryActivity
+import com.example.qthien.t__t.view.order.OrderHistoryActivity
 import com.example.qthien.t__t.view.product_favorite.ProductFavoriteActivity
 import com.example.qthien.t__t.view.view_login.LoginActivity
 import com.facebook.accountkit.AccountKit
@@ -54,7 +53,6 @@ class AccountFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(MainActivity.customer != null){
-            setLogin(MainActivity.customer!!)
             toolbarAccount.setOnClickListener({
                 startActivity(Intent(context , CustomerActivity::class.java))
             })
@@ -95,16 +93,16 @@ class AccountFragment : Fragment() {
         })
 
         txtLaw.setOnClickListener({
-            startActivity(Intent(context , LawActivity::class.java))
+            val i = Intent(context , WebActivity::class.java)
+            i.putExtra("url" , "${RetrofitInstance.baseUrl}/rule")
+            startActivity(i)
         })
     }
 
     override fun onStart() {
         super.onStart()
-        Toast.makeText(context , "onStart" , Toast.LENGTH_LONG).show()
-        if(MainActivity.customer == null)
-            setLogout()
-        else
+        Log.d("logggoutt" , "onStart")
+        if(MainActivity.customer != null)
             setLogin(MainActivity.customer!!)
     }
 
@@ -116,8 +114,6 @@ class AccountFragment : Fragment() {
             val c = MainActivity.customer
             Log.d("cccccccc" ,"2" + c.toString())
             if(c != null) {
-                setLogin(c)
-
                 if(call.equals(""))
                     communicationToMain?.checkSelectedFragmentNews()
                 if(call.equals("favorite"))
@@ -141,10 +137,8 @@ class AccountFragment : Fragment() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden)
-            if(MainActivity.customer != null) {
+            if(MainActivity.customer != null)
                 setLogin(MainActivity.customer!!)
-            }else
-                setLogout()
     }
 
     private fun setLogin(c : Customer) {
@@ -154,15 +148,16 @@ class AccountFragment : Fragment() {
         txtPointUser.visibility = View.VISIBLE
         txtMember.visibility = View.VISIBLE
 
+        Log.d("logggoutt" , "a")
+
         if(c.avatar != null)
-            GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/${c.avatar}")
-                .into(imgAvataAccount)
-        else
-            if(MainActivity.customerFB != null)
-                GlideApp.with(context!!).load(MainActivity.customerFB!!.avatar)
-                    .into(imgAvataAccount)
+            if(!c.avatar!!.contains("https://"))
+                GlideApp.with(this).load(RetrofitInstance.baseUrl + "/" + c.avatar)
+                        .into(imgAvataAccount)
             else
-                GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/images/logo1.png")
+                GlideApp.with(this).load(c.avatar).into(imgAvataAccount)
+        else
+            GlideApp.with(context!!).load("${RetrofitInstance.baseUrl}/images/logo1.png")
                     .into(imgAvataAccount)
 
         if(c.point == null)
@@ -175,6 +170,9 @@ class AccountFragment : Fragment() {
     }
 
     fun setLogout(){
+
+        Log.d("logggoutt" , "setLogoutAccc")
+
         txtLogout.visibility = View.GONE
         txtNameCustomerAccount.visibility = View.GONE
         txtPointUser.visibility = View.GONE
@@ -182,6 +180,8 @@ class AccountFragment : Fragment() {
         imgAvataAccount.visibility = View.GONE
         btnLoginNowAccount.visibility = View.VISIBLE
     }
+
+    val callNews = fun() =  communicationToMain?.checkSelectedFragmentNews()
 
     fun logout(){
 
@@ -194,7 +194,6 @@ class AccountFragment : Fragment() {
         }
         context!!.getSharedPreferences("Login" , Context.MODE_PRIVATE).edit().clear().apply()
         MainActivity.customer = null
-        MainActivity.customerFB = null
         setLogout()
         communicationToMain?.checkSelectedFragmentNews()
     }

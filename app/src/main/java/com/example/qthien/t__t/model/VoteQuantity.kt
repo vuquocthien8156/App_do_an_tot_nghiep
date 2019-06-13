@@ -1,18 +1,21 @@
 package com.example.qthien.t__t.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class VoteQuantity(
         @SerializedName("tong")
         var total: Int,
-        @SerializedName("nam_diem")
+        @SerializedName("namdiem")
         var totalFive: Int,
-        @SerializedName("bon_diem")
+        @SerializedName("bondiem")
         var totalFour: Int,
-        @SerializedName("ba_diem")
+        @SerializedName("badiem")
         var totalThree: Int,
-        @SerializedName("hai_diem")
+        @SerializedName("haidiem")
         var totalTwo: Int,
-        @SerializedName("mot_diem")
+        @SerializedName("motdiem")
         var totalOne: Int
-)
+) : Parcelable

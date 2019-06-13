@@ -128,14 +128,16 @@
             android:layout_below="@id/line2"
             android:layout_width="match_parent"
             android:background="@color/colorSecondaryText"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true">
         <TextView
                 android:id="@+id/txtAddtopping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorIconsText"
                 android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+                android:paddingBottom="8dp"
                 android:text="@string/add_topping"
                 android:textSize="16sp"
                 android:textStyle="bold"

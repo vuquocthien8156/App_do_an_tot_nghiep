@@ -7,7 +7,6 @@
 
 
     <TextView
-
             android:padding="15dp"
             android:textSize="16sp"
             android:textColor="#fff"
@@ -15,7 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:id="@+id/txtShowAddress" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/txtShowAddresss"
+        app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

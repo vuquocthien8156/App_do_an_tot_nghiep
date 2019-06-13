@@ -7,17 +7,34 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:popupMenuStyle">@style/PopupTheme</item>
+        <item name="actionMenuTextColor">@color/colorIconsText</item>
+        <item name="android:actionMenuTextColor">@color/colorIconsText</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/color_grey_light</item>
-        <item name="colorControlActivated">#E91E63</item>
+        <item name="colorControlActivated">#FFE500</item>
     </style>
 
     <style name="EditextStyle" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">#c5c5c5</item>
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
+    </style>
+
+    <style name="CounterText" parent="TextAppearance.Design.Counter">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="CounterOverFlow" parent="TextAppearance.Design.Counter.Overflow">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="HintText" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="PopupWindowTheme" parent="Theme.AppCompat.Light.NoActionBar">

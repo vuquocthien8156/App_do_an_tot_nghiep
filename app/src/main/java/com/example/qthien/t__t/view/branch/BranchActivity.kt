@@ -25,6 +25,7 @@ class BranchActivity : AppCompatActivity() , IBranchActivity , BranchAdapter.Bra
         else
             Toast.makeText(this , R.string.fail_again , Toast.LENGTH_LONG).show()
         adapter.notifyDataSetChanged()
+        swipeRefreshLayout.isRefreshing = false
     }
 
     override fun failureBranch(message: String) {
@@ -69,7 +70,17 @@ class BranchActivity : AppCompatActivity() , IBranchActivity , BranchAdapter.Bra
         recy_branch.layoutManager = layoutManager
         recy_branch.adapter = adapter
 
+        swipeRefreshLayout.isRefreshing = true
         PreBranch(this).getBranchFolowArea()
+
+        swipeRefreshLayout.setOnRefreshListener {
+            PreBranch(this).getBranchFolowArea()
+        }
+    }
+
+    override fun supportNavigateUpTo(upIntent: Intent) {
+        onBackPressed()
+        super.supportNavigateUpTo(upIntent)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

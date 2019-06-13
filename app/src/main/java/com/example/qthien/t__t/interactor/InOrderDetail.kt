@@ -2,14 +2,14 @@ package com.example.qthien.t__t.interactor
 
 import android.util.Log
 import com.example.qthien.t__t.model.ResponseDetailOrder
-import com.example.qthien.t__t.presenter.order.IPreDetailOrder
+import com.example.qthien.t__t.presenter.order.IPreDetailOrderHistory
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class InOrderDetail(var iPreDetailOrder: IPreDetailOrder) {
+class InOrderDetail(var iPreDetailOrder: IPreDetailOrderHistory) {
     val instance = RetrofitInstance.getRetrofit
     fun getOrderDetail(idOrder : Int) {
         val call = instance.getOrderDetail(idOrder)

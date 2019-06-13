@@ -1,36 +1,46 @@
 package com.example.qthien.t__t.view.main
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.checkSelfPermission
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.*
+import com.example.qthien.t__t.FragmentDialogShowAddress
+import com.example.qthien.t__t.R
 import com.example.qthien.t__t.adapter.FilterAdapter
 import com.example.qthien.t__t.adapter.ViewPagerTabAdapter
 import com.example.qthien.t__t.model.CatalogyProduct
-import com.example.qthien.t__t.model.LatLng
+import com.example.qthien.t__t.model.InfoAddress
 import com.example.qthien.t__t.model.Product
 import com.example.qthien.t__t.presenter.pre_frag_order.PreFragOrder
 import com.example.qthien.t__t.view.cart.CartActivity
 import com.example.qthien.t__t.view.delivery_address.DeliveryAddressActivity
 import com.example.qthien.t__t.view.search_product.SearchProductActivity
 import kotlinx.android.synthetic.main.fragment_orders.*
+import java.text.DecimalFormat
 
 
+class OrderFragment : Fragment() , IViewFragOrder{
 
-
-class OrderFragment : Fragment() , IViewFragOrder {
+    interface OrderFragmentCallMain{
+        fun visibleNavigation(boolean: Boolean)
+     }
 
     companion object {
         fun newInstance() : OrderFragment = OrderFragment()
@@ -38,29 +48,111 @@ class OrderFragment : Fragment() , IViewFragOrder {
 
     private val REQUEST_FINE_LOCATION = 100
     private val REQUEST_CODE_ADDRESS = 101
-    private var address : String? = null
-    private var latLngNow : LatLng? = null
+    private var addressInfo : InfoAddress? = null
+    private var latLngNow : com.google.android.gms.maps.model.LatLng? = null
     private var arrCatalogyProduct : ArrayList<CatalogyProduct>? = null
     private var adapterViewPager : ViewPagerTabAdapter? = null
     private var fragmentSelected : Fragment? = null
+    private var orderFragmentCallMain : OrderFragmentCallMain? = null
+    var checkGPSFirst = false
+    lateinit var preFragOrder : PreFragOrder
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        preFragOrder = PreFragOrder(context!! , this@OrderFragment)
+        return layoutInflater.inflate(com.example.qthien.t__t.R.layout.fragment_orders , container , false)
+    }
+
+    fun initLayoutLocation(){
+        lnLocation.visibility = View.VISIBLE
+        btnGPS.setOnClickListener({
+            val locationManager : LocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val isGPSEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            if(isGPSEnable) {
+                preFragOrder.getLocation()
+                lnLocation.visibility = View.GONE
+            }
+            else {
+                val action = Settings.ACTION_LOCATION_SOURCE_SETTINGS
+                startActivity(Intent(action))
+            }
+        })
+        btnAddressDefaul.setOnClickListener({
+            preFragOrder.getAddressInfo(MainActivity.customer!!.idCustomer)
+            lnLocation.visibility = View.GONE
+        })
+        btnCancel.setOnClickListener({
+            txtAddressOrder.setText(R.string.not_address_delivery)
+        })
+
+        checkGPSFirst = true
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(context , "onStart" , Toast.LENGTH_LONG).show()
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(context!!,
+            if (ContextCompat.checkSelfPermission(context!!,
                             Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                 requestPermissions(
                         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                         REQUEST_FINE_LOCATION)
-            else {
-                Log.d("TAGGG", "Yes")
-                PreFragOrder(context!!, this).getLocation()
-            }
+            else
+                checkGPS()
         }
         else
-            PreFragOrder(context!!, this).getLocation()
+            checkGPS()
+    }
 
-        return layoutInflater.inflate(com.example.qthien.t__t.R.layout.fragment_orders , container , false)
+
+    fun checkGPS(){
+        val locationManager : LocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGPSEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if(isGPSEnable) {
+            lnLocation.visibility = View.GONE
+            checkGPSFirst = true
+            if(addressInfo == null)
+                preFragOrder.getLocation()
+        }else{
+            if(addressInfo == null && !checkGPSFirst)
+                initLayoutLocation()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun resultGetAddressDefault(infoAddress: InfoAddress?) {
+        if(infoAddress != null) {
+            addressInfo = infoAddress.copy()
+            txtAddressOrder.setText("${addressInfo?.nameCustomer} - ${addressInfo?.addressInfo} - ${addressInfo?.phoneCustomer}")
+        }else {
+            val address = context?.getSharedPreferences("address" , Context.MODE_PRIVATE)?.
+                    getString("address" , "")
+            if(address.equals(""))
+                txtAddressOrder.setText(R.string.not_address_delivery)
+            else
+                txtAddressOrder.setText(address)
+        }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if(context is OrderFragmentCallMain)
+            orderFragmentCallMain = context
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun setUpQuantityAndPrice(){
+        val share = context!!.getSharedPreferences("QuantityPrice" , Activity.MODE_PRIVATE)
+        val quantity = share.getInt("quantity" , 0)
+        val price = share.getInt("price" , 0)
+
+        if(quantity != 0){
+            relaToDepay.visibility = View.VISIBLE
+            txtQuantity.setText(quantity.toString())
+            txtSumPriceCart.setText(DecimalFormat("###,###,###").format(price)+ " đ")
+        }
+        else
+            relaToDepay.visibility = View.GONE
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +161,7 @@ class OrderFragment : Fragment() , IViewFragOrder {
         setLinetab()
 
         arrCatalogyProduct = ArrayList()
-        PreFragOrder(context!! , this).getAllCatalogy()
+        preFragOrder.getAllCatalogy()
 
         ibtnSearch.setOnClickListener({
             startActivity(Intent(context , SearchProductActivity::class.java))
@@ -80,11 +172,12 @@ class OrderFragment : Fragment() , IViewFragOrder {
         })
 
         btnChangeAddress.setOnClickListener({
-            startActivityForResult(Intent(context , DeliveryAddressActivity::class.java) , REQUEST_CODE_ADDRESS)
+            val i = Intent(context , DeliveryAddressActivity::class.java)
+            startActivityForResult(i , REQUEST_CODE_ADDRESS)
         })
 
         txtAddressOrder.setOnClickListener({
-            showAddress(txtAddressOrder.text.toString())
+            showAddress()
         })
 
         relaToDepay.setOnClickListener({
@@ -95,10 +188,13 @@ class OrderFragment : Fragment() , IViewFragOrder {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
                 fragmentSelected = adapterViewPager?.getRegisteredFragment(position)
+                (fragmentSelected as TabFragment).checkBottomRecycler()
             }
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+
+        setUpQuantityAndPrice()
     }
 
     fun updateViewPager(){
@@ -107,10 +203,10 @@ class OrderFragment : Fragment() , IViewFragOrder {
         }
     }
 
-
-    private fun showAddress(address : String) {
-//        FragmentDialogShowAddress.newInstance(address)
-//            .show(childFragmentManager  , "dialog")
+    private fun showAddress() {
+        if(addressInfo != null)
+            FragmentDialogShowAddress.newInstance(addressInfo)
+            .show(childFragmentManager  , "dialog")
     }
 
     fun loadMenuFilter(view : View){
@@ -143,6 +239,14 @@ class OrderFragment : Fragment() , IViewFragOrder {
         window.setFocusable(true)
 
         window.showAtLocation(view , Gravity.CENTER , 0 , 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CODE_ADDRESS && resultCode == Activity.RESULT_OK && data != null){
+            addressInfo = data.extras?.getParcelable("address")
+            txtAddressOrder.setText("${addressInfo?.nameCustomer} - ${addressInfo?.addressInfo} - ${addressInfo?.phoneCustomer}")
+        }
     }
 
     fun eventSelectedItemListView(tabPosition : Int , idCatalogy : Int?){
@@ -184,22 +288,23 @@ class OrderFragment : Fragment() , IViewFragOrder {
         }
         when(requestCode){
             REQUEST_FINE_LOCATION ->{
-                PreFragOrder(context!! , this).getLocation()
+                preFragOrder.getLocation()
             }
         }
     }
 
-    override fun successGetLocationAddress(address: String, latLng: LatLng) {
-        this.address = address
+    override fun successGetLocationAddress(address: String, latLng: com.google.android.gms.maps.model.LatLng) {
+        this.addressInfo = InfoAddress(0 , "" , "" , address , 0 , 0 , 0)
         this.latLngNow = latLng
         txtAddressOrder.setText(address)
-        Toast.makeText(context , address , Toast.LENGTH_LONG).show()
+        context?.getSharedPreferences("address" , Context.MODE_PRIVATE)?.
+                edit()?.putString("address" , address)?.apply()
+        preFragOrder.removeRequest()
     }
 
     override fun failure(message: String) {
         Toast.makeText(context , message , Toast.LENGTH_LONG).show()
-        Toast.makeText(context , "AAAAAAA" , Toast.LENGTH_LONG).show()
-        finishLoader()
+//        finishLoader()
     }
 
     override fun resultGetAllCatalogy(arrCatalogy: ArrayList<CatalogyProduct>?) {
@@ -210,6 +315,25 @@ class OrderFragment : Fragment() , IViewFragOrder {
             viewpagerOrder.adapter = adapterViewPager
             viewpagerOrder.offscreenPageLimit = 4
             tabLayoutOrder.setupWithViewPager(viewpagerOrder)
+        }
+    }
+
+    fun callVisibleNavigationMain(boolean: Boolean){
+        orderFragmentCallMain?.visibleNavigation(boolean)
+    }
+
+    fun visibleBtnFilter(boolean: Boolean){
+        val animHide = AnimationUtils.loadAnimation(context , R.anim.anim_hide_btn_filter)
+        val animShow = AnimationUtils.loadAnimation(context , R.anim.anim_show_btn_filter)
+        if(boolean){
+            if(ibtnFilter.visibility  != View.GONE)
+                ibtnFilter.startAnimation(animHide)
+            ibtnFilter.visibility = View.GONE
+        }
+        else{
+            if(ibtnFilter.visibility  != View.VISIBLE)
+                ibtnFilter.startAnimation(animShow)
+            ibtnFilter.visibility = View.VISIBLE
         }
     }
 

@@ -1,5 +1,8 @@
 package com.example.qthien.t__t.model
 
-class ResponseChildEvaluation (
+import com.google.gson.annotations.SerializedName
+
+data class ResponseChildEvaluation (
+        @SerializedName("list")
     var arrChildEvaluation : ArrayList<ChildEvaluation>
     ) : ResponseDefault()

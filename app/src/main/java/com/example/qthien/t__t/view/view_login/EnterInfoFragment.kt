@@ -25,6 +25,7 @@ class EnterInfoFragment : Fragment() , ILogin {
 
     interface ResultFragmentCallActivity{
         fun popAllBackStack(customer: Customer , size : Int)
+        fun visibleLoader(b: Boolean)
     }
 
     interface FragmentCallActivityEnterInfo{
@@ -93,6 +94,7 @@ class EnterInfoFragment : Fragment() , ILogin {
                     "Nam" -> 0
                     else -> 1
                 }
+                callActivity?.visibleLoader(true)
                 PreLogin(this).register(customer!!)
             }
         })
@@ -159,6 +161,7 @@ class EnterInfoFragment : Fragment() , ILogin {
         Log.d("resultRegisterAccount" , idUser.toString())
         if(idUser == null) {
             Toast.makeText(context , R.string.fail_again , Toast.LENGTH_LONG).show()
+            callActivity?.visibleLoader(false)
         }
         else {
             if (customer != null) {
@@ -181,8 +184,6 @@ class EnterInfoFragment : Fragment() , ILogin {
     override fun failure(message: String) {
         Toast.makeText(context , message , Toast.LENGTH_LONG).show()
     }
-
-    override fun resultExistAccount(email : String? , id_fb : String? , phone : String?) {}
 
     override fun resultLoginAccount(customer: Customer?) {}
 

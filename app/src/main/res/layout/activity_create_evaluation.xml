@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ealuation.CreateEvaluationActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarAddEvaluate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/netedAddEvaluate"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:fillViewport="true"
+        android:layout_below="@id/toolbarAddEvaluate"
+        android:layout_above="@id/relaBottom">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/relaHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp">
+                <ImageView
+                    android:id="@+id/imgProduct"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:scaleType="center"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
+                <TextView
+                    android:id="@+id/txtNameProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imgProduct"
+                    android:textSize="20sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/colorPrimaryText"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/relaHeader"
+                android:background="@color/colorSecondaryText"
+                android:orientation="vertical"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/line"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true">
+                <TextView
+                    android:id="@+id/txtYourEv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/your_evaluate"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"/>
+
+                <RatingBar
+                    android:id="@+id/ratingProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:numStars="5"
+                    android:rating="0"
+                    android:stepSize="1"
+                    style="@style/RatingBar"
+                    android:progressTint="#F9BB28"
+                    android:progressBackgroundTint="#DADADA"
+                    android:secondaryProgressTint="#B8B8B8"
+                    android:layout_below="@+id/txtYourEv"
+                    android:layout_marginTop="8dp"/>
+                <TextView
+                    android:id="@+id/txtNameRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ratingProduct"
+                    android:textColor="@color/colorAccent"
+                    android:text="Cực hài lòng"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"/>
+
+                <RelativeLayout
+                    android:id="@+id/relaSelectedImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtNameRating"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="8dp"
+                    android:background="@drawable/shape_stroke_rectangle_black">
+                    <LinearLayout
+                        android:id="@+id/lnSelectedImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+                        <ImageView
+                            android:id="@+id/imgAddPhotoCamera"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_camera_add"
+                            android:tint="@color/colorSecondaryText"
+                            android:layout_marginEnd="20dp"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/or"
+                            android:textStyle="bold|italic"/>
+
+                        <ImageView
+                            android:id="@+id/imgAddPhoto"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_photo_add"
+                            android:tint="@color/colorSecondaryText"
+                           />
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/txtLead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lnSelectedImg"
+                        android:textColor="@color/colorSecondaryText"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:text="@string/add_images_real_if_you_want"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyImageSelected"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtLead"
+                        android:layout_marginTop="8dp">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                </RelativeLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputlayoutTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/relaSelectedImage"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:hintTextAppearance="@style/HintText"
+                    >
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edtTileEv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/title_evaluation"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:textCursorDrawable="@null"
+                        android:textSize="14sp"
+                        android:padding="12dp"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputlayoutContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputlayoutTitle"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:counterMaxLength="4000"
+                    app:counterEnabled="true"
+                    app:hintTextAppearance="@style/HintText"
+                    app:counterTextAppearance="@style/CounterText"
+                    app:counterOverflowTextAppearance="@style/CounterOverFlow"
+                    >
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edtContentEv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:hint="@string/hint_content_evaluation"
+                        android:textCursorDrawable="@null"
+                        android:textSize="14sp"
+                        android:padding="12dp"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relaBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/btnSendEv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            android:textColor="@color/colortext_un_endable_btn"
+            android:background="@drawable/selector_btn_send_evaluate"
+            android:enabled="false"/>
+    </RelativeLayout>
+
+</RelativeLayout>

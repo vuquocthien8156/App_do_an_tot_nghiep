@@ -1,515 +1,616 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.detail_product.DetailProductActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.detail_product.DetailProductActivity">
+
     <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbarDetailProduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:background="@color/colorPrimary"
-            android:layout_alignParentTop="true">
+        android:id="@+id/toolbarDetailProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPrimary">
 
     </android.support.v7.widget.Toolbar>
+
     <android.support.v4.widget.NestedScrollView
-            android:id="@+id/nestDetail"
-            android:layout_above="@id/lnBtnOrder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbarDetailProduct"
-            android:fillViewport="true">
+        android:id="@+id/nestDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/lnBtnOrder"
+        android:layout_below="@id/toolbarDetailProduct"
+        android:fillViewport="true">
+
         <RelativeLayout
-                android:id="@+id/relaNestedDetailProduct"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            android:id="@+id/relaNestedDetailProduct"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <FrameLayout
-                    android:id="@+id/frmViewPagerDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="5dp">
+                android:id="@+id/frmViewPagerDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp">
+
                 <android.support.v4.view.ViewPager
-                        android:id="@+id/viewpagerImgProducts"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
+                    android:id="@+id/viewpagerImgProducts"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
 
                 </android.support.v4.view.ViewPager>
 
                 <TextView
-                        android:id="@+id/txtPage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginEnd="15dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorPrimaryText"
-                        android:text="1/15"
-                        android:layout_marginBottom="15dp"/>
+                    android:id="@+id/txtPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:text="1/15"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="14sp" />
             </FrameLayout>
 
             <TextView
-                    android:id="@+id/txtNameProduct"
+                android:id="@+id/txtNameProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/frmViewPagerDetail"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="#fff"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:text="Trà sữa trân châu"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/lnPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtNameProduct"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:paddingTop="8dp">
+
+                <LinearLayout
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#000"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/lnPriceS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/txtSizeS"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Size S"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <TextView
+                        android:id="@+id/txtPriceSProduct"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:gravity="end"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Giá: 56,000đ"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#000"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/lnPriceM"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/txtSizeM"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Size M"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <TextView
+                        android:id="@+id/txtPriceMProduct"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:gravity="end"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Giá: 60,000đ"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#000"
+                    android:orientation="vertical" />
+
+                <LinearLayout
+                    android:id="@+id/lnPriceL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="10">
+
+                    <TextView
+                        android:id="@+id/txtSizeL"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Size L"
+                        android:textColor="@color/colorPrimaryText" />
+
+                    <TextView
+                        android:id="@+id/txtPriceLProduct"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:gravity="end"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Giá: 64,000đ"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="#000"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lnDeription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lnPrice"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
                     android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/decription"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp" />
+
+                <at.blogc.android.views.ExpandableTextView
+                    android:id="@+id/txtDeriptionProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
-                    android:textSize="20sp"
-                    android:textColor="@color/colorPrimaryText"
-                    android:text="Trà sữa trân châu"
+                    app:animation_duration="750" />
+
+                <TextView
+                    android:id="@+id/btnReadMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_alignParentStart="true"
-                    android:background="#fff"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@id/frmViewPagerDetail"/>
-
-            <LinearLayout
-                    android:id="@+id/lnPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#fff"
-                    android:layout_below="@id/txtNameProduct"
-                    android:layout_alignParentStart="true"
-                    android:paddingTop="8dp"
-                    android:layout_alignParentEnd="true">
-                <LinearLayout
-                        android:id="@+id/line1"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:background="#000"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_height="1dp"/>
-                <LinearLayout
-                        android:id="@+id/lnPriceS"
-                        android:layout_width="match_parent"
-                        android:weightSum="10"
-                        android:layout_height="wrap_content">
-                    <TextView
-                            android:id="@+id/txtSizeS"
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/colorPrimaryText"
-                            android:text="Size S"/>
-                    <TextView
-                            android:id="@+id/txtPriceSProduct"
-                            android:layout_width="0dp"
-                            android:layout_weight="7"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:textColor="@color/colorPrimary"
-                            android:text="Giá: 56,000đ"
-                            android:textStyle="bold"
-                            android:gravity="end"
-                            android:paddingBottom="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:background="#000"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_height="1dp"/>
-
-                <LinearLayout
-                        android:id="@+id/lnPriceM"
-                        android:layout_width="match_parent"
-                        android:weightSum="10"
-                        android:layout_height="wrap_content">
-                    <TextView
-                            android:id="@+id/txtSizeM"
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/colorPrimaryText"
-                            android:text="Size M"
-                    />
-                    <TextView
-                            android:id="@+id/txtPriceMProduct"
-                            android:layout_width="0dp"
-                            android:layout_weight="7"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/colorPrimary"
-                            android:text="Giá: 60,000đ"
-                            android:textStyle="bold"
-                            android:gravity="end"
-                    />
-
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:background="#000"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_height="1dp"/>
-
-                <LinearLayout
-                        android:id="@+id/lnPriceL"
-                        android:layout_width="match_parent"
-                        android:weightSum="10"
-                        android:layout_height="wrap_content">
-                    <TextView
-                            android:id="@+id/txtSizeL"
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/colorPrimaryText"
-                            android:text="Size L"
-                    />
-                    <TextView
-                            android:id="@+id/txtPriceLProduct"
-                            android:layout_width="0dp"
-                            android:layout_weight="7"
-                            android:layout_height="wrap_content"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="@color/colorPrimary"
-                            android:text="Giá: 64,000đ"
-                            android:textStyle="bold"
-                            android:gravity="end"
-                    />
-                </LinearLayout>
-
-                <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:background="#000"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_height="1dp"/>
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/read_more" />
             </LinearLayout>
 
-            <LinearLayout
-                    android:id="@+id/lnDeription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/lnPrice"
-                    android:paddingTop="8dp"
-                    android:background="#fff"
-                    android:orientation="vertical"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true">
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/colorPrimaryText"
-                        android:text="@string/decription"/>
-                <at.blogc.android.views.ExpandableTextView
-                        android:id="@+id/txtDeriptionProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="3"
-                        android:ellipsize="end"
-                        app:animation_duration="750"
-                        android:text="@string/text"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+            <ProgressBar
+                android:id="@+id/progressLoader"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:visibility="visible"
+                android:layout_below="@id/lnDeription"
                 />
-                <TextView
-                        android:id="@+id/btnReadMore"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:background="@android:color/transparent"
-                        android:text="@string/read_more"
-                />
-            </LinearLayout>
 
             <LinearLayout
-                    android:id="@+id/lnEvaluation"
+                android:id="@+id/lnEvaluation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/progressLoader"
+                android:background="#fff"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/lnDeription"
-                    android:layout_marginTop="10dp"
-                    android:background="#fff"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:orientation="vertical">
-                <TextView
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
                         android:text="@string/customer_evaluation"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:textSize="16sp"
                         android:textColor="@color/colorPrimaryText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="16sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="9"/>
+
+                    <ImageButton
+                        android:id="@+id/ibtnAddEvaluation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_write_evaluation"
+                        />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/txtNotEvaluation"
+                    android:text="@string/not_evaluation"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
                         android:id="@+id/lnInfoEvaluation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
+                        android:orientation="horizontal"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
                         android:weightSum="10">
-                    <LinearLayout
-                            android:layout_weight="3"
+
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:paddingTop="15dp"
-                            android:paddingBottom="15dp"
-                            android:orientation="vertical">
-                        <TextView
-                                android:text="4,5/5"
-                                android:gravity="center"
-                                android:textSize="20sp"
-                                android:textColor="@color/colorPrimaryText"
+                            android:layout_weight="3"
+                            android:orientation="vertical"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp">
+
+                            <TextView
+                                android:id="@+id/txtRatio"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-                        <RatingBar
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="4,5/5"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="20sp" />
+
+                            <RatingBar
+                                android:id="@+id/ratingRatio"
+                                style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:numStars="5"
                                 android:rating="4.5"
-                                android:layout_gravity="center"
-                                android:theme="@style/RatingBar"
-                                style="?android:attr/ratingBarStyleSmall"
-                                android:layout_height="wrap_content"/>
-                        <TextView
-                                android:text="272 bình chọn"
-                                android:gravity="center"
-                                android:textSize="12sp"
-                                android:textColor="@color/colorPrimaryText"
+                                android:theme="@style/RatingBar" />
+
+                            <TextView
+                                android:id="@+id/txtTotalEvaluation"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
-                    </LinearLayout>
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="272 bình chọn"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="12sp" />
+                        </LinearLayout>
 
-                    <LinearLayout
+                        <LinearLayout
                             android:layout_width="2dp"
-                            android:background="@color/color_grey_light"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:background="@color/color_grey_light" />
 
-                    <LinearLayout
-                            android:layout_weight="7"
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="7"
                             android:orientation="vertical">
-                        <LinearLayout
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-                            <RatingBar
+
+                                <RatingBar
+                                    style="?android:attr/ratingBarStyleSmall"
                                     android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="20dp"
                                     android:numStars="5"
                                     android:rating="5"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_gravity="center"
-                                    android:theme="@style/RatingBar"
-                                    style="?android:attr/ratingBarStyleSmall"
-                                    android:layout_height="wrap_content"/>
-                            <ProgressBar
-                                    android:layout_marginStart="10dp"
+                                    android:theme="@style/RatingBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressFive"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="0dp"
-                                    android:progress="60"
-                                    android:layout_weight="1"
+                                    android:layout_height="3dp"
                                     android:layout_gravity="center_vertical"
-                                    android:progressDrawable="@drawable/layer_progressbar"
-                                    android:layout_height="3dp"/>
-
-                            <TextView
                                     android:layout_marginStart="10dp"
-                                    android:text="60%"
-                                    android:textSize="12sp"
+                                    android:layout_weight="1"
+                                    android:progress="60"
+                                    android:progressDrawable="@drawable/layer_progressbar" />
+
+                                <TextView
+                                    android:id="@+id/txtPercentFive"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginEnd="10dp"/>
-                        </LinearLayout>
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:text="60%"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
 
-                        <LinearLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-                            <RatingBar
+
+                                <RatingBar
+                                    style="?android:attr/ratingBarStyleSmall"
                                     android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="20dp"
                                     android:numStars="5"
                                     android:rating="4"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_gravity="center"
-                                    android:theme="@style/RatingBar"
-                                    style="?android:attr/ratingBarStyleSmall"
-                                    android:layout_height="wrap_content"/>
-                            <ProgressBar
-                                    android:layout_marginStart="10dp"
+                                    android:theme="@style/RatingBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressFour"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="0dp"
-                                    android:progress="60"
-                                    android:layout_weight="1"
+                                    android:layout_height="3dp"
                                     android:layout_gravity="center_vertical"
-                                    android:progressDrawable="@drawable/layer_progressbar"
-                                    android:layout_height="3dp"/>
-
-                            <TextView
                                     android:layout_marginStart="10dp"
-                                    android:text="60%"
+                                    android:layout_weight="1"
+                                    android:progress="60"
+                                    android:progressDrawable="@drawable/layer_progressbar" />
+
+                                <TextView
+                                    android:id="@+id/txtPercentFour"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:layout_marginEnd="10dp"/>
-                        </LinearLayout>
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:text="60%"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
 
-                        <LinearLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-                            <RatingBar
+
+                                <RatingBar
+                                    style="?android:attr/ratingBarStyleSmall"
                                     android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="20dp"
                                     android:numStars="5"
                                     android:rating="3"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_gravity="center"
-                                    android:theme="@style/RatingBar"
-                                    style="?android:attr/ratingBarStyleSmall"
-                                    android:layout_height="wrap_content"/>
-                            <ProgressBar
-                                    android:layout_marginStart="10dp"
+                                    android:theme="@style/RatingBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressThree"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="0dp"
-                                    android:progress="60"
-                                    android:layout_weight="1"
+                                    android:layout_height="3dp"
                                     android:layout_gravity="center_vertical"
-                                    android:progressDrawable="@drawable/layer_progressbar"
-                                    android:layout_height="3dp"/>
-
-                            <TextView
                                     android:layout_marginStart="10dp"
-                                    android:text="60%"
+                                    android:layout_weight="1"
+                                    android:progress="60"
+                                    android:progressDrawable="@drawable/layer_progressbar" />
+
+                                <TextView
+                                    android:id="@+id/txtPercentThree"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:layout_marginEnd="10dp"/>
-                        </LinearLayout>
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:text="60%"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
 
-                        <LinearLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-                            <RatingBar
+
+                                <RatingBar
+                                    style="?android:attr/ratingBarStyleSmall"
                                     android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="20dp"
                                     android:numStars="5"
                                     android:rating="2"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_gravity="center"
-                                    android:theme="@style/RatingBar"
-                                    style="?android:attr/ratingBarStyleSmall"
-                                    android:layout_height="wrap_content"/>
-                            <ProgressBar
-                                    android:layout_marginStart="10dp"
+                                    android:theme="@style/RatingBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressTwo"
                                     style="?android:attr/progressBarStyleHorizontal"
                                     android:layout_width="0dp"
-                                    android:progress="60"
-                                    android:layout_weight="1"
+                                    android:layout_height="3dp"
                                     android:layout_gravity="center_vertical"
-                                    android:progressDrawable="@drawable/layer_progressbar"
-                                    android:layout_height="3dp"/>
-
-                            <TextView
                                     android:layout_marginStart="10dp"
-                                    android:text="60%"
+                                    android:layout_weight="1"
+                                    android:progress="60"
+                                    android:progressDrawable="@drawable/layer_progressbar" />
+
+                                <TextView
+                                    android:id="@+id/txtPercentTwo"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:layout_marginEnd="10dp"/>
-                        </LinearLayout>
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:text="60%"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
 
-                        <LinearLayout
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-                            <RatingBar
-                                    android:layout_width="wrap_content"
-                                    android:numStars="5"
-                                    android:rating="1"
-                                    android:layout_marginStart="20dp"
-                                    android:layout_gravity="center"
-                                    android:theme="@style/RatingBar"
-                                    style="?android:attr/ratingBarStyleSmall"
-                                    android:layout_height="wrap_content"/>
-                            <ProgressBar
-                                    android:layout_marginStart="10dp"
-                                    style="?android:attr/progressBarStyleHorizontal"
-                                    android:layout_width="0dp"
-                                    android:progress="60"
-                                    android:layout_weight="1"
-                                    android:layout_gravity="center_vertical"
-                                    android:progressDrawable="@drawable/layer_progressbar"
-                                    android:layout_height="3dp"/>
 
-                            <TextView
-                                    android:layout_marginStart="10dp"
-                                    android:text="60%"
+                                <RatingBar
+                                    style="?android:attr/ratingBarStyleSmall"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:layout_marginEnd="10dp"/>
+                                    android:layout_gravity="center"
+                                    android:layout_marginStart="20dp"
+                                    android:numStars="5"
+                                    android:rating="1"
+                                    android:theme="@style/RatingBar" />
+
+                                <ProgressBar
+                                    android:id="@+id/progressOne"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="3dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_weight="1"
+                                    android:progress="60"
+                                    android:progressDrawable="@drawable/layer_progressbar" />
+
+                                <TextView
+                                    android:id="@+id/txtPercentOne"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:text="60%"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </LinearLayout>
-
-                <Button android:layout_width="match_parent"
+                    <Button
+                        android:id="@+id/btnWriteEvaluation"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@color/color_grey_light"
-                        android:textColor="@color/colorPrimary"
-                        android:text="@string/write_evaluation"/>
+                        android:text="@string/write_evaluation"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary" />
 
-                <android.support.v7.widget.RecyclerView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerEvaluation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="5dp">
 
-                </android.support.v7.widget.RecyclerView>
+                    </android.support.v7.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/btnReadMoreEvaluation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_btn_login"
+                        android:backgroundTint="@color/color_grey_light"
+                        android:gravity="center"
+                        android:paddingTop="10dp"
+                        android:textColor="@color/colorPrimaryText"
+                        android:paddingBottom="10dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/read_more" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </RelativeLayout>
@@ -517,25 +618,27 @@
     </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
-            android:id="@+id/lnBtnOrder"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:background="#fff"
-            android:layout_height="wrap_content">
+        android:id="@+id/lnBtnOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="#fff">
+
         <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:textSize="14sp"
-                android:textColor="@color/colorIconsText"
-                android:background="@drawable/shape_btn_main"
-                android:backgroundTint="@color/colorAccent"
-                android:text="@string/order_now"
-                android:layout_marginTop="5dp"/>
+            android:id="@+id/btnOrderNow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_btn_main"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/order_now"
+            android:textColor="@color/colorIconsText"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </RelativeLayout>

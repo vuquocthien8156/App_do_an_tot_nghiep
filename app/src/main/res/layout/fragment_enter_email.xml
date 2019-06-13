@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#fff">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/colorPrimaryText"
-            android:text="@string/enter_email_login_register"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText"
+        android:text="@string/enter_email_login_register"/>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lnEnterEmail"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_centerVertical="true"
-            android:orientation="vertical" android:layout_alignParentStart="true" android:layout_alignParentEnd="true">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lnEnterEmail"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" android:layout_alignParentStart="true" android:layout_alignParentEnd="true">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:id="@+id/edtEnterEmail"
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:hint="@string/your_email"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/txtShowError"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-            <EditText
-                    android:id="@+id/edtEnterEmail"
-                    android:layout_width="match_parent"
-                    android:inputType="textEmailAddress"
-                    android:hint="@string/your_email"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:id="@+id/txtShowError"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ff0000"
-                    android:textSize="12sp"
-                    android:paddingStart="3dp"
-                    android:paddingEnd="3dp"
-                    />
+                android:textColor="#ff0000"
+                android:textSize="12sp"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
+                />
         </LinearLayout>
         <Button
-                android:id="@+id/btnContinuteEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/shape_btn_login"
-                android:backgroundTint="@color/colorAccent"
-                android:textColor="@color/colorIconsText"
-                android:text="@string/continute"/>
+            android:id="@+id/btnContinuteEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/shape_btn_login"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/colorIconsText"
+            android:text="@string/continute"/>
 
         <TextView
-                android:id="@+id/txtForgotPass"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp"
-                android:focusable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/forgot_pass"
-        />
+            android:id="@+id/txtForgotPass"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="16sp"
+            android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_pass"
+            />
     </LinearLayout>
 
 </RelativeLayout>

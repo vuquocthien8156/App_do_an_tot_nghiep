@@ -20,20 +20,20 @@ import com.example.qthien.t__t.model.ToppingProductCart
 import com.example.qthien.t__t.presenter.pre_cart.PreSheetTopping
 import kotlinx.android.synthetic.main.dialog_sheet_topping.*
 
-class DialogSheetTopping : BottomSheetDialogFragment() ,
-    ToppingAdapter.SelectedTopping,
-    ToppingSelectedAdapter.CommunicationActiAdd,
-    IDialogSheetTopping{
+class DialogSheetTopping : BottomSheetDialogFragment(),
+        ToppingAdapter.SelectedTopping,
+        ToppingSelectedAdapter.CommunicationActiAdd,
+        IDialogSheetTopping {
 
-    interface CompleteTopping{
-        fun completeEditTopping(arrToppingEdit : ArrayList<ToppingProductCart>)
+    interface CompleteTopping {
+        fun completeEditTopping(arrToppingEdit: ArrayList<ToppingProductCart>)
     }
 
-    private var completeTopping : CompleteTopping? = null
+    private var completeTopping: CompleteTopping? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if(context is CompleteTopping)
+        if (context is CompleteTopping)
             completeTopping = context
     }
 
@@ -47,35 +47,39 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
             this.arrToping.addAll(arrTopping)
             adapterMain.notifyDataSetChanged()
             progress_load_topping.visibility = View.GONE
-            if(context!!.getSharedPreferences("lead_add_topping" , MODE_PRIVATE).getInt("lead" , 0) == 0){
+            if (context!!.getSharedPreferences("lead_add_topping", MODE_PRIVATE).getInt("lead", 0) == 0) {
                 showAlertLead()
             }
         }
     }
 
     override fun removerTopping(position: Int) {
-        arrTopingSelected.get(position).quantity -= 1
-
-        if(arrTopingSelected.get(position).quantity == 0)
+        Log.d("quantityyyy", arrTopingSelectedOld.toString())
+        var quantity = arrTopingSelected.get(position).quantity
+        quantity -= 1
+        arrTopingSelected.get(position).quantity = quantity
+        if(quantity == 0)
             arrTopingSelected.removeAt(position)
+
+        Log.d("quantityyyy", arrTopingSelected.toString())
+        Log.d("quantityyyy", arrTopingSelectedOld.toString())
 
         if (arrTopingSelected.size == 0)
             txtParent.setText(com.example.qthien.t__t.R.string.not_topping_selected)
-        adapterOrder.notifyDataSetChanged()
 
+        adapterOrder.notifyDataSetChanged()
+        adapterOrder.remove = false
         checkChange()
     }
 
     override fun selectedTopping(position: Int) {
 
-        Log.d("quantityyyy", arrTopingSelected.toString())
-        Log.d("quantityyyy", arrTopingSelected.map { it.quantity }.sum().toString())
-        if (arrTopingSelected.sumBy { it.quantity } <= 2){
+        if (arrTopingSelected.sumBy { it.quantity } <= 2) {
             val tpSelected = arrToping[position]
             val p = arrTopingSelected.find { it.idProduct == tpSelected.idProduct }
 
             val product = ToppingProductCart(
-                tpSelected.idProduct, tpSelected.nameProduct, tpSelected.priceProduct, 1
+                    tpSelected.idProduct, tpSelected.nameProduct, tpSelected.priceProduct, 1
             )
             if (p != null) {
                 product.quantity += p.quantity
@@ -87,10 +91,9 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
             else {
                 arrTopingSelected.add(0, product)
             }
-        }else
+        } else
             showArleTopping()
 
-        Log.d("SelecteddTopping", arrTopingSelected.size.toString())
 
         adapterOrder.notifyDataSetChanged()
         txtParent.setText(com.example.qthien.t__t.R.string.view_topping_selected)
@@ -98,22 +101,33 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
         checkChange()
     }
 
-    fun checkChange(){
+    fun checkChange() {
         var i = 0
-        for(topping in arrTopingSelected){
+        for (topping in arrTopingSelected) {
             val t = arrTopingSelectedOld.find { it.equals(topping) }
-            if(t != null)
+            if (t != null)
                 i += 1
         }
+        Log.d("sizeeees", arrTopingSelected.size.toString())
+        Log.d("sizeeees", arrTopingSelectedOld.size.toString())
+        Log.d("sizeeees", i.toString())
+        Log.d("sizeeees", arrTopingSelected.toString())
+        Log.d("sizeeees", arrTopingSelectedOld.toString())
+        Log.d("sizeeees", "------------------------")
 
-        if(i == arrTopingSelected.size){
-            btnComplete.setText(R.string.back)
-            btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_remove)
-        }
-        else{
+
+        if (arrTopingSelectedOld.size == arrTopingSelected.size) {
+            if (arrTopingSelectedOld.size == i) {
+                btnComplete.setText(R.string.back)
+                btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_remove)
+                return
+            }
             btnComplete.setText(R.string.update)
             btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_update)
+            return
         }
+        btnComplete.setText(R.string.update)
+        btnComplete.setBackgroundResource(R.drawable.shape_btn_cart_update)
     }
 
     private lateinit var adapterMain: ToppingAdapter
@@ -121,29 +135,34 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
 
     private lateinit var arrTopingSelected: ArrayList<ToppingProductCart>
     private lateinit var arrToping: ArrayList<Product>
-    private lateinit var arrTopingSelectedOld : ArrayList<ToppingProductCart>
+    private lateinit var arrTopingSelectedOld: ArrayList<ToppingProductCart>
 
     private var preSheetTopping = PreSheetTopping(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return layoutInflater.inflate(R.layout.dialog_sheet_topping , container , false)
+        return layoutInflater.inflate(R.layout.dialog_sheet_topping, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arrTopingSelected = ArrayList()
-        arrToping = ArrayList()
         arrTopingSelectedOld = ArrayList()
+        arrToping = ArrayList()
 
         val arr = arguments?.getParcelableArrayList<ToppingProductCart>("topping")
-        if(arr != null) {
-            arrTopingSelectedOld.addAll(arr)
-            arrTopingSelected.addAll(arr)
+        if (arr != null) {
+            for(t in arr) {
+                arrTopingSelectedOld.add(t.copy())
+                arrTopingSelected.add(t.copy())
+            }
+            Log.d("sizeeees", arrTopingSelectedOld.toString())
+            Log.d("sizeeees", arrTopingSelected.toString())
+            Log.d("sizeeees", "------------------------")
         }
 
-        adapterMain = ToppingAdapter(context!! , arrToping)
-        adapterOrder = ToppingSelectedAdapter(context!! , arrTopingSelected)
+        adapterMain = ToppingAdapter(context!!, arrToping)
+        adapterOrder = ToppingSelectedAdapter(context!!, arrTopingSelected)
 
         adapterMain.selectedTopping = this
         adapterOrder.communicationActiAdd = this
@@ -157,41 +176,40 @@ class DialogSheetTopping : BottomSheetDialogFragment() ,
         preSheetTopping.getAllProductTopping()
 
         btnComplete.setOnClickListener({
-            if(btnComplete.text.equals(context!!.getString(R.string.back))){
+            if (btnComplete.text.equals(context!!.getString(R.string.back))) {
                 dismiss()
-            }
-            else{
-                if(completeTopping != null)
+            } else {
+                if (completeTopping != null)
                     completeTopping?.completeEditTopping(arrTopingSelected)
+                Log.d("sizeeees", arrTopingSelected.toString())
                 dismiss()
             }
         })
 
     }
 
-    fun showAlertLead(){
+    fun showAlertLead() {
         val alert = AlertDialog.Builder(context!!)
 
         alert.setTitle(R.string.can_not_know)
-        alert.setIcon(R.drawable.ic_mainn)
         alert.setMessage(R.string.lead_add_topping)
-        alert.setPositiveButton(R.string.know , ({ dialogInterface: DialogInterface, i: Int ->
+        alert.setPositiveButton(R.string.know, ({ dialogInterface: DialogInterface, i: Int ->
             onCancel(dialogInterface)
         }))
-        alert.setNegativeButton(R.string.not_show_again , ({ dialogInterface: DialogInterface, i: Int ->
-            context!!.getSharedPreferences("lead_add_topping" , MODE_PRIVATE)
-                .edit().putInt("lead" , 1).apply()
+        alert.setNegativeButton(R.string.not_show_again, ({ dialogInterface: DialogInterface, i: Int ->
+            context!!.getSharedPreferences("lead_add_topping", MODE_PRIVATE)
+                    .edit().putInt("lead", 1).apply()
             onCancel(dialogInterface)
         }))
         alert.show()
     }
 
-    fun showArleTopping(){
+    fun showArleTopping() {
         val alert = AlertDialog.Builder(context!!)
         alert.setTitle(R.string.noti)
         alert.setIcon(R.drawable.ic_main)
         alert.setMessage(R.string.error_add_topping)
-        alert.setPositiveButton(R.string.know , ({ dialogInterface: DialogInterface, i: Int ->
+        alert.setPositiveButton(R.string.know, ({ dialogInterface: DialogInterface, i: Int ->
             onCancel(dialogInterface)
         }))
         alert.show()
