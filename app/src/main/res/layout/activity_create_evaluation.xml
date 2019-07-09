@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ealuation.CreateEvaluationActivity">
+    tools:context=".mvp.view.ealuation.CreateEvaluationActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarAddEvaluate"
@@ -232,4 +232,21 @@
             android:enabled="false"/>
     </RelativeLayout>
 
+    <FrameLayout
+            android:id="@+id/frmLoader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:focusable="false"
+            android:clickable="false"
+            android:visibility="gone"
+    >
+        <com.tuyenmonkey.mkloader.MKLoader
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:mk_type="TwinFishesSpinner"
+                app:mk_color="@color/colorPrimary"
+        />
+    </FrameLayout>
 </RelativeLayout>

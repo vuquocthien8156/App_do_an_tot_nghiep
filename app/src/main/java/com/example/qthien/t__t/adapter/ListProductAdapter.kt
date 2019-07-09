@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Discount
 import com.example.qthien.t__t.model.ProductByCatalogy
 import kotlinx.android.synthetic.main.item_list_product.view.*
 
 class ListProductAdapter(internal var context: Context,
-                         internal var arrListProduct: ArrayList<ProductByCatalogy>
+                         internal var arrListProduct: ArrayList<ProductByCatalogy>,
+                         var discount : Discount?
 ) : RecyclerView.Adapter<ListProductAdapter.ViewHolder>(){
 
 
@@ -24,7 +26,7 @@ class ListProductAdapter(internal var context: Context,
         val arr = arrListProduct[p1].arrProduct
         val layoutManager = GridLayoutManager(context , 2)
         vh.recyclerView.layoutManager = layoutManager
-        val adapter = ProductsAdapter(context, arr)
+        val adapter = ProductsAdapter(context, arr , discount)
         vh.recyclerView.adapter = adapter
     }
 

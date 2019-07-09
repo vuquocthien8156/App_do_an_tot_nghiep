@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.ealuation.EvaluationActivity"
+    tools:context=".mvp.view.ealuation.EvaluationActivity"
     android:fitsSystemWindows="true">
 
 
@@ -76,7 +76,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="4,5/5"
                             android:textColor="@color/colorPrimaryText"
                             android:textSize="20sp" />
 
@@ -87,7 +86,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:numStars="5"
-                            android:rating="4.5"
                             android:theme="@style/RatingBar" />
 
                         <TextView
@@ -138,6 +136,7 @@
                                 android:progressDrawable="@drawable/layer_progressbar" />
 
                             <TextView
+                                android:id="@+id/txtPercentFive"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -173,6 +172,7 @@
                                 android:progressDrawable="@drawable/layer_progressbar" />
 
                             <TextView
+                                android:id="@+id/txtPercentFour"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -208,6 +208,7 @@
                                 android:progressDrawable="@drawable/layer_progressbar" />
 
                             <TextView
+                                android:id="@+id/txtPercentThree"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -243,6 +244,7 @@
                                 android:progressDrawable="@drawable/layer_progressbar" />
 
                             <TextView
+                                android:id="@+id/txtPercentTwo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -278,6 +280,7 @@
                                 android:progressDrawable="@drawable/layer_progressbar" />
 
                             <TextView
+                                android:id="@+id/txtPercentOne"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
@@ -291,6 +294,7 @@
                 </LinearLayout>
 
                 <Button
+                        android:id="@+id/btnWriteEv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -346,11 +350,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/colorSecondaryText"/>
-                
-                <ProgressBar
-                    android:id="@+id/progressLoaderFirst"
+
+                <TextView
+                    android:id="@+id/txtNotEv"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:text="@string/not_evaluation"
+                    android:visibility="gone"/>
+
+                <com.tuyenmonkey.mkloader.MKLoader
+                        android:id="@+id/progressLoaderFirst"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        app:mk_type="Worm"
+                        app:mk_color="@color/colorPrimary"
+                        android:visibility="visible"
+                />
+
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerEvaluation"

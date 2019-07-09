@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.InfoAddress
-import com.example.qthien.t__t.view.delivery_address.DeliveryAddressActivity
+import com.example.qthien.t__t.mvp.view.delivery_address.DeliveryAddressActivity
 import kotlinx.android.synthetic.main.item_recy_address_delivery.view.*
 
 class DeliveryAdapterAddress(var context : Context, var arrAdress : ArrayList<InfoAddress>)

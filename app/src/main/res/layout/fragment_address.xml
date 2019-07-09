@@ -1,19 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-
-    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:fillViewport="true">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="#fff"
+    >
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address"
-            android:layout_centerInParent="true"/>
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/check_address"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryText"/>
+
+        <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitle"
+                android:focusableInTouchMode="true"
+                android:inputType="textPersonName"
+                android:textSize="14sp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:hint="@string/full_name_order"
+        />
+
+        <FrameLayout
+                android:id="@+id/lnedtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtName"
+        >
+            <EditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone|numberSigned"
+                    android:textSize="14sp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:hint="@string/phone_number"
+                    android:paddingEnd="32dp"
+            />
+
+            <ImageButton
+                    android:id="@+id/ibtnSelectedContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_contacts_24dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:background="@android:color/transparent"
+                    android:layout_marginEnd="6dp"
+                    />
+        </FrameLayout>
+
+
+        <EditText
+                android:id="@+id/edtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lnedtPhone"
+                android:textSize="14sp"
+                android:paddingTop="12dp"
+                android:hint="@string/address_deivery"
+                android:paddingBottom="12dp"
+        />
+
+        <Button
+                android:id="@+id/btnSelectedInBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/edtAddress"
+                android:drawableEnd="@drawable/ic_book"
+                android:textStyle="bold"
+                android:text="@string/book_address"/>
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

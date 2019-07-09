@@ -1,7 +1,9 @@
 package com.example.qthien.t__t.adapter
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Paint
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.SparseBooleanArray
@@ -33,12 +35,35 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<Detail
 
     override fun getItemCount(): Int = arrDetail.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position : Int) {
         val arr = arrDetail[position]
 
         holder.txtQuantity.text = arr.quantity.toString()
         holder.txtNameProduct.text = arr.nameProduct
+
+        holder.txtPriceCurrent.text = DecimalFormat("###,###,###").format(arr.unitPrice) + " đ"
         holder.txtPrice.text = DecimalFormat("###,###,###").format(arr.total) + " đ"
+
+        if(arr.priceDiscount != 0L){
+            holder.imgArrow.visibility = View.VISIBLE
+            holder.txtPriceDiscount.visibility = View.VISIBLE
+            holder.txtPriceCurrent.setPaintFlags(holder.txtPriceCurrent.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+
+            holder.txtPriceDiscount.text = DecimalFormat("###,###,###").format(arr.priceDiscount) + " đ"
+        }
+        else{
+            holder.imgArrow.visibility = View.GONE
+            holder.txtPriceDiscount.visibility = View.GONE
+        }
+
+        if(arr.note == null || arr.note.equals("")){
+            holder.txtNote.visibility = View.GONE
+        }
+        else{
+            holder.txtNote.visibility = View.VISIBLE
+            holder.txtNote.setText(arr.note)
+        }
 
         holder.setIsRecyclable(false)
 
@@ -76,11 +101,11 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<Detail
             holder.expandableLinearLayout.initLayout()
 
 
-        if(arr.arrTopping != null){
+        if(arr.arrTopping.size > 0){
             holder.ibtn.visibility = View.VISIBLE
 
             val arrTopping = ArrayList<ToppingProductCart>()
-            for(t in arr.arrTopping!!){
+            for(t in arr.arrTopping){
                 arrTopping.add(ToppingProductCart( t.idProduct , t.nameProduct , t.unitPrice , t.quantity))
             }
 
@@ -88,7 +113,7 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<Detail
             holder.recyToping.adapter = ToppingSelectedAdapter(context , arrTopping)
         }
         else
-            holder.ibtn.visibility = View.GONE
+            holder.ibtn.visibility = View.INVISIBLE
 
     }
 
@@ -107,5 +132,9 @@ class DetailOrderAdapter(var context : Context, var arrDetail : ArrayList<Detail
         val txtQuantity = itemView.txtQuantityProductOrder
         val txtNameProduct = itemView.txtNameProductOrder
         val txtPrice = itemView.txtPriceProductOrder
+        val txtNote = itemView.txtNote
+        val txtPriceCurrent = itemView.txtPriceCurrent
+        val txtPriceDiscount = itemView.txtPriceDiscount
+        val imgArrow = itemView.imgArrow
     }
 }

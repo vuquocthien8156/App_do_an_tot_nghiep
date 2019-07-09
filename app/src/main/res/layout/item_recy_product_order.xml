@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+    <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3x"
+            android:textColor="@color/colorAccent"
+            android:layout_marginEnd="6dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@drawable/shape_stroke_rectangle_black"
+    />
+
+    <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/txtQuantity"
+            android:text="Trà sữa trân châu đen trắng"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_toStartOf="@id/txtPrice"
+            android:ellipsize="end"/>
+    <RelativeLayout
+            android:id="@+id/relaPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/txtQuantity"
+            android:layout_below="@+id/txtName"
+            android:layout_toStartOf="@id/txtPrice"
+    >
+        <TextView
+                android:id="@+id/txtPriceCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="35.000đ"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
+                android:textColor="@color/colorPrimaryText"
+                android:ellipsize="end"/>
+
+        <ImageView
+                android:id="@+id/imgArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_right"
+                android:layout_toEndOf="@id/txtPriceCurrent"
+        />
+
+        <TextView
+                android:id="@+id/txtPriceDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imgArrow"
+                android:textSize="12sp"
+                android:text="35.000đ"
+                android:paddingStart="4dp"
+                android:textColor="@color/colorPrimary"
+                android:ellipsize="end"/>
+    </RelativeLayout>
+
+    <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="90.000đ"
+            android:layout_marginStart="4dp"
+            android:layout_below="@id/txtName"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentEnd="true"/>
+    <TextView
+            android:id="@+id/txtToppingNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relaPrice"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"
+            android:layout_toEndOf="@id/txtQuantity"
+            android:textColor="@color/colorSecondaryText"
+            android:text="Chân châu hoàng kim , Bánh plan"
+    />
+
+</RelativeLayout>

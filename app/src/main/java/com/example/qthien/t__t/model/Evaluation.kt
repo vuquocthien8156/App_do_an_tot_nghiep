@@ -24,6 +24,8 @@ data class Evaluation(
         var time: String,
         @SerializedName("duyet")
         var done: Int,
+        @SerializedName("dat_hang")
+        var isOrder: Int,
         @SerializedName("so_cam_on")
         var quantityTks: Int,
         @SerializedName("Hinh_anh")

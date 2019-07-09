@@ -18,8 +18,6 @@ data class Product (
     var priceLProduct : Long,
     @SerializedName("ngay_ra_mat")
     var launchDateProduct : String?,
-    @SerializedName("so_lan_dat")
-    var numberOrder : Int,
     @SerializedName("hinh_san_pham")
     var imageProduct : String,
     @SerializedName("mo_ta")

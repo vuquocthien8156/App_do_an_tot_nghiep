@@ -59,7 +59,18 @@ class RootCartAdapter(var context : Context, var arrCart : ArrayList<MainProduct
             else -> c.priceLProduct
         }
 
-        price += (price * c.quantity) + c.arrTopping.sumBy { (it.quantity*it.priceProduct).toInt() }
+        if(c.note == null || c.note.equals("")){
+            holder.txtNote.visibility = View.GONE
+        }else{
+            holder.txtNote.visibility = View.VISIBLE
+            holder.txtNote.setText(c.note)
+        }
+
+        if(c.arrTopping.size > 0)
+            price = (price * c.quantity) + (c.arrTopping.sumBy { (it.quantity*it.priceProduct ).toInt() } * c.quantity)
+        else
+            price = (price * c.quantity)
+
         holder.txtPrice.setText(DecimalFormat("###,###,###").format(price)+" đ")
         holder.txtQuantity.setText(c.quantity.toString())
 
@@ -129,5 +140,6 @@ class RootCartAdapter(var context : Context, var arrCart : ArrayList<MainProduct
         val txtName = itemView.txtNameProductCart
         val txtPrice = itemView.txtPriceProductCart
         val txtQuantity = itemView.txtQuantityProductCart
+        val txtNote = itemView.txtNote
     }
 }

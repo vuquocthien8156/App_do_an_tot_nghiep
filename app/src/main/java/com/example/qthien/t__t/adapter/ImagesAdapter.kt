@@ -19,7 +19,6 @@ class ImagesAdapter(var context : Context ,var  arrImage : ArrayList<ImagesSelec
     }
 
     private var imagesAdapterCallActi : ImagesAdapterCallActi? = null
-    private var isFull = false
 
     init {
         if(context is ImagesAdapterCallActi)
@@ -36,19 +35,14 @@ class ImagesAdapter(var context : Context ,var  arrImage : ArrayList<ImagesSelec
         val r = arrImage[p1]
         GlideApp.with(context).load(r.url).into(p0.img)
 
-        if(r.selected){
+        if(r.selected)
             p0.lnChecked.visibility = View.VISIBLE
-            imagesAdapterCallActi?.selectedImage(r.url)
-        }
-        else{
+        else
             p0.lnChecked.visibility = View.GONE
-            imagesAdapterCallActi?.unSelectedImage(r.url)
-        }
-
 
         p0.frmLayout.setOnClickListener({
             if (!r.selected) {
-                if(!isFull) {
+                if(arrImage.count { it.selected } < 3) {
                     p0.lnChecked.visibility = View.VISIBLE
                     imagesAdapterCallActi?.selectedImage(r.url)
                     r.selected = !r.selected
@@ -60,10 +54,6 @@ class ImagesAdapter(var context : Context ,var  arrImage : ArrayList<ImagesSelec
                 r.selected = !r.selected
             }
         })
-    }
-
-    fun setFulll(boolean: Boolean){
-        isFull = boolean
     }
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){

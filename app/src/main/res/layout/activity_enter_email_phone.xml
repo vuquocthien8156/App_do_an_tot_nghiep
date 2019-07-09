@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.customer.EnterEmailPhoneActivity">
+        tools:context=".mvp.view.customer.EnterEmailPhoneActivity">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -59,16 +59,40 @@
         />
     </LinearLayout>
 
-    <Button
-            android:id="@+id/btnContinute"
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
-            android:layout_below="@id/lnEdtEmailPhone"
-            android:background="@drawable/shape_btn_login"
-            android:backgroundTint="@color/colorAccent"
-            android:textColor="@color/colorIconsText"
-            android:text="@string/continute"/>
+            android:layout_below="@id/lnEdtEmailPhone">
+        <Button
+                android:id="@+id/btnContinute"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_btn_login"
+                android:backgroundTint="@color/colorAccent"
+                android:textColor="@color/colorIconsText"
+                android:text="@string/continute"/>
+        <LinearLayout
+                android:id="@+id/progressLoader"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:visibility="gone"
+                android:background="@drawable/shape_btn_login"
+                android:backgroundTint="@color/colorAccent"
+                android:gravity="center"
+        >
+            <com.tuyenmonkey.mkloader.MKLoader
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:mk_type="Worm"
+                    app:mk_color="@color/colorPrimary"
+            />
+        </LinearLayout>
+
+    </FrameLayout>
+
 </RelativeLayout>

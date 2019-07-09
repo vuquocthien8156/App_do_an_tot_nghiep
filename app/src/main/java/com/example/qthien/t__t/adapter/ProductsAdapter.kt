@@ -10,16 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Discount
 import com.example.qthien.t__t.model.Product
+import com.example.qthien.t__t.mvp.view.cart.AddToCartActivity
+import com.example.qthien.t__t.mvp.view.detail_product.DetailProductActivity
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.cart.AddToCartActivity
-import com.example.qthien.t__t.view.detail_product.DetailProductActivity
 import kotlinx.android.synthetic.main.item_product.view.*
 import java.text.DecimalFormat
 import java.util.*
 
 class ProductsAdapter(internal var context: Context,
-                      internal var arrProducts: ArrayList<Product>
+                      internal var arrProducts: ArrayList<Product>,
+                      var discount : Discount?
 ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
 
@@ -71,6 +73,7 @@ class ProductsAdapter(internal var context: Context,
         vh.layoutContain.setOnClickListener {
             val i = Intent(context , DetailProductActivity::class.java)
             i.putExtra("product" , p)
+            i.putExtra("discount" , discount)
             context.startActivity(i)
         }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutOrder"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.detail_product.DetailProductActivity">
+    tools:context=".mvp.view.detail_product.DetailProductActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarDetailProduct"
@@ -267,13 +268,17 @@
                     android:text="@string/read_more" />
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progressLoader"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:visibility="visible"
-                android:layout_below="@id/lnDeription"
-                />
+            <com.tuyenmonkey.mkloader.MKLoader
+                    android:id="@+id/progressLoader"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    app:mk_type="Worm"
+                    app:mk_color="@color/colorPrimary"
+                    android:visibility="visible"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/lnDeription"
+            />
 
             <LinearLayout
                 android:id="@+id/lnEvaluation"
@@ -323,16 +328,16 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:visibility="gone"
+                    android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content" />
 
                 <LinearLayout
-
+                    android:id="@+id/lnInfoEvaluation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/lnInfoEvaluation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -366,7 +371,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:numStars="5"
-                                android:rating="4.5"
                                 android:theme="@style/RatingBar" />
 
                             <TextView
@@ -582,7 +586,6 @@
                         android:layout_marginEnd="10dp"
                         android:background="@color/color_grey_light"
                         android:text="@string/write_evaluation"
-                        android:visibility="gone"
                         android:textColor="@color/colorPrimary" />
 
                     <android.support.v7.widget.RecyclerView

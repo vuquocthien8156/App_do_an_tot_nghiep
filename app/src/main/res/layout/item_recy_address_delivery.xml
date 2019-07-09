@@ -92,7 +92,7 @@
                     android:background="#7FE2E2E2">
                 <TextView
                         android:id="@+id/txtNameAdd"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
@@ -101,7 +101,9 @@
                         android:text="Vũ Quốc Thiên"
                         android:padding="2dp"
                         android:textColor="#000"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp"/>
 
                 <TextView
                         android:id="@+id/txtPhoneAdd"
@@ -111,6 +113,8 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp"
                 />
 
                 <TextView
@@ -122,6 +126,8 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="30dp"
                         android:maxEms="13"
                         android:maxLines="2"
                 />

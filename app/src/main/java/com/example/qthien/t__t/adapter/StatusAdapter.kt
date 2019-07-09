@@ -10,6 +10,7 @@ import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.StatusOrder
 import kotlinx.android.synthetic.main.item_recy_status.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 class StatusAdapter(var context: Context, var arrStatus: ArrayList<StatusOrder>)
     : RecyclerView.Adapter<StatusAdapter.ViewHolder>(){
@@ -23,6 +24,7 @@ class StatusAdapter(var context: Context, var arrStatus: ArrayList<StatusOrder>)
         p0.txtName.setText(arrStatus[p1].nameStatus)
 
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        format.setTimeZone(TimeZone.getTimeZone("GMT"))
         val format1 = SimpleDateFormat("HH:mm")
         val timeFormat = format1.format(format.parse(arrStatus[p1].timeStatus))
         p0.txtTime.setText(timeFormat)

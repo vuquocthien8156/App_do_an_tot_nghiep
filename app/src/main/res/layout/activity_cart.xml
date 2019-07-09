@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.cart.CartActivity">
+        tools:context=".mvp.view.cart.CartActivity">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarCart"
@@ -59,7 +59,10 @@
                     android:layout_marginBottom="15dp"
                     android:layout_centerVertical="true"
                     android:textSize="12sp"
-                    android:padding="2dp"
+                    android:paddingBottom="4dp"
+                    android:paddingStart="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="4dp"
                     android:textColor="@color/colorIconsText"
                     android:background="@drawable/shape_stroke_rectangle"
                     android:text="200"/>

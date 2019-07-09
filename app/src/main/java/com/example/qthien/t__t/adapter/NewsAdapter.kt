@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.News
+import com.example.qthien.t__t.mvp.view.WebActivity
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.WebActivity
 import kotlinx.android.synthetic.main.item_recyler_news.view.*
 
 class NewsAdapter(internal var context : Context

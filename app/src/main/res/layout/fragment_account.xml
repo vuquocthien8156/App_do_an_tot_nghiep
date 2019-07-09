@@ -13,8 +13,8 @@
                 android:layout_height="wrap_content">
             <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgAvataAccount"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
                     android:src="@drawable/ic_main"
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="3dp"
@@ -34,6 +34,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:visibility="gone"
                     android:text="@string/login_point" android:layout_alignStart="@+id/imgAvataAccount"/>
 
             <TextView
@@ -46,7 +47,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@color/colorIconsText"
-                    android:layout_marginTop="3dp"/>
+                    android:layout_marginTop="15dp"/>
 
                 <TextView
                         android:id="@+id/txtMember"
@@ -85,6 +86,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
         <TextView
+                android:id="@+id/txtPointManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -98,7 +100,7 @@
                 android:background="@drawable/shape_btn_main"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                android:text="@string/rewards"
+                android:text="@string/history_point"
                 android:textColor="@color/colorPrimaryText"
                 />
         <TextView
@@ -159,23 +161,23 @@
                 android:textColor="@color/colorPrimaryText"
         />
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:paddingStart="10dp"
-                android:drawablePadding="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/shape_btn_main"
-                android:drawableStart="@drawable/ic_bank_cards_20"
-                android:paddingEnd="5dp"
-                android:text="@string/Payment"
-                android:textColor="@color/colorPrimaryText"
-        />
+        <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="16sp"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:paddingStart="10dp"-->
+                <!--android:drawablePadding="10dp"-->
+                <!--android:layout_marginEnd="5dp"-->
+                <!--android:layout_marginStart="5dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:background="@drawable/shape_btn_main"-->
+                <!--android:drawableStart="@drawable/ic_bank_cards_20"-->
+                <!--android:paddingEnd="5dp"-->
+                <!--android:text="@string/Payment"-->
+                <!--android:textColor="@color/colorPrimaryText"-->
+        <!--/>-->
         <TextView
                 android:id="@+id/txtLaw"
                 android:layout_width="match_parent"

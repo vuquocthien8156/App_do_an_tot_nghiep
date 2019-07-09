@@ -5,7 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ealuation.DetailEvaluationActivity"
+        android:background="@color/background_material_light"
+        tools:context=".mvp.view.ealuation.DetailEvaluationActivity"
         >
 
         <android.support.v7.widget.Toolbar
@@ -25,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:fillViewport="true"
             android:layout_below="@id/toolbarEvaluation"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_above="@id/frmBottom"
@@ -50,7 +52,7 @@
                         android:layout_height="64dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="0dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="8dp"
                         android:scaleType="center"
@@ -87,17 +89,28 @@
                         android:textSize="16sp" />
                 </RelativeLayout>
 
+                <com.tuyenmonkey.mkloader.MKLoader
+                        android:id="@+id/progressLoaderFirst"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:mk_type="ClassicSpinner"
+                        android:layout_centerHorizontal="true"
+                        app:mk_color="@color/colorPrimary"
+                        android:visibility="visible"
+                        android:layout_below="@+id/relaHeader"
+                />
+
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerChild"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/relaHeader"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp">
+                        android:id="@+id/recyclerChild"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/relaHeader"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp">
 
                 </android.support.v7.widget.RecyclerView>
 
@@ -105,18 +118,23 @@
 
         </android.support.v4.widget.NestedScrollView>
 
+        <com.tuyenmonkey.mkloader.MKLoader
+                android:id="@+id/progressLoader"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:mk_type="ClassicSpinner"
+                app:mk_color="@color/colorPrimary"
+                android:layout_above="@id/frmBottom"
+                android:layout_centerHorizontal="true"
+                android:background="#fff"
+        />
+
         <FrameLayout
             android:id="@+id/frmBottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             >
-            <ProgressBar
-                android:id="@+id/progressLoader"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:visibility="gone"
-                />
 
             <RelativeLayout
                 android:id="@+id/relaEdtEvaluation"
@@ -137,6 +155,7 @@
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_send_gray_24dp" />
+
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

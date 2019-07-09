@@ -11,6 +11,19 @@
         <item name="android:actionMenuTextColor">@color/colorIconsText</item>
     </style>
 
+    <style name="ChipTextAppearance" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">#212121</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">#CCCCCC</item>
+        <item name="android:textAppearance">@style/ChipTextAppearance</item>
+    </style>
+
+    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="CustomChipChoiceStyle">@style/ChipStyle</item>
+    </style>
+
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/color_grey_light</item>
         <item name="colorControlActivated">#FFE500</item>
@@ -55,5 +68,24 @@
     <style name="SpashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/layer_splash</item>
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="dialog" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#4267b2</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="SlirdThemeFullScreen" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 </resources>

@@ -40,15 +40,14 @@
             android:layout_alignParentStart="true"
     />
     <TextView
-            android:id="@+id/txtDaMuaHang"
+            android:id="@+id/txtIsOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="12sp"
             android:layout_marginTop="2dp"
             android:layout_below="@id/txtTitleEvaluation"
-            android:text="Đã mua hàng"
-            android:textColor="#00C20D"
+            android:textColor="@color/green_compelete"
             android:layout_toEndOf="@id/ratingEvaluation"/>
     <TextView
             android:id="@+id/txtNameUserEvaluation"

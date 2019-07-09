@@ -15,20 +15,22 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.model.Discount
 import com.example.qthien.t__t.model.Product
-import com.example.qthien.t__t.presenter.pre_product_favorite.PreProductFavoriteActi
+import com.example.qthien.t__t.mvp.presenter.pre_product_favorite.PreProductFavoriteActi
+import com.example.qthien.t__t.mvp.view.cart.AddToCartActivity
+import com.example.qthien.t__t.mvp.view.detail_product.DetailProductActivity
+import com.example.qthien.t__t.mvp.view.main.MainActivity
+import com.example.qthien.t__t.mvp.view.product_favorite.IViewProductFavoriteActi
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.cart.AddToCartActivity
-import com.example.qthien.t__t.view.detail_product.DetailProductActivity
-import com.example.qthien.t__t.view.main.MainActivity
-import com.example.qthien.t__t.view.product_favorite.IViewProductFavoriteActi
 import kotlinx.android.synthetic.main.item_recycler_search_product.view.*
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchProductAdapter(var context : Context,
-                           var mComparator: Comparator<Product>? = null):
+                           var mComparator: Comparator<Product>? = null,
+                           var discount : Discount?):
     RecyclerView.Adapter<SearchProductAdapter.ViewHolder>() , IViewProductFavoriteActi {
 
     override fun resultGetProductFavorite(arrResult: ArrayList<Product>?) {}
@@ -44,7 +46,7 @@ class SearchProductAdapter(var context : Context,
     var arrFavorite = ArrayList<String>()
     var position = -1
     var idProduct = -1
-    var favo = -1
+    var favo = 0
     init {
         val stringFavorite = context.getSharedPreferences("Favorite", Context.MODE_PRIVATE).getString("arrFavorite", null)
         if(stringFavorite != null)
@@ -147,12 +149,16 @@ class SearchProductAdapter(var context : Context,
         vh.layout.setOnClickListener({
             val i = Intent(context , DetailProductActivity::class.java)
             i.putExtra("product" , p)
+            i.putExtra("discount" , discount)
             context.startActivity(i)
         })
     }
 
     fun addOrRemoveFavorite(){
+
         Log.d("favoooooo" , arrFavorite.toString())
+        Log.d("favoooooo" , favo.toString())
+
         if(favo == 1){
             arrFavorite.add(idProduct.toString().trim())
         }

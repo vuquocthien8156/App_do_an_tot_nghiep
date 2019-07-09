@@ -7,15 +7,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance{
     private var retrofit : Retrofit? = null
-    val baseUrl = "http://192.168.0.102:8000"
+    val baseUrl = "http://192.168.43.102:8000"
 
     val getRetrofit : GetData
         get(){
             if(retrofit == null){
-
                 val client = OkHttpClient.Builder()
                     .addNetworkInterceptor(StethoInterceptor())
-                    .build();
+                    .build()
 
                 retrofit = retrofit2.Retrofit.Builder()
                     .baseUrl(baseUrl)

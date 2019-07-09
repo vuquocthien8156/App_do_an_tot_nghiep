@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.qthien.t__t.view.search_product.SearchProductActivity">
+        tools:context=".mvp.view.search_product.SearchProductActivity">
 
     <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
@@ -35,7 +35,9 @@
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:paddingStart="12dp"
+                    android:inputType="text"
                     android:paddingEnd="12dp"
+                    android:imeOptions="actionDone"
                     android:textSize="16sp"
                     android:hint="@string/enter_keyword"
                     android:background="@drawable/shape_edt_search"/>

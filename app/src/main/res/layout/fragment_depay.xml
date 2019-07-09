@@ -1,19 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
-
-    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:fillViewport="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#fff"
+    >
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Depay"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+                android:id="@+id/txtNoti"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:visibility="gone"
+                android:textColor="@color/colorSecondaryText"
+                android:text="@string/order_as_less_as_fifty_thousand"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#fff"
+        >
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/note_for_order"
+                    android:textSize="16sp"
+                    android:background="#57E9E9E9"
+                    android:textColor="@color/colorPrimaryText"
+                    android:padding="10dp"
+                    android:drawableStart="@drawable/ic_check_green_22dp"
+                    android:drawablePadding="8dp"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                        android:id="@+id/edtNoteOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:padding="10dp"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="14sp"
+                        android:hint="@string/your_note"
+                        android:layout_toStartOf="@id/ibtnClearText"
+                />
+                <ImageButton
+                        android:id="@+id/ibtnClearText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_close_black"
+                        android:visibility="gone"
+                        android:background="@android:color/transparent"
+                        android:layout_marginEnd="10dp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#fff"
+        >
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/discount"
+                    android:textSize="16sp"
+                    android:background="#57E9E9E9"
+                    android:textColor="@color/colorPrimaryText"
+                    android:padding="10dp"
+                    android:drawableStart="@drawable/ic_check_green_22dp"
+                    android:drawablePadding="8dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/txtDiscount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_discount"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimaryText"
+                        android:padding="12dp"
+                        android:layout_marginEnd="32dp"
+                />
+
+                <ImageButton
+                        android:id="@+id/ibtnRemoveDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_close_black"
+                        android:layout_gravity="end|center_vertical"
+                        android:background="@android:color/transparent"
+                        android:layout_marginEnd="10dp"
+                        android:visibility="gone"/>
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#fff"
+        >
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/point_depay"
+                        android:textSize="16sp"
+                        android:background="#57E9E9E9"
+                        android:textColor="@color/colorPrimaryText"
+                        android:padding="10dp"
+                        android:drawableStart="@drawable/ic_check_green_22dp"
+                        android:drawablePadding="8dp"/>
+            </RelativeLayout>
+
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+
+            <CheckBox
+                    android:id="@+id/cbDepayPoint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+            />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#fff">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/method_depay"
+                    android:textSize="16sp"
+                    android:background="#57E9E9E9"
+                    android:textColor="@color/colorPrimaryText"
+                    android:padding="10dp"
+                    android:drawableStart="@drawable/ic_check_green_22dp"
+                    android:drawablePadding="8dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="#99000000"/>
+            <RadioGroup
+                    android:id="@+id/rdoGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:checkedButton="@id/rdoDepayGive"
+            >
+                <RadioButton
+                        android:id="@+id/rdoDepayGive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/depay_delivery_success"
+                />
+                <RadioButton
+                        android:id="@+id/rdoDepayCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/depay_card"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

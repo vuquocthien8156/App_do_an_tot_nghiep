@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.cart.AddToCartActivity">
+        tools:context=".mvp.view.cart.AddToCartActivity">
 
     <ImageButton
             android:id="@+id/imgClose"
@@ -84,7 +84,7 @@
             android:layout_alignParentEnd="true"
             android:gravity="start"
             android:layout_marginEnd="20dp">
-        <Button
+        <android.widget.Button
                 android:id="@+id/btnS"
                 android:layout_width="50dp"
                 android:layout_height="30dp"
@@ -93,7 +93,7 @@
                 android:background="@drawable/shape_btn_size_nomal"
 
         />
-        <Button
+        <android.widget.Button
                 android:id="@+id/btnM"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
@@ -101,7 +101,7 @@
                 android:background="@drawable/shape_btn_size_nomal"
                 android:layout_marginStart="20dp"
         />
-        <Button
+        <android.widget.Button
                 android:id="@+id/btnL"
                 android:layout_width="70dp"
                 android:layout_height="30dp"
@@ -169,33 +169,85 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"/>
 
-    <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputLayout"
+    <FrameLayout
+            android:id="@+id/frmNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line3"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true">
 
-        <android.support.design.widget.TextInputEditText
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:textSize="14sp"
-                android:hint="@string/your_note"
-                android:id="@+id/edtNote"
-                android:backgroundTint="@color/colorSecondaryText"
-                android:textCursorDrawable="@null"
-                android:focusableInTouchMode="true"
-        />
-    </android.support.design.widget.TextInputLayout>
+
+                android:textColorHint="@color/colorPrimary"
+                app:hintTextAppearance="@style/HintText">
+
+            <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="42dp"
+                    android:textSize="14sp"
+                    android:hint="@string/your_note"
+                    android:id="@+id/edtNote"
+                    android:inputType="text"
+                    android:backgroundTint="@color/colorSecondaryText"
+                    android:textCursorDrawable="@null"
+                    android:focusableInTouchMode="true"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageButton
+                android:id="@+id/ibtnClearText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close_black"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="12dp"
+                android:visibility="gone"
+                android:layout_marginTop="18dp"/>
+    </FrameLayout>
+
+    <RelativeLayout
+            android:id="@+id/lnSu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frmNote"
+            android:gravity="center_vertical">
+        <TextView
+                android:id="@+id/txtSu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/suggestions"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="6dp"/>
+
+        <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarSize="2dp"
+                android:layout_toEndOf="@id/txtSu">
+            <android.support.design.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/chipGroup"
+                    style="@style/Widget.MaterialComponents.ChipGroup"
+                    app:singleLine="true"
+                    app:singleSelection="true"/>
+        </HorizontalScrollView>
+
+    </RelativeLayout>
+
 
     <RelativeLayout
             android:id="@+id/rela3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/inputLayout">
+            android:layout_below="@id/lnSu">
         <LinearLayout
                 android:id="@+id/ln1"
                 android:layout_width="wrap_content"
@@ -294,19 +346,19 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/frmLoader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:visibility="gone"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true">
+            android:id="@+id/frmLoader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:visibility="gone"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true">
         <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
     </FrameLayout>
 
 </RelativeLayout>

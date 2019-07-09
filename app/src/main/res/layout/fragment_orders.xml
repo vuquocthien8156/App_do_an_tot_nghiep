@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+        android:id="@+id/layoutOrder"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
                     android:layout_toEndOf="@id/imgBike"
                     android:layout_marginStart="10dp"
                     android:textSize="14sp"
-                    android:text="Địa chỉ"
+                    android:text="loading..."
                     android:textStyle="bold"
                     android:maxLines="1"
                     android:focusable="true"
@@ -105,26 +106,26 @@
             android:background="@color/colorSecondaryText"/>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpagerOrder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/relaToDepay"
-        android:layout_below="@id/linearLine"
-        android:layout_marginTop="-2dp"
-        android:layout_marginBottom="3dp">
+            android:id="@+id/viewpagerOrder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/relaToDepay"
+            android:layout_below="@id/linearLine"
+            android:layout_marginTop="-2dp"
+            android:layout_marginBottom="3dp">
 
     </android.support.v4.view.ViewPager>
 
     <ImageButton
-        android:id="@+id/ibtnFilter"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/shape_btn_filter_order"
-        android:src="@drawable/ic_format_list" />
+            android:id="@+id/ibtnFilter"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignBottom="@id/viewpagerOrder"
+            android:background="@drawable/shape_btn_filter_order"
+            android:src="@drawable/ic_format_list"/>
 
     <RelativeLayout
             android:id="@+id/relaToDepay"
@@ -135,7 +136,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:background="@color/colorAccent">
+            android:background="@color/colorAccent"
+            >
         <TextView
                 android:id="@+id/txtQuantity"
                 android:layout_width="wrap_content"
@@ -148,7 +150,7 @@
                 android:paddingBottom="4dp"
                 android:paddingStart="4dp"
                 android:paddingTop="4dp"
-                android:paddingEnd="6dp"
+                android:paddingEnd="4dp"
                 android:textColor="@color/colorIconsText"
                 android:background="@drawable/shape_stroke_rectangle"
                 android:text="200"/>
@@ -178,82 +180,118 @@
                 android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/lnLocation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="#fff"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLocation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/not_my_location"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryText"
-            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            >
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/leader_check_gps"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/colorSecondaryText"
+                    android:gravity="center"
+                    android:layout_gravity="center"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/please_open_gps_get_my_location_or_defaul_address"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:textColor="@color/colorPrimaryText"
-            android:gravity="center" />
-        <Button
-            android:id="@+id/btnGPS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/open_gps"
-            android:background="@drawable/shape_btn_login"
-            android:backgroundTint="@color/colorAccent"
-            android:layout_marginBottom="8dp"/>
 
-        <Button
-            android:id="@+id/btnAddressDefaul"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/address_default"
-            android:background="@drawable/shape_btn_login"
-            android:backgroundTint="@color/colorAccent"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
-            android:layout_marginBottom="8dp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_my_location"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryText"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="80dp"
+            />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/please_open_gps_get_my_location_or_defaul_address"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+            />
+            <Button
+                    android:id="@+id/btnGPS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/open_gps"
+                    android:background="@drawable/shape_btn_login"
+                    android:backgroundTint="@color/colorAccent"
+                    android:textColor="@color/colorIconsText"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center"
+            />
 
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/watch_product"
-            android:background="@drawable/shape_btn_login"
-            android:backgroundTint="@color/colorAccent"/>
-    </LinearLayout>
+            <Button
+                    android:id="@+id/btnAddressDefaul"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address_default"
+                    android:textColor="@color/colorIconsText"
+                    android:background="@drawable/shape_btn_login"
+                    android:backgroundTint="@color/colorAccent"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center"
+            />
+
+            <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/watch_product"
+                    android:textColor="@color/colorIconsText"
+                    android:background="@drawable/shape_btn_login"
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_gravity="center"
+            />
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <LinearLayout
-        android:id="@+id/lnLoader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="#fff"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible">
+            android:id="@+id/lnLoader"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="#fff"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <com.tuyenmonkey.mkloader.MKLoader
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:mk_type="TwinFishesSpinner"
+                app:mk_color="@color/colorPrimary"
+        />
     </LinearLayout>
 </RelativeLayout>

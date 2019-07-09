@@ -65,6 +65,7 @@
     <string name="permission_deny">Không cho phép truy cập</string>
     <string name="select_address_in_map">Chọn trên bản đồ</string>
     <string name="read_more">Xem thêm</string>
+    <string name="read_more_point">Xem thêm…</string>
     <string name="decription">Mô tả</string>
     <string name="collapse">Thu gọn</string>
     <string name="like">Yêu thích</string>
@@ -83,7 +84,7 @@
     <string name="small">Nhỏ</string>
     <string name="fit">Vừa</string>
     <string name="large">Lớn</string>
-    <string name="topping_for_drink"> Topping cho thức uống</string>
+    <string name="topping_for_drink">Topping cho thức uống</string>
     <string name="provisional">Tạm tính</string>
     <string name="add_cart">Thêm vào giỏ</string>
     <string name="name">Tên</string>
@@ -108,7 +109,7 @@
     <string name="total1">Tổng</string>
     <string name="product">sản phẩm</string>
     <string name="transport_fee">Phí vận chuyển</string>
-    <string name="total">Tổng cộng</string>
+    <string name="total">Thành tiền</string>
     <string name="scan_id_user">Quét mã thành viên</string>
     <string name="title_activity_maps">Map</string>
     <string name="my_location">Vị trí của bạn</string>
@@ -182,7 +183,7 @@
     <string name="or">Hoặc</string>
     <string name="error_edt_content_ev">Bạn đã vượt quá 4000 kí tự</string>
     <string name="evaluate_product">Đánh giá sản phẩm</string>
-    <string name="message_noti_evaluate">Trả lời của bạn sẻ được hiện lên sau khi được duyệt vì có chưa từ ngữ không cho phép.</string>
+    <string name="message_noti_evaluate">Trả lời của bạn có chưa từ ngữ không cho phép.</string>
     <string name="error_selected_img">Chỉ được tối đa 3 hình !!!</string>
     <string name="selected_address">Chọn địa chỉ này</string>
     <string name="search_addess_delivery">Tìm địa chỉ giao hàng</string>
@@ -190,7 +191,8 @@
     <string name="me">Tôi</string>
     <string name="selected_image">Chọn hình ảnh</string>
     <string name="done">Xong</string>
-    <string name="success_evaluate_check_after"><![CDATA[Cám ơn bạn đã gửi đánh giá, T&&T sẽ duyệt đánh giá của bạn trong thời gian sớm nhất!!!]]></string>
+    <string name="success_evaluate_check_after">
+        <![CDATA[Cám ơn bạn đã gửi đánh giá, T&&T sẽ duyệt đánh giá của bạn trong thời gian sớm nhất!!!]]></string>
     <string name="depay">Thanh toán</string>
     <string name="verify">Xác nhận</string>
     <string name="verify_address">Xác nhận địa chỉ</string>
@@ -216,6 +218,98 @@
     <string name="not_my_location">Không tìm được vị trí của bạn</string>
     <string name="open_gps">Định vị</string>
     <string name="address_default">Địa chỉ mặc định</string>
-    <string name="please_open_gps_get_my_location_or_defaul_address">Mở định vị để chúng tôi tìm được vị trí hiện tại của bạn hoặc bạn có thể sửa dụng địa chỉ mặc định nếu có</string>
+    <string name="please_open_gps_get_my_location_or_defaul_address">Mở định vị để chúng tôi tìm được vị trí hiện tại
+        của bạn tốt nhất là ở (chế độ chính xác cao) hoặc bạn có thể sửa dụng địa chỉ mặc định nếu có
+    </string>
     <string name="watch_product">Xem món</string>
+    <string name="discount">Khuyến mãi</string>
+    <string name="has_limit">Có giới hạn</string>
+    <string name="not_limit">Không giới hạn</string>
+    <string name="day_left">ngày nữa</string>
+    <string name="dealine">Hết hạn</string>
+    <string name="use_now">Sửa dụng ngay</string>
+    <string name="duration">Hạn dùng từ</string>
+    <string name="to">đến hết</string>
+    <string name="total_point_use">Tổng điểm sử dụng</string>
+    <string name="total_point_accumulated">Tổng điểm tích đươc</string>
+    <string name="total_surplus">Còn lại</string>
+    <string name="history_point">Lịch sử tích và sử dụng điểm</string>
+    <string name="show_point_accumulated">Hiển điểm tích được</string>
+    <string name="hide_point_accumulated">Ẩn điểm tích được</string>
+    <string name="show_point_use">Hiện điểm sửa dụng</string>
+    <string name="hide_point_use">Ẩn điểm sửa dụng</string>
+    <string name="no_point_continute_order">Bạn chưa có điểm tiếp tục mua hàng để tích điểm</string>
+    <string name="depay_point">Thanh toán bằng điểm</string>
+    <string name="point_use">Điểm sửa dụng</string>
+    <string name="evaluate_of">Đánh giá của</string>
+    <string name="check_address">Kiểm tra thông tin</string>
+    <string name="method_depay">Hình thức thanh toán</string>
+    <string name="point_depay">Sử dụng điểm để thanh toán</string>
+    <string name="verify_depay">Xác nhận thanh toán</string>
+    <string name="check_order">Kiểm tra đơn hàng</string>
+    <string name="depay_delivery_success">Thanh toán bằng tiền mặt khi nhận hàng</string>
+    <string name="depay_card">Thanh toán bằng thẻ</string>
+    <string name="add_discount">Thêm khuyến mãi cho đơn hàng</string>
+    <string name="suggestions">Gợi ý :</string>
+    <string name="not_point_depay">Bạn chưa đủ điểm để thanh toán</string>
+    <string name="you_has">Bạn có</string>
+    <string name="equivalent">tương đương</string>
+    <string name="point">điểm</string>
+    <string name="point_current">Điểm hiện có :</string>
+    <string name="you_want_use_point">Bạn muốn sử dụng số điểm là:</string>
+    <string name="note_use_point">Lưu ý : Bạn chỉ có thể dùng điểm để thanh toán nhỏ hơn hoặc bằng 50% giá trị đơn hàng.
+        Hoặc tổng giá trị đơn hàng.
+        Và sẽ không dược tích điểm.
+    </string>
+    <string name="total_order">Tổng tiền đơn hàng</string>
+    <string name="you_use">Bạn sửa dụng</string>
+    <string name="error_use_point">Số điểm đã vượt quá 50% giá trị đơn hàng</string>
+    <string name="price_from_point">.000đ</string>
+    <string name="info_order">Thông tin đơn hàng</string>
+    <string name="not_selected_method">Chưa chọn hình thức thanh toán</string>
+    <string name="ten_thousand">10.000đ</string>
+    <string name="error_use_discount">Khuyến mãi không hợp lệ cho đơn hàng</string>
+    <string name="house_left">giờ nữa</string>
+    <string name="error_name">Vui lòng nhập họ tên của bạn</string>
+    <string name="use">Sử dụng</string>
+    <string name="note_for_order">Ghi chú cho đơn hàng</string>
+    <string name="use_full_limit">Đã được sử dụng hết</string>
+    <string name="add_order_success">Đặt hàng thành công</string>
+    <string name="order_as_less_as_fifty_thousand">Đơn hàng nhỏ hơn 50.000đ cộng 10.000đ phí vận chuyển.</string>
+    <string name="note_not_ice">Không đá</string>
+    <string name="note_little_ice">Ít đá</string>
+    <string name="note_less_sweet">Ít Ngọt</string>
+    <string name="note_much_sweet">Ngọt nhiều</string>
+    <string name="note_sweet">Không ngọt</string>
+    <string name="checking_network">Kiểm tra kết nối mạng</string>
+    <string name="noti_network">Có điều không ổn rồi sư phụ ơi !!!</string>
+    <string name="login_for_order">Bạn cần đăng nhập để có thể đặt hàng</string>
+    <string name="login_now">Đăng nhập ngay</string>
+    <string name="not_enter_info_error_card">Chưa nhập đủ hoặc sai thông tin thẻ</string>
+    <string name="info_card_payment">Thông tin thẻ thanh toán</string>
+    <string name="is_order">Đã mua hàng</string>
+    <string name="not_order">Chưa mua hàng</string>
+    <string name="noti_forgot_pass">Đã gửi email xác nhận , vui lòng kiểm tra và làm theo hướng dẫn.</string>
+    <string name="erorr_now">Có lỗi xảy ra</string>
+    <string name="full_name_order">Họ tên người nhận</string>
+    <string name="verify_info">Xác nhận thông tin</string>
+    <string name="error_address">Vui lòng nhập địa chỉ giao hàng</string>
+    <string name="go_to_history_order">Xem đơn hàng</string>
+    <string name="watch"><![CDATA[Xem->]]></string>
+    <string name="accumulated">Tích</string>
+    <string name="email_confirm_error">Email xác nhận không trùng khớp với email đã nhập</string>
+    <string name="phone_change_not_allow">Số điện thoãi xác nhận không trùng khớp với số điện thoại đã nhập ở ứng dụng
+    </string>
+    <string name="open">Mở</string>
+    <string name="close">Đóng</string>
+    <string name="noti_location_permisstion">Bạn đã từ chối quyền vị trí, sẽ không thể sử dụng chức năng này.</string>
+    <string name="noti_call_permisstion">Bạn đã từ chối quyền sử dụng điện thoại, sẽ không thể sử dụng chức năng này.</string>
+    <string name="noti_contact_permisstion">Bạn đã từ chối quyền sử dụng danh bạ, sẽ không thể sử dụng chức năng này.</string>
+    <string name="noti_camera_permisstion">Bạn đã từ chối quyền sử dụng máy ảnh, sẽ không thể sử dụng chức năng này.</string>
+    <string name="noti_memory_permisstion">Bạn đã từ chối quyền sử dụng bộ nhớ, sẽ không thể sử dụng chức năng này.</string>
+    <string name="settings">Cài đặt</string>
+    <string name="noti_gps">Bạn phải mở định vị tốt nhất là ở chế dộ chính xác cao</string>
+    <string name="loading_location">Đang tìm vị trí</string>
+    <string name="leader_check_gps">Nếu đã bật định vị có thể kéo xuống hoặc bấm lại nút định vị để kiểm tra lại
+    </string>
 </resources>

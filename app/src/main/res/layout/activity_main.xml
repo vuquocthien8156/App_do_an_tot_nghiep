@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.main.MainActivity">
+        tools:context=".mvp.view.main.MainActivity">
 
     <FrameLayout
             android:id="@+id/frmContainer"
@@ -32,23 +32,5 @@
             app:itemTextColor="@color/selected_item_nav"
             app:menu="@menu/navigation"
     />
-
-    <FrameLayout
-        android:id="@+id/frmLoader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_main"
-            android:layout_gravity="center"
-            android:scaleType="center"
-            />
-    </FrameLayout>
 
 </RelativeLayout>

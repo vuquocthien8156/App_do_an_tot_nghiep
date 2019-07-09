@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.detail_product.DetailProductActivity
-import com.example.qthien.t__t.view.detail_product.ViewFullScreenImageActivity
+import com.example.qthien.t__t.mvp.view.detail_product.DetailProductActivity
+import com.example.qthien.t__t.mvp.view.detail_product.ViewFullScreenImageActivity
 import kotlinx.android.synthetic.main.item_viewpager.view.*
 import java.util.*
 

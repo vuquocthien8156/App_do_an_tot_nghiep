@@ -13,6 +13,7 @@
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/color_grey_light"
             android:padding="5dp">
         <TextView
                 android:id="@+id/txtNameCustomerOrder"
@@ -54,9 +55,10 @@
                 android:layout_height="wrap_content"
                 android:text="Đã giao hàng"
                 android:textSize="12sp"
+                android:textStyle="bold"
                 android:textColor="@color/colorAccent"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:layout_below="@id/txtAddressOrder"/>
         <TextView
                 android:id="@+id/txtTimeOrder"
@@ -72,8 +74,9 @@
                 android:id="@+id/lnPointAndPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:orientation="vertical"
-                android:layout_below="@id/txtNameCustomerOrder"
+                android:layout_below="@id/txtAddressOrder"
                 android:layout_alignParentEnd="true"
         >
             <TextView
@@ -81,7 +84,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5"
-                    android:layout_marginTop="15dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="end"
+                    android:textSize="12sp"
+                    android:drawablePadding="2dp"
                     android:textColor="@color/colorAccent"
                     android:drawableEnd="@drawable/ic_rating"
             />
@@ -90,6 +96,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:gravity="end"
+                    android:layout_gravity="end"
                     android:textColor="@color/colorPrimary"
                     android:text="50.000đ"/>
         </LinearLayout>

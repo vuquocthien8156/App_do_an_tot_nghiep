@@ -13,6 +13,10 @@ interface GetData {
                   @Field("password") mat_khau : String) : Call<ResponseLogin>
 
     @FormUrlEncoded
+    @POST("/api/verify")
+    fun sendEmailConfirm(@Field("Email") email: String): Call<ResponseDefault>
+
+    @FormUrlEncoded
     @POST("/api/login-by-phone")
     fun loginUserPhone(@Field("username") username : String) : Call<ResponseLogin>
 
@@ -55,7 +59,7 @@ interface GetData {
 
     @GET("/api/getAllAddressByUser")
     fun getAllAddressByUser(@Query("ma_tai_khoan") idAccount : Int,
-                            @Query("main") main : Int? = null) : Call <ResponseInfoAddress>
+                            @Query("main") main : Int = 0) : Call <ResponseInfoAddress>
 
     @POST("/api/insertAddressOrder")
     fun insertAddressByUser(@Body address : InfoAddress) : Call<ResponseDefault>
@@ -73,17 +77,31 @@ interface GetData {
     fun changePass(@Field("ma_kh") idUser : Int ,
                     @Field("password") pass : String) : Call<ResponseDefault>
 
+    @GET("/api/getLogPointUser")
+    fun getAllPointOfUser(@Query("id_KH") idCustomer: Int): Call<ResponsePoint>
+
     // Order
     @GET("/api/getOrderOfCustomer")
     fun getOrderByUser(@Query("id_KH") idCustomer: Int) : Call<ResponseOrder>
     @GET("/api/getOrderDetail")
     fun getOrderDetail(@Query("ma_don_hang") idOrder : Int) : Call<ResponseDetailOrder>
 
+    @POST("/api/addOrder")
+    fun addOrder(@Body order : OrderAdd) : Call<ResponseDefault>
+
+    @FormUrlEncoded
+    @POST("/api/paymentOnline")
+    fun paymentOnline(@Field("stripeToken") id: String,
+                      @Field("total") total : Long): Call<ResponseDefault>
+
     // Branch
     @GET("/api/getBranch")
     fun getBranchFolowArea() : Call<ResponseBranch>
 
     //Cart
+    @GET("/api/getDiscount")
+    fun getDiscount(@Query("slider") slider: Int?) : Call<ResponseDiscount>
+
     @GET("/api/getCartOfCustomer")
     fun getCartOfUser(@Query("id_KH") idCustomer: Int) : Call<ResponseCart>
 
@@ -96,15 +114,6 @@ interface GetData {
     @FormUrlEncoded
     @POST("/api/delete-cart")
     fun deleteCart(@Field("id_GH") idCart : Int) : Call<ResponseDefault>
-
-    @FormUrlEncoded
-    @POST("/api/delete-all-cart-of-customer")
-    fun deleteCartCustomer(@Field("id_KH") idCustomer : Int) : Call<ResponseDefault>
-
-    @FormUrlEncoded
-    @POST("/api/update-quantity")
-    fun updateQuantity(@Field("id_GH") idCart : Int,
-                       @Field("type") type : Int) : Call<ResponseDefault>
 
     @GET("/api/getQuantityAndPrice")
     fun getTotalQuantityAndTotalPrice(@Query("ma_kh") idCustomer: Int) : Call<ResponseQuantityPrice>
@@ -132,10 +141,6 @@ interface GetData {
     @GET("/api/likedProduct")
     fun getProductFavoritedByUser(@Query("id") idUser : Int) : Call<ResponseProducts>
 
-    @GET("/api/checkLikeByUser")
-    fun checkFavoriteProduct(@Query("id") idUser : Int,
-                             @Query("id_sp") idProduct : Int) : Call<ResponseCheckFavorite>
-
     @GET("/api/like")
     fun favoriteProduct(@Query("id_product") idProduct : Int,
                         @Query("id_user") idUser : Int,
@@ -149,7 +154,8 @@ interface GetData {
                                         @Query("ma_kh") idCustomer : Int,
                                         @Query("page") page : Int?,
                                         @Query("so_diem") point : Int?,
-                                        @Query("thoi_gian") time : Int?) : Call<ResponseEvaluation>
+                                        @Query("thoi_gian") time : Int?,
+                                        @Query("refresh") refresh : Int?) : Call<ResponseEvaluation>
 
     @GET("/api/getChildEvaluate")
     fun getChildEvaluate(@Query("ma_danh_gia") idEvaluate: Int,
@@ -162,11 +168,12 @@ interface GetData {
     fun addReply(@Body childEvaluation: ChildEvaluation) : Call<ResponseDefault>
 
     @Multipart
-    @POST("/api/addImagesEv")
+    @POST("/api/uploadManyImage")
     fun addImagesEvalute(@Part files : ArrayList<MultipartBody.Part> ) : Call<ResponseMutilImage>
 
     @FormUrlEncoded
     @POST("api/addThanks")
     fun addThanks(@Field("id_Evaluate") idEvaluate: Int,
                   @Field("id_KH") idCustomer: Int) : Call<ResponseDefault>
+
 }

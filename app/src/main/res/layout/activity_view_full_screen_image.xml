@@ -4,19 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
-    tools:context=".view.detail_product.ViewFullScreenImageActivity">
-
-    <ImageButton
-        android:id="@+id/ibtnCloseFullScreen"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_close"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@android:color/transparent"/>
+    android:background="#202020"
+    tools:context=".mvp.view.detail_product.ViewFullScreenImageActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpagerImg"
@@ -35,4 +24,16 @@
         android:background="@android:color/transparent">
 
     </android.support.v7.widget.RecyclerView>
+
+
+    <ImageButton
+            android:id="@+id/ibtnCloseFullScreen"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@android:color/transparent"/>
 </RelativeLayout>

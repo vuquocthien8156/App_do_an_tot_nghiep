@@ -11,9 +11,9 @@ data class Customer(
     @SerializedName("fb_id")
     var id_fb: String? = "",
     @SerializedName("ten")
-    var nameCustomer: String?,
+    var nameCustomer: String,
     @SerializedName("sdt")
-    var phoneNumber : String?,
+    var phoneNumber : String? = null,
     @SerializedName("gioi_tinh")
     var gender : Int?,
     @SerializedName("diem_tich")
@@ -25,6 +25,6 @@ data class Customer(
     @SerializedName("dia_chi")
     var address : String?,
     @SerializedName("avatar")
-    var avatar : String?,
+    var avatar : String? = null,
     var password : String?
 ) : Parcelable

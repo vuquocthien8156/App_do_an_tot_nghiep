@@ -14,7 +14,8 @@
         <RelativeLayout
                 android:id="@+id/relaRoot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
             <TextView
                     android:id="@+id/txtQuantityProductOrder"
                     android:layout_width="wrap_content"
@@ -24,29 +25,82 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:layout_marginStart="2dp"
+                    android:layout_centerVertical="true"
                     android:gravity="center"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
-                    android:layout_centerVertical="true"
                     android:background="@drawable/shape_stroke_rectangle_black"
-                    android:text="3"/>
+                    android:text="3 x"/>
             <TextView
                     android:id="@+id/txtNameProductOrder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="Trà sữa trân châu - (S)"
                     android:layout_marginStart="8dp"
                     android:textSize="16sp"
                     android:textColor="@color/colorPrimaryText"
                     android:layout_toEndOf="@id/txtQuantityProductOrder"
                     android:layout_toStartOf="@id/txtPriceProductOrder"/>
+
+            <RelativeLayout
+                    android:id="@+id/relaPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@id/txtQuantityProductOrder"
+                    android:layout_below="@+id/txtNameProductOrder"
+                    android:layout_toStartOf="@id/txtPriceProductOrder"
+            >
+                <TextView
+                        android:id="@+id/txtPriceCurrent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text="35.000đ"
+                        android:paddingStart="2dp"
+                        android:paddingEnd="2dp"
+                        android:textColor="@color/colorPrimaryText"
+                        android:ellipsize="end"/>
+
+                <ImageView
+                        android:id="@+id/imgArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chevron_right"
+                        android:layout_toEndOf="@id/txtPriceCurrent"
+                />
+
+                <TextView
+                        android:id="@+id/txtPriceDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/imgArrow"
+                        android:textSize="12sp"
+                        android:text="35.000đ"
+                        android:paddingStart="4dp"
+                        android:textColor="@color/colorPrimary"
+                        android:ellipsize="end"/>
+            </RelativeLayout>
+
+
+            <TextView
+                    android:id="@+id/txtNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="12sp"
+                    android:layout_below="@id/relaPrice"
+                    android:textColor="@color/colorSecondaryText"
+                    android:layout_toEndOf="@id/txtQuantityProductOrder"
+                    android:layout_toStartOf="@id/ibtnExpand"
+                    android:lines="1"
+                    android:ellipsize="end"/>
             <TextView
                     android:id="@+id/txtPriceProductOrder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:textSize="14sp"
+                    android:layout_below="@id/txtNameProductOrder"
                     android:layout_toStartOf="@id/ibtnExpand"
                     android:textColor="@color/colorPrimaryText"
                     android:text="50.000đ"/>

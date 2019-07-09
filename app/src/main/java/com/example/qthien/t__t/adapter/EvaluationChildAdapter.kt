@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.ChildEvaluation
-import com.example.qthien.t__t.view.main.MainActivity
+import com.example.qthien.t__t.mvp.view.main.MainActivity
 import kotlinx.android.synthetic.main.item_reply_child.view.*
 import java.text.SimpleDateFormat
 

@@ -7,7 +7,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GetDataGoogleAPI {
-
     @GET("?key={key}&inputtype=textquery&fields=photos,formatted_address,name")
     fun getPlaceByText(@Query("input") query : String ,
                        @Path("key") key : String) : Call<ArrayList<ResponsePlace>>

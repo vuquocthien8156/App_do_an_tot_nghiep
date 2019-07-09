@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,8 +13,8 @@ import android.view.ViewGroup
 import com.example.qthien.t__t.GlideApp
 import com.example.qthien.t__t.R
 import com.example.qthien.t__t.model.Evaluation
+import com.example.qthien.t__t.mvp.view.ealuation.DetailEvaluationActivity
 import com.example.qthien.t__t.retrofit2.RetrofitInstance
-import com.example.qthien.t__t.view.ealuation.DetailEvaluationActivity
 import kotlinx.android.synthetic.main.item_recycler_evaluation.view.*
 import java.text.SimpleDateFormat
 
@@ -46,6 +47,8 @@ class EvaluationAdapter(var context : Context,var arrEvaluation : ArrayList<Eval
         vh.txtContent.setText(evalu.content)
         vh.ratingbar.numStars = evalu.point
 
+
+
         val tks = if (evalu.quantityTks != 0) evalu.quantityTks.toString() else ""
         vh.txtTks.setText("$tks ${context.getString(R.string.thanks)}")
 
@@ -55,6 +58,15 @@ class EvaluationAdapter(var context : Context,var arrEvaluation : ArrayList<Eval
         } else{
             vh.txtTks.isEnabled = true
             vh.txtTks.setTextColor(Color.parseColor("#00C20D"))
+        }
+
+        if(evalu.isOrder == 0){
+            vh.txtIsOrder.setText(R.string.not_order)
+            vh.txtIsOrder.setTextColor(ContextCompat.getColor(context , R.color.colorPrimary))
+        }
+        else {
+            vh.txtIsOrder.setTextColor(ContextCompat.getColor(context , R.color.green_compelete))
+            vh.txtIsOrder.setText(R.string.is_order)
         }
 
         val baseUrl = RetrofitInstance.baseUrl
@@ -113,6 +125,7 @@ class EvaluationAdapter(var context : Context,var arrEvaluation : ArrayList<Eval
         val txtNameCus = itemView.txtNameUserEvaluation
         val ratingbar = itemView.ratingEvaluation
         val txtContent = itemView.txtContentValuation
+        val txtIsOrder= itemView.txtIsOrder
         val img1 = itemView.imgEvaluation1
         val img2 = itemView.imgEvaluation2
         val img3 = itemView.imgEvaluation3

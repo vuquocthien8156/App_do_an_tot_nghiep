@@ -5,7 +5,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.example.qthien.t__t.view.main.MainActivity
+import com.example.qthien.t__t.mvp.view.main.MainActivity
 
 class MyExceptionHandler(var context : Activity) : Thread.UncaughtExceptionHandler {
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mvp.view.NetworkCheckingActivity"
+        android:orientation="vertical"
+        android:background="#fff">
+
+    <TextView
+            android:id="@+id/txtMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noti_network"
+            android:layout_marginTop="200dp"
+            android:layout_toEndOf="@id/img"
+            android:background="@drawable/shape_message_network"
+            android:padding="10dp"
+            android:layout_marginEnd="15dp"/>
+
+    <ImageView
+            android:id="@+id/img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/img_wukong"
+            android:layout_below="@+id/txtMessage"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checking_network"
+            android:layout_below="@id/img"
+            android:padding="20dp"
+            android:background="@drawable/shape_button_check_network"
+            android:layout_centerHorizontal="true"/>
+</RelativeLayout>
