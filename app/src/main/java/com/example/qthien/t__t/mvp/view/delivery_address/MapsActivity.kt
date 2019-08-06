@@ -19,11 +19,12 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.qthien.t__t.R
+import com.example.qthien.t__t.adapter.PlaceAutocompleteAdapter
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.location.places.AutocompleteFilter
-import com.google.android.gms.location.places.ui.PlaceAutocomplete
+//import com.google.android.gms.location.places.AutocompleteFilter
+//import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -75,24 +76,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         loadLocationCreate()
 
         edtAddressSelected.setOnClickListener({
-            val locale: Locale
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                locale = getResources().getConfiguration().getLocales().get(0)
-            } else {
-                locale = getResources().getConfiguration().locale
-            }
-
-            val typeFilter = AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                .setCountry(locale.country)
-                .build()
-
-            val intent = PlaceAutocomplete.IntentBuilder(
-                PlaceAutocomplete.MODE_OVERLAY
-            )
-                .setFilter(typeFilter)
-                .build(this)
-            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+//            val locale: Locale
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                locale = getResources().getConfiguration().getLocales().get(0)
+//            } else {
+//                locale = getResources().getConfiguration().locale
+//            }
+//
+//            val typeFilter = AutocompleteFilter.Builder()
+//                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+//                .setCountry(locale.country)
+//                .build()
+//
+//            val intent = PlaceAutocompleteAdapter.PlaceAutocomplete.IntentBuilder(
+//                PlaceAutocomplete.MODE_OVERLAY
+//            )
+//                .setFilter(typeFilter)
+//                .build(this)
+//            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         })
 
         btnSelectedAddress.setOnClickListener({
@@ -291,9 +292,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                val place = PlaceAutocomplete.getPlace(this, data)
-                latLngCurrentMaps = place.latLng
-                moveCamera(latLngCurrentMaps)
+//                val place = PlaceAutocompleteAdapter.PlaceAutocomplete.getPlace(this, data)
+//                latLngCurrentMaps = place.latLng
+//                moveCamera(latLngCurrentMaps)
             }
         }
 

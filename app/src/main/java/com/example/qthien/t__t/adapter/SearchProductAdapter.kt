@@ -100,15 +100,14 @@ class SearchProductAdapter(var context : Context,
     override fun onBindViewHolder(vh: ViewHolder, p1: Int) {
         val p = mSortedList.get(p1)
 
+        Log.d("favoooooov" , (arrFavorite.find { it.trim().equals(p.idProduct.toString()) } != null).toString())
 
         if(arrFavorite.find { it.trim().equals(p.idProduct.toString()) } != null) {
             vh.ibtnFavorite.setImageResource(R.drawable.ic_unlike)
             vh.ibtnFavorite.setTag(R.drawable.ic_unlike)
-            Log.d("favoooooo" , "No")
         }else {
             vh.ibtnFavorite.setImageResource(R.drawable.ic_favorite_red_36dp)
             vh.ibtnFavorite.setTag(R.drawable.ic_favorite_red_36dp)
-            Log.d("favoooooo" , "Yes")
         }
 
         GlideApp.with(context)
@@ -155,19 +154,20 @@ class SearchProductAdapter(var context : Context,
     }
 
     fun addOrRemoveFavorite(){
-
-        Log.d("favoooooo" , arrFavorite.toString())
-        Log.d("favoooooo" , favo.toString())
+        Log.d("favoooooov" , mSortedList.size().toString())
+        Log.d("favoooooov" , position.toString())
+        Log.d("favoooooov" , favo.toString())
 
         if(favo == 1){
             arrFavorite.add(idProduct.toString().trim())
         }
         else{
-            arrFavorite.remove(idProduct.toString().trim())
+            arrFavorite.removeAt(arrFavorite.indices.find { arrFavorite[it].trim().equals(idProduct.toString().trim()) }!!)
+            Log.d("favoooooov" ,"id = " + idProduct.toString())
+            Log.d("favoooooov" , arrFavorite.toString())
         }
         context.getSharedPreferences("Favorite" , Context.MODE_PRIVATE).edit()
                 .putString( "arrFavorite" , arrFavorite.toString()).apply()
-        Log.d("favoooooo" , arrFavorite.toString())
         notifyItemChanged(position)
     }
 

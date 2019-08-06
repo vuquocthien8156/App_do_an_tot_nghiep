@@ -131,13 +131,13 @@
 
             <ImageButton
                     android:id="@+id/ibtnSearchPlace"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/line"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/places_ic_search"
-                    android:padding="8dp"
+                    android:src="@drawable/ic_search"
+                    android:layout_marginTop="6dp"
                     />
 
             <LinearLayout

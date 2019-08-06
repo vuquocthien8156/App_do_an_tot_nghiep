@@ -22,7 +22,7 @@ class InSearchDelivery(
     }
 
     fun searchPlace(address : String){
-        val call = instance.getPlaceByText(address , context.getString(R.string.GOOGLE_API_KEY))
+        val call = instance.getPlaceByText(address , context.getString(R.string.google_maps_key))
         call.enqueue(object : Callback<ArrayList<ResponsePlace>> {
             override fun onFailure(call: Call<ArrayList<ResponsePlace>>, t: Throwable) {
 
